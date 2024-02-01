@@ -1,0 +1,11 @@
+.card {
+  display: inline-block;
+  img {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    .card-text-wrapper {
+      padding-top: 1rem;
+    }
+  }
+}
