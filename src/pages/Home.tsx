@@ -15,6 +15,8 @@ const HomePage = () => {
       {data &&
         data.map((item: CardProps) => (
           <Card
+            key={item.id}
+            id={item.id}
             brand={item.brand}
             model={item.model}
             description={item.description}
