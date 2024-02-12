@@ -10,6 +10,9 @@ const Navbar = () => {
         <h1>SHOPNAME</h1>
       </NavLink>
       <div className={classes["buttons-wrapper"]}>
+        <NavLink to="/admin">
+          <Button>ADMIN</Button>
+        </NavLink>
         <NavLink to="/signin">
           <Button>Sign in</Button>
         </NavLink>

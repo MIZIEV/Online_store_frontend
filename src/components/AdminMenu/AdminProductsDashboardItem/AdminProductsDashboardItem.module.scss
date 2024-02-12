@@ -1,0 +1,18 @@
+.admin-product-item {
+  button {
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    cursor: pointer;
+  }
+  .delete-button {
+    background-color: red;
+  }
+  .edit-button {
+    background-color: black;
+  }
+  .manage {
+    display: flex;
+    gap: 10px;
+  }
+}
