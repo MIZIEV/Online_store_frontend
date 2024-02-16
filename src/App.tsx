@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 import RootLayout from "./pages/Root";
 import HomePage from "./pages/Home";
@@ -7,8 +7,8 @@ import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import ErrorPage from "./pages/Error";
 import AdminPage from "./pages/Admin";
-
-const queryClient = new QueryClient();
+import AddNewModal from "./components/AdminMenu/AdminModals/AddNewModal";
+import { queryClient } from "./utils/http";
 
 const router = createBrowserRouter([
   {
@@ -16,14 +16,16 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <HomePage /> },
-      { path: "admin", element: <AdminPage /> },
-      { path: "signin", element: <SignInPage /> },
-      { path: "signup", element: <SignUpPage /> },
+      { path: "", element: <HomePage /> },
+      {
+        path: "admin",
+        element: <AdminPage />,
+        children: [{ path: "new", element: <AddNewModal /> }],
+      },
     ],
   },
-
-  {},
+  { path: "signin", element: <SignInPage /> },
+  { path: "signup", element: <SignUpPage /> },
 ]);
 
 function App() {

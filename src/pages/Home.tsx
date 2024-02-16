@@ -5,8 +5,8 @@ import { CardProps } from "../shared.types";
 
 const HomePage = () => {
   const { data, isPending, isError } = useQuery({
-    queryKey: ["phones"],
-    queryFn: () => getMethod("http://13.60.5.92:8080/api/phone/list"),
+    queryKey: ["products"],
+    queryFn: () => getMethod("http://13.60.5.92:8080/api/product/list"),
   });
 
   return (

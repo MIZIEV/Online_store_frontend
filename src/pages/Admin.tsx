@@ -1,11 +1,18 @@
-import AdminProductsDashboard from "../components/AdminMenu/AdminProductsDashboard/AdminProductsDashboard"
+import { Link, Outlet } from "react-router-dom";
+import AdminProductsDashboard from "../components/AdminMenu/AdminProductsDashboard/AdminProductsDashboard";
 
 const AdminPage = () => {
   return (
     <>
-      <AdminProductsDashboard/>
+      <h1>
+        <Outlet />
+        <Link to=".." relative="path">
+          Back
+        </Link>
+      </h1>
+      <AdminProductsDashboard />
     </>
-  )
-}
+  );
+};
 
-export default AdminPage
+export default AdminPage;
