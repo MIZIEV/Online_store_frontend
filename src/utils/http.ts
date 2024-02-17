@@ -3,6 +3,9 @@ import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
 
+const ADD_NEW_PRODUCT_URL: string = "http://13.60.5.92:8080/api/product/add";
+const DELETE_PRODUCT_URL: string = "http://13.60.5.92:8080/api/product/remove/";
+
 export async function getMethod(path: string) {
   try {
     const response = await axios.get(path);
@@ -18,7 +21,7 @@ export async function postProduct(data: unknown) {
   console.log(data);
   try {
     const response = await axios.post(
-      "http://13.60.5.92:8080/api/product/add",
+      ADD_NEW_PRODUCT_URL,
       data
     );
     console.log(response);
@@ -32,7 +35,7 @@ export async function postProduct(data: unknown) {
 export async function deleteProduct(productId: number) {
 
   try {
-    const response = await axios.delete(`http://13.60.5.92:8080/api/product/remove/${productId}`);
+    const response = await axios.delete(DELETE_PRODUCT_URL + `${productId}`);
 
     return response.data;
   } catch (error) {
