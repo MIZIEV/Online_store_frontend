@@ -28,3 +28,15 @@ export async function postProduct(data: unknown) {
     throw error;
   }
 }
+
+export async function deleteProduct(productId: number) {
+
+  try {
+    const response = await axios.delete(`http://13.60.5.92:8080/api/product/remove/${productId}`);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
