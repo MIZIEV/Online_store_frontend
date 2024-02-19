@@ -6,3 +6,8 @@ export type CardProps = {
   price: number;
   pictureURL: string;
 };
+
+export type Category = {
+  id: number;
+  categoryName: string;
+}

@@ -1,18 +1,24 @@
 import Button from "../../../UI/Button/Button";
 import { CardProps } from "../../../shared.types";
 import classes from "./AdminProductsDashboardItem.module.scss";
-import { deleteProduct } from "../../../utils/http";
+import { deleteProduct, queryClient } from "../../../utils/http";
+import { useMutation } from "@tanstack/react-query";
 
 const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
-
   /*----------------------TODO-----------------------
                  when the product is removed, it removed from DB, but stayed in the page
                  think how to fix it!!!
   */
+  const { mutate } = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
 
-  const handleDelete = async () => {
-    await deleteProduct(props.id);
-  }
+  const handleDelete = () => {
+    mutate(props.id);
+  };
 
   return (
     <tr className={classes["admin-product-item"]}>
@@ -24,7 +30,9 @@ const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
       <td>
         <div className={classes.manage}>
           <Button className={classes["edit-button"]}>✏️Edit</Button>
-          <Button onClick={handleDelete} className={classes["delete-button"]}>🗑️Delete</Button>
+          <Button onClick={handleDelete} className={classes["delete-button"]}>
+            🗑️Delete
+          </Button>
         </div>
       </td>
     </tr>
