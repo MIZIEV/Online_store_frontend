@@ -9,6 +9,7 @@ import ErrorPage from "./pages/Error";
 import AdminPage from "./pages/Admin";
 import AddNewModal from "./components/AdminMenu/AdminModals/AddNewModal";
 import { queryClient } from "./utils/http";
+import EditModal from "./components/AdminMenu/AdminModals/EditModal";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,10 @@ const router = createBrowserRouter([
       {
         path: "admin",
         element: <AdminPage />,
-        children: [{ path: "new", element: <AddNewModal /> }],
+        children: [
+          { path: "new", element: <AddNewModal /> },
+          { path: ":productId/edit", element: <EditModal /> },
+        ],
       },
     ],
   },

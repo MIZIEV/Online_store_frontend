@@ -3,6 +3,7 @@ import { CardProps } from "../../../shared.types";
 import classes from "./AdminProductsDashboardItem.module.scss";
 import { deleteProduct, queryClient } from "../../../utils/http";
 import { useMutation } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
   /*----------------------TODO-----------------------
@@ -29,7 +30,9 @@ const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
       <td>{props.price} UAH</td>
       <td>
         <div className={classes.manage}>
-          <Button className={classes["edit-button"]}>✏️Edit</Button>
+          <Link to={`${props.id}/edit`}>
+            <Button className={classes["edit-button"]}>✏️Edit</Button>
+          </Link>
           <Button onClick={handleDelete} className={classes["delete-button"]}>
             🗑️Delete
           </Button>
