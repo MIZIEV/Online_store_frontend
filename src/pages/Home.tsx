@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getMethod } from "../utils/http";
 import Card from "../components/Card/Card";
 import { CardProps } from "../shared.types";
+import Filter from "../components/HomePage/Filter/Filter";
 
 const HomePage = () => {
   const { data, isPending, isError } = useQuery({
@@ -12,6 +13,7 @@ const HomePage = () => {
   return (
     <div>
       {isPending && <p>Loading...</p>}
+      <Filter/>
       {data &&
         data.map((item: CardProps) => (
           <Card
