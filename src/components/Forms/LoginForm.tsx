@@ -1,16 +1,20 @@
 
 import React, { useState } from 'react';
-import './Form.modules.scss'; 
+import './Form.modules.scss';
+import { loginUser } from '../../utils/AuthService';
 
 const LoginForm: React.FC = () => {
-	const [email, setEmail] = useState('');
+	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
+
+	const [loading, setLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameOrEmail)) {
 			setError('Invalid email address');
 			return;
 		}
@@ -21,30 +25,37 @@ const LoginForm: React.FC = () => {
 		}
 
 		try {
-			const response = await fetch('/api/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ email, password })
-			});
-
-			if (!response.ok) {
-				throw new Error('Login failed');
+			const userData = {
+				usernameOrEmail,
+				password
 			}
 
-			// Відповідна обробка успішного входу
+			const success = await loginUser(userData);
+
+			if (success) {
+				setSuccess(true);
+			} else {
+				setError('Login failed');
+			}
+
 		} catch (error) {
-			setError('Login failed');
+			console.error(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
 	return (
 		<form className="form" onSubmit={handleSubmit}>
 			<h2>Sign In</h2>
+
+			{loading && <div>Loading...</div>}
+			{error && <div className="error">{error}</div>}
+			{success && <div>login successful!</div>}
+
 			{error && <div className="error">{error}</div>}
 			<div className="form-group">
-				<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+				<input type="email" value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} placeholder="Email" required />
 			</div>
 			<div className="form-group">
 				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
