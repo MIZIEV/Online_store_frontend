@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import './Form.modules.scss';
-import { loginUser } from '../../utils/AuthService';
+import { loginUser, saveLoggedInUser } from '../../utils/AuthService';
 
 const LoginForm: React.FC = () => {
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -33,6 +33,7 @@ const LoginForm: React.FC = () => {
 			const success = await loginUser(userData);
 
 			if (success) {
+				saveLoggedInUser(usernameOrEmail, success.role);
 				setSuccess(true);
 			} else {
 				setError('Login failed');
