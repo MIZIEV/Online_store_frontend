@@ -1,15 +1,16 @@
-
 import React, { useState } from 'react';
 import './Form.modules.scss';
 import { loginUser, saveLoggedInUser } from '../../utils/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
-
 	const [loading, setLoading] = useState(false);
-	const [success, setSuccess] = useState(false);
+	// const [success, setSuccess] = useState(false); // Додали стан success
+
+	const navigate = useNavigate();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -28,19 +29,21 @@ const LoginForm: React.FC = () => {
 			const userData = {
 				usernameOrEmail,
 				password
-			}
+			};
 
-			const success = await loginUser(userData);
+			setLoading(true); // Встановлюємо стан загрузки на true
+			const response = await loginUser(userData);
 
-			if (success) {
-				saveLoggedInUser(usernameOrEmail, success.role);
-				setSuccess(true);
+			if (response) {
+				saveLoggedInUser(usernameOrEmail, response.role);
+				navigate('/'); // Використовуємо функцію navigate для перенаправлення
 			} else {
 				setError('Login failed');
 			}
 
 		} catch (error) {
 			console.error(error);
+			setError('An error occurred'); // Встановлюємо повідомлення про помилку
 		} finally {
 			setLoading(false);
 		}
@@ -52,9 +55,7 @@ const LoginForm: React.FC = () => {
 
 			{loading && <div>Loading...</div>}
 			{error && <div className="error">{error}</div>}
-			{success && <div>login successful!</div>}
 
-			{error && <div className="error">{error}</div>}
 			<div className="form-group">
 				<input type="email" value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} placeholder="Email" required />
 			</div>
