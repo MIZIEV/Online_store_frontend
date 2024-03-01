@@ -1,3 +1,5 @@
+// AuthService.ts
+
 import axios from "axios";
 
 const BASE_URL = "http://13.60.5.92:8080/api/auth";
@@ -77,4 +79,3 @@ export const isAdminUser = () => {
 	const role = sessionStorage.getItem("role");
 	return role === "ROLE_ADMIN";
 };
-

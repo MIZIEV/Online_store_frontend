@@ -1,4 +1,5 @@
-// import React from "react";
+//Navbar.tsx
+
 import { NavLink } from "react-router-dom";
 import { getLoggedInUser } from "../../utils/AuthService";
 import Button from "../../UI/Button/Button";
@@ -13,7 +14,7 @@ const Navbar = () => {
 				<h1>SHOPNAME</h1>
 			</NavLink>
 			<div className={classes["buttons-wrapper"]}>
-				{loggedInUser && <div>Welcome, {loggedInUser}</div>}
+				{loggedInUser && <div className={classes["welcome-message"]}>Welcome, {loggedInUser}</div>}
 				<NavLink to="/admin">
 					<Button>ADMIN</Button>
 				</NavLink>
