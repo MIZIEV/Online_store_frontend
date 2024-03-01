@@ -3,13 +3,31 @@ import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
 
-const PRODUCTS_URL = "http://13.60.5.92:8080/api/product/";
+const PRODUCTS_URL = "http://13.60.5.92:8080/api/product/list";
 const ADD_NEW_PRODUCT_URL: string = "http://13.60.5.92:8080/api/product/add";
 const DELETE_PRODUCT_URL: string = "http://13.60.5.92:8080/api/product/remove/";
 
 export async function getMethod(path: string) {
   try {
     const response = await axios.get(path);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+export async function getProducts({ signal, filter }) {
+  let url = PRODUCTS_URL;
+
+  if (filter) {
+    url += filter;
+  }
+
+  console.log(url);
+
+  try {
+    const response = await axios.get(url, { cancelToken: signal.token });
     console.log(response);
     return response.data;
   } catch (error) {
