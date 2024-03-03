@@ -1,11 +1,12 @@
 // Navbar.tsx
 import { NavLink, useNavigate } from "react-router-dom";
-import { getLoggedInUser, logout } from "../../utils/AuthService"; // Додана функція logout
+import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService"; // Додана функція logout
 import Button from "../../UI/Button/Button";
 import classes from "./Navbar.module.scss";
 
 const Navbar = () => {
 	const loggedInUser = getLoggedInUser();
+	const isAdmin = isAdminUser();
 	const navigate = useNavigate();
 
 	const handleLogout = () => {
@@ -20,13 +21,15 @@ const Navbar = () => {
 			</NavLink>
 			<div className={classes["buttons-wrapper"]}>
 				{loggedInUser && <div className={classes["welcome-message"]}>Welcome, {loggedInUser}</div>}
+				{isAdmin && ( // Перевіряємо, чи користувач є адміністратором
+					<NavLink to="/admin">
+						<Button>ADMIN</Button> {/* Відображаємо кнопку "ADMIN" тільки для адміністраторів */}
+					</NavLink>
+				)}
 				{loggedInUser ? ( // Перевіряємо, чи користувач увійшов у систему
 					<Button onClick={handleLogout}>Log Out</Button> // Якщо так, то відображаємо кнопку LogOut
 				) : (
 					<> {/* Якщо користувач не увійшов у систему, відображаємо кнопки для входу, реєстрації та кнопку admin */}
-							<NavLink to="/admin">
-								<Button>ADMIN</Button>
-							</NavLink>
 						<NavLink to="/signin">
 							<Button>Sign in</Button>
 						</NavLink>
