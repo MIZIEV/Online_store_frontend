@@ -27,7 +27,14 @@ export async function getMethod(path: string) {
     throw error;
   }
 }
-export async function getProducts({ signal, filter }) {
+export async function getProducts({
+  signal,
+  filter,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  signal: any;
+  filter: string;
+}) {
   let url = PRODUCTS_URL;
 
   if (filter) {
