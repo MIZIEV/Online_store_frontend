@@ -1,5 +1,3 @@
-// AuthService.ts
-
 import axios from "axios";
 
 const BASE_URL = "http://13.60.5.92:8080/api/auth";
@@ -62,7 +60,7 @@ export const getLoggedInUser = () => {
 }
 
 export function saveToken(token: string) {
-	localStorage.setItem('token', token);
+	localStorage.setItem('token',"Bearer "+ token);
 }
 
 export function getToken(): string | null {
