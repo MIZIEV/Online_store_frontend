@@ -1,31 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./Filter.module.scss";
 import Button from "../../../UI/Button/Button";
+import { getMethod } from "../../../utils/http";
 
 const Filter: React.FC<{ onFilterChange: (filter: string) => void }> = ({
   onFilterChange,
 }) => {
   const [sortFilter, setSortFilter] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
 
   const handleFilterChange = () => {
-    const filters = "?sort=" + sortFilter;
+    const filters =
+      "?sort=" + sortFilter + "&" + "categoryid=" + selectedCategory;
     onFilterChange(filters);
   };
+
+  useEffect(() => {
+    async function getCategories() {
+      const returnedCategories = await getMethod(
+        "http://13.60.5.92:8080/api/category/list"
+      );
+      setCategories(returnedCategories);
+    }
+    getCategories();
+  }, []);
+
+  console.log(categories);
 
   return (
     <div className={classes.filter}>
       <div>
         <p>Category</p>
-        <select name="category">
+        <select
+          name="category"
+          onChange={(event) => {
+            setSelectedCategory(event.target.value);
+          }}
+        >
           <option key="not-selected" value="">
             Not selected
           </option>
-          <option key="case" value="case">
-            Cases
-          </option>
-          <option key="phone" value="phone">
-            Phones
-          </option>
+          {categories.map((category: { id: number; categoryName: string }) => (
+            <option key={category.id} value={category.id}>
+              {category.categoryName}
+            </option>
+          ))}
         </select>
       </div>
       <div>
