@@ -17,10 +17,12 @@ const HomePage = () => {
     setFilter(filter);
   };
 
+  console.log(data);
+
   return (
     <div>
-      {isPending && <p>Loading...</p>}
       <Filter onFilterChange={handleFilterChange} />
+      {data && data.length === 0 && <p>Nothing was found for your search</p>}
       {data &&
         data.map((item: CardProps) => (
           <Card
@@ -33,6 +35,7 @@ const HomePage = () => {
             pictureURL={item.pictureURL}
           />
         ))}
+      {isPending && <p>Loading...</p>}
       {isError && "Failed to fetch data"}
     </div>
   );

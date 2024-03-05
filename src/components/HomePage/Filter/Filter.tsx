@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./Filter.module.scss";
 import Button from "../../../UI/Button/Button";
 import { getMethod } from "../../../utils/http";
@@ -9,10 +9,18 @@ const Filter: React.FC<{ onFilterChange: (filter: string) => void }> = ({
   const [sortFilter, setSortFilter] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const searchTerm = useRef<HTMLInputElement>(null);
 
   const handleFilterChange = () => {
     const filters =
-      "?sort=" + sortFilter + "&" + "categoryid=" + selectedCategory;
+      "?sort=" +
+      sortFilter +
+      "&" +
+      "categoryid=" +
+      selectedCategory +
+      "&" +
+      "searchTerm=" +
+      searchTerm.current?.value;
     onFilterChange(filters);
   };
 
@@ -67,6 +75,7 @@ const Filter: React.FC<{ onFilterChange: (filter: string) => void }> = ({
           </option>
         </select>
       </div>
+      <input type="text" ref={searchTerm} onChange={handleFilterChange} />
       <Button onClick={handleFilterChange}>Apply</Button>
     </div>
   );
