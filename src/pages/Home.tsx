@@ -4,6 +4,7 @@ import Card from "../components/Card/Card";
 import { CardProps } from "../shared.types";
 import Filter from "../components/HomePage/Filter/Filter";
 import { useState } from "react";
+import classes from './Home.module.scss'
 
 const HomePage = () => {
   const [filter, setFilter] = useState("");
@@ -23,18 +24,20 @@ const HomePage = () => {
     <div>
       <Filter onFilterChange={handleFilterChange} />
       {data && data.length === 0 && <p>Nothing was found for your search</p>}
-      {data &&
-        data.map((item: CardProps) => (
-          <Card
-            key={item.id}
-            id={item.id}
-            brand={item.brand}
-            model={item.model}
-            description={item.description}
-            price={item.price}
-            pictureURL={item.pictureURL}
-          />
-        ))}
+      <div className={classes.products}>
+        {data &&
+          data.map((item: CardProps) => (
+            <Card
+              key={item.id}
+              id={item.id}
+              brand={item.brand}
+              model={item.model}
+              description={item.description}
+              price={item.price}
+              pictureURL={item.pictureURL}
+            />
+          ))}
+      </div>
       {isPending && <p>Loading...</p>}
       {isError && "Failed to fetch data"}
     </div>

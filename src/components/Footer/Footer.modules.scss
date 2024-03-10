@@ -1,17 +1,14 @@
 footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	min-height: 30px;
-	background-color: black;
-	div {
-		padding: 1rem;
-		p {
-			color: white;
-			padding: 1rem;
-			text-align: center;
-			text-transform: uppercase;
-		}
-	}
+  width: 100%;
+  min-height: 30px;
+  background-color: black;
+  div {
+    padding: 1rem;
+    p {
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
 }

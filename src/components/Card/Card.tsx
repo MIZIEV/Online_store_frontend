@@ -8,12 +8,12 @@ const Card: React.FC<CardProps> = (props) => {
     <div className={classes.card}>
       <img src={props.pictureURL} alt={props.model} />
       <div className={classes["card-text-wrapper"]}>
+        <h2>{props.brand}</h2>
         <h3>{props.model}</h3>
-        <h4>{props.brand}</h4>
-        <p>{props.description}</p>
-        <p>{props.price}</p>
+        <h4>{props.description}</h4>
+        <h2>₴ {props.price}</h2>
+        <Button>Add to cart</Button>
       </div>
-      <Button>Buy</Button>
     </div>
   );
 };
