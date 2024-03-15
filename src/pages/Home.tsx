@@ -35,6 +35,7 @@ const HomePage = () => {
               description={item.description}
               price={item.price}
               pictureURL={item.pictureURL}
+              totalMark={item.totalMark}
             />
           ))}
       </div>

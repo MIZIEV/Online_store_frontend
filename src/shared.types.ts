@@ -6,6 +6,7 @@ export type CardProps = {
   price: number;
   pictureURL: string;
   categoryId?: string;
+  totalMark: number;
 };
 
 export type Category = {
