@@ -10,6 +10,9 @@ import AdminPage from "./pages/Admin";
 import AddNewModal from "./components/AdminMenu/AdminModals/AddNewModal";
 import { queryClient } from "./utils/http";
 import EditModal from "./components/AdminMenu/AdminModals/EditModal";
+import CartModal from "./components/Navbar/Cart/CartModal";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 const router = createBrowserRouter([
   {
@@ -30,14 +33,16 @@ const router = createBrowserRouter([
       },
     ],
   },
-
 ]);
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <CartModal />
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
