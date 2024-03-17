@@ -25,7 +25,7 @@ const Card: React.FC<CardProps> = (props) => {
         <Button
           onClick={() =>
             addProduct({
-              id: props.model,
+              id: props.id,
               brand: props.brand,
               model: props.model,
               price: props.price,
