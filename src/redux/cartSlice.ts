@@ -28,12 +28,9 @@ export const cartSlice = createSlice({
     },
     addToCart: (state, action) => {
       const { id } = action.payload;
-      console.log(id)
       const existingItem = state.items.find((item) => item.id === id);
-      console.log(state.items);
 
       if (existingItem) {
-        console.log("item exists");
         state.items = state.items.map((item) =>
           item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         );
@@ -41,9 +38,13 @@ export const cartSlice = createSlice({
         state.items = [...state.items, { ...action.payload, quantity: 1 }];
       }
     },
+    removeFromCart: (state, action) => {
+      const { id } = action.payload;
+      state.items = [...state.items].filter((item) => item.id !== id);
+    },
   },
 });
 
-export const { toggleModalVisibility, addToCart } = cartSlice.actions;
+export const { toggleModalVisibility, addToCart, removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

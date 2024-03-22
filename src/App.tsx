@@ -13,6 +13,7 @@ import EditModal from "./components/AdminMenu/AdminModals/EditModal";
 import CartModal from "./components/Navbar/Cart/CartModal";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import CheckOutPage from "./pages/CheckOut";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,14 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "", element: <HomePage /> },
+      {
+        path: "",
+        element: <HomePage />,
+        children: [{ path: "cart", element: <CartModal /> }],
+      },
       { path: "signin", element: <SignInPage /> },
       { path: "signup", element: <SignUpPage /> },
+      { path: "checkout", element: <CheckOutPage /> },
       {
         path: "admin",
         element: <AdminPage />,
@@ -39,7 +45,6 @@ function App() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <CartModal />
         <RouterProvider router={router} />
       </QueryClientProvider>
     </Provider>

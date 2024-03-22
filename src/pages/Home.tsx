@@ -4,7 +4,8 @@ import Card from "../components/Card/Card";
 import { CardProps } from "../shared.types";
 import Filter from "../components/HomePage/Filter/Filter";
 import { useState } from "react";
-import classes from './Home.module.scss'
+import classes from "./Home.module.scss";
+import { Outlet } from "react-router";
 
 const HomePage = () => {
   const [filter, setFilter] = useState("");
@@ -22,6 +23,7 @@ const HomePage = () => {
 
   return (
     <div>
+      <Outlet />
       <Filter onFilterChange={handleFilterChange} />
       {data && data.length === 0 && <p>Nothing was found for your search</p>}
       <div className={classes.products}>

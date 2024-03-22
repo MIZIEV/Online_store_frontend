@@ -6,6 +6,8 @@ import {
   CartState,
   toggleModalVisibility,
 } from "../../../redux/cartSlice";
+import CartItem from "./CartItem/CartItem";
+import { Link } from "react-router-dom";
 
 const CartModal = () => {
   const cart = useSelector(
@@ -27,17 +29,17 @@ const CartModal = () => {
               <p className={classes.modalTop}>
                 <button onClick={handleCartModalVisibility}>Close</button>
               </p>
-              {cart.items &&
-                cart.items.map((item) => (
-                  <div key={item.id}>
-                    <p>{item.brand}</p>
-                    <p>{item.model}</p>
-                    <p>
-                      {item.price} x {item.quantity} ={" "}
-                      {item.price * item.quantity}
-                    </p>
-                  </div>
-                ))}
+              <div>
+                {cart.items &&
+                  cart.items.map((item) => (
+                    <CartItem key={item.id} item={item} />
+                  ))}
+              </div>
+              <p className={classes.modalDown}>
+                <Link to="/checkout" relative="path">
+                  <button>CheckOut</button>
+                </Link>
+              </p>
             </div>
           </div>,
           document.getElementById("modal")!

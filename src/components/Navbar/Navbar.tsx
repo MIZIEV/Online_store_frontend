@@ -1,5 +1,5 @@
 // Navbar.tsx
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService"; // Додана функція logout
 import Button from "../../UI/Button/Button";
 import classes from "./Navbar.module.scss";
@@ -21,7 +21,9 @@ const Navbar = () => {
         <h1>SHOPNAME</h1>
       </NavLink>
       <div className={classes["buttons-wrapper"]}>
-        <CartIcon />
+        <Link to="cart">
+          <CartIcon />
+        </Link>
         {loggedInUser && (
           <div className={classes["welcome-message"]}>
             Welcome, {loggedInUser}
