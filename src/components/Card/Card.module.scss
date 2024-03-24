@@ -1,49 +1,72 @@
 .card {
-  display: inline-block;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  max-width: 15rem;
-  background-color: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  img {
-    height: 15rem;
-    width: 15rem;
-    object-fit: contain;
-    margin-bottom: 0.45rem;
-  }
-  .card-text-wrapper {
-    font-family: "Roboto", sans-serif;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    h2 {
-      font-weight: 700;
-      font-style: normal;
-      font-size: x-large;
-    }
-    p {
-      margin-bottom: 1rem;
-    }
-    h4 {
-      color: rgb(90, 90, 90);
-      font-style: italic;
-    }
-    button {
-      font-family: "Roboto", sans-serif;
-      font-weight: 500;
-      font-size: medium;
-      background-color: black;
-      color: white;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: rgb(50, 50, 50);
-    }
-  }
+	display: inline-block;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	max-width: 15rem;
+	background-color: white;
+	border-radius: 1rem;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	img {
+		height: 15rem;
+		width: 15rem;
+		object-fit: contain;
+		margin-bottom: 0.45rem;
+	}
+
+	.card-text-wrapper {
+		font-family: "Roboto", sans-serif;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		h2 {
+			font-weight: 700;
+			font-style: normal;
+			font-size: x-large;
+		}
+
+		p {
+			margin-bottom: 1rem;
+		}
+
+		h4 {
+			color: rgb(90, 90, 90);
+			font-style: italic;
+		}
+
+		button {
+			font-family: "Roboto", sans-serif;
+			font-weight: 500;
+			font-size: medium;
+			background-color: black;
+			color: white;
+			padding: 0.75rem;
+			border-radius: 0.5rem;
+			border: none;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: rgb(50, 50, 50);
+		}
+
+		.rating-stars {
+			span {
+				cursor: pointer;
+				&:hover,
+				&:hover ~ span {
+					color: yellow;
+				}
+				&:active,
+				&:active ~ span,
+				&.active,
+				&.active ~ span {
+					color: yellow;
+				}
+			}
+		}
+	}
 }
