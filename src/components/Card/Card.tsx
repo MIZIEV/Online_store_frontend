@@ -9,24 +9,37 @@ import { CartProduct, addToCart } from "../../redux/cartSlice";
 
 const Card: React.FC<CardProps> = (props) => {
 	const dispatch = useDispatch();
-	const [rating, setRating] = useState<number>(0); // Додали стан для зберігання рейтингу
+	const [rating, setRating] = useState<number>(0);
+	const [hovered, setHovered] = useState<boolean>(false); // Додайте стан для відстеження наведення на картку
 
 	const addProduct = (payload: CartProduct) => {
 		dispatch(addToCart(payload));
 	};
 
 	const handleRatingChange = (newRating: number) => {
-		setRating(newRating); // Оновлюємо стан рейтингу при зміні
+		setRating(newRating);
+	};
+
+	const handleCardHover = () => {
+		setHovered(true); // Встановіть стан, коли курсор наведено на картку
+	};
+
+	const handleCardLeave = () => {
+		setHovered(false); // Встановіть стан, коли курсор відведено від картки
 	};
 
 	return (
-		<div className={classes.card}>
+		<div
+			className={`${classes.card} ${hovered ? classes.hovered : ""}`} // Додайте клас, коли курсор наведено на картку
+			onMouseEnter={handleCardHover}
+			onMouseLeave={handleCardLeave}
+		>
 			<img src={props.pictureURL} alt={props.model} />
 			<div className={classes["card-text-wrapper"]}>
 				<h2>{props.brand}</h2>
 				<h3>{props.model}</h3>
-				<Rating rating={rating} onChange={handleRatingChange} /> {/* Додаємо компонент рейтингу */}
-				<h4>{props.description}</h4>
+				<Rating rating={rating} onChange={handleRatingChange} />
+				<h4 className={hovered ? classes.showH4 : ""}>{props.description}</h4> {/* Застосуйте клас, якщо курсор наведено на картку */}
 				<h2>₴ {props.price}</h2>
 				<Button
 					onClick={() =>
@@ -36,7 +49,7 @@ const Card: React.FC<CardProps> = (props) => {
 							model: props.model,
 							price: props.price,
 							quantity: 1,
-							rating: rating // Додаємо рейтинг до об'єкту товару при додаванні в кошик
+							rating: rating
 						})
 					}
 				>
