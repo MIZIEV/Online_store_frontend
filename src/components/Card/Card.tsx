@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = (props) => {
       <div className={classes["card-text-wrapper"]}>
         <h2>{props.brand}</h2>
         <h3>{props.model}</h3>
-        <Rating rating={Number(props.totalMark)} />
+        <Rating rating={Number(props.rating)} />
         <h4>{props.description}</h4>
         <h2>₴ {props.price}</h2>
         <Button

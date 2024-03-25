@@ -8,7 +8,7 @@ import classes from "./Home.module.scss";
 import { Outlet } from "react-router";
 
 const HomePage = () => {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("?sort=maxRating");
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["products", { filter: filter }],
@@ -37,7 +37,7 @@ const HomePage = () => {
               description={item.description}
               price={item.price}
               pictureURL={item.pictureURL}
-              totalMark={item.totalMark}
+              rating={item.rating}
             />
           ))}
       </div>

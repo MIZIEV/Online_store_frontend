@@ -34,8 +34,6 @@ const Filter: React.FC<{ onFilterChange: (filter: string) => void }> = ({
     getCategories();
   }, []);
 
-  console.log(categories);
-
   return (
     <div className={classes.filter}>
       <div>
@@ -57,21 +55,21 @@ const Filter: React.FC<{ onFilterChange: (filter: string) => void }> = ({
         </select>
       </div>
       <div>
-        <p>Price</p>
+        <p>Sorting</p>
         <select
           name="category"
           onChange={(event) => {
             setSortFilter(event.target.value);
           }}
         >
-          <option key="recomended" value="">
-            Recomended
+          <option key="recomended" value="maxRating">
+            By rating
           </option>
-          <option key="expensive" value="max">
-            More expensive at first
+          <option key="expensive" value="maxPrice">
+            By more price
           </option>
-          <option key="cheaper" value="min">
-            Cheaper at first
+          <option key="cheaper" value="minProice">
+            By lower price
           </option>
         </select>
       </div>
