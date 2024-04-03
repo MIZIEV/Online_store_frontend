@@ -1,72 +1,111 @@
 // LoginForm.tsx
 
-import React, { useState } from 'react';
-import './Form.modules.scss';
-import { loginUser, saveLoggedInUser } from '../../utils/AuthService';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import classes from "./Form.module.scss";
+import { loginUser, saveLoggedInUser } from "../../utils/AuthService";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
-	const [usernameOrEmail, setUsernameOrEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
-	const [loading, setLoading] = useState(false);
-	// const [success, setSuccess] = useState(false); // Додали стан success
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  // const [success, setSuccess] = useState(false); // Додали стан success
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameOrEmail)) {
-			setError('Invalid email address');
-			return;
-		}
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameOrEmail)) {
+      setError("Invalid email address");
+      return;
+    }
 
-		if (password.length < 5) {
-			setError('Password must be at least 5 characters long');
-			return;
-		}
+    if (password.length < 5) {
+      setError("Password must be at least 5 characters long");
+      return;
+    }
 
-		try {
-			const userData = {
-				usernameOrEmail,
-				password
-			};
+    try {
+      const userData = {
+        usernameOrEmail,
+        password,
+      };
 
-			setLoading(true); // Встановлюємо стан загрузки на true
-			const response = await loginUser(userData);
+      setLoading(true); // Встановлюємо стан загрузки на true
+      const response = await loginUser(userData);
 
-			if (response) {
-				saveLoggedInUser(usernameOrEmail, response.role);
-				navigate('/'); // Використовуємо функцію navigate для перенаправлення
-			} else {
-				setError('Login failed');
-			}
+      if (response) {
+        saveLoggedInUser(usernameOrEmail, response.role);
+        navigate("/"); // Використовуємо функцію navigate для перенаправлення
+      } else {
+        setError("Login failed");
+      }
+    } catch (error) {
+      console.error(error);
+      setError("An error occurred"); // Встановлюємо повідомлення про помилку
+    } finally {
+      setLoading(false);
+    }
+  };
 
-		} catch (error) {
-			console.error(error);
-			setError('An error occurred'); // Встановлюємо повідомлення про помилку
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	return (
-		<form className="form" onSubmit={handleSubmit}>
-			<h2>Sign In</h2>
-
-			{loading && <div>Loading...</div>}
-			{error && <div className="error">{error}</div>}
-
-			<div className="form-group">
-				<input type="email" value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} placeholder="Email" required />
-			</div>
-			<div className="form-group">
-				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-			</div>
-			<button type="submit" className="btn btn-primary">Sign In</button>
-		</form>
-	);
+  return (
+    <div className={classes["login-form"]}>
+      <form className={classes["form"]} onSubmit={handleSubmit}>
+        {loading && <div>Loading...</div>}
+        {error && <div className="error">{error}</div>}
+        <div className={classes["input-container"]}>
+          <img
+            src="/public/icons/mail.svg"
+            className={classes["icon"]}
+            alt=""
+          />
+          <input
+            className={classes["input-field"]}
+            type="email"
+            value={usernameOrEmail}
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
+            placeholder="Пошта"
+            required
+          />
+        </div>
+        <div className={classes["input-container"]}>
+          <img src="/public/icons/eye.svg" className={classes["icon"]} alt="" />
+          <input
+            className={classes["input-field"]}
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Пароль"
+            required
+          />
+        </div>
+        <button type="submit" className={classes["login-button"]}>
+          Увійти
+        </button>
+      </form>
+      <p className={classes["forgot-password"]}>
+        <a href="">Забули пароль?</a>
+      </p>
+      <div className={classes["or"]}>
+        <h2>
+          <span>або</span>
+        </h2>
+      </div>
+      <div className={classes["buttons-section"]}>
+        <button>
+          <img src="/public/icons/googlebtn.svg" alt="" />
+        </button>
+        <button>
+          <img src="/public/icons/facebookbtn.svg" alt="" />
+        </button>
+      </div>
+      <p className={classes['no-account']}>
+        <a href="">Немає особистого кабінету? Зареєструватись</a>
+      </p>
+    </div>
+  );
 };
 
 export default LoginForm;
