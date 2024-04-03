@@ -16,14 +16,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={classes.navbar}>
-      <NavLink to="/">
-        <h1>SHOPNAME</h1>
-      </NavLink>
-      <div className={classes["buttons-wrapper"]}>
-        <Link to="cart">
-          <CartIcon />
-        </Link>
+    <header>
+      <nav className={classes["navbar-top"]}>
+        <NavLink to="/">
+          <h1>TalkieTech</h1>
+        </NavLink>
+
         {loggedInUser && (
           <div className={classes["welcome-message"]}>
             Welcome, {loggedInUser}
@@ -41,16 +39,50 @@ const Navbar = () => {
           <>
             {" "}
             {/* Якщо користувач не увійшов у систему, відображаємо кнопки для входу, реєстрації та кнопку admin */}
+            {/* <NavLink to="/signin">
+                <Button>Sign in</Button>
+              </NavLink> */}
+            <Link className={classes.link} to="">
+              Контакти
+            </Link>
+            <Link className={classes.link} to="">
+              Оплата та доставка
+            </Link>
+            <Link className={classes.link} to="">
+              Блог
+            </Link>
             <NavLink to="/signin">
-              <Button>Sign in</Button>
-            </NavLink>
-            <NavLink to="/signup">
-              <Button>Sign up</Button>
+              <Button className={classes["signin-button"]}>Увійти</Button>
             </NavLink>
           </>
         )}
-      </div>
-    </nav>
+      </nav>
+      <nav className={classes["navbar-bottom"]}>
+        <Button className={classes["categories-button"]}>
+          Категорії
+          <img src="/public/icons/arrow.svg" alt="" />
+        </Button>
+        <div className={classes['links-group']}>
+          <Link className={classes.link} to="">
+            Б/У пропозиції
+          </Link>
+          <Link className={classes.link} to="">
+            Бестселери
+          </Link>
+          <Link className={classes.link} to="">
+            Новинки
+          </Link>
+        </div>
+        <div className={classes['search-cart-group']}>
+          <input type="text" name="" id="" placeholder="Пошук"/>
+          <Link to="cart">
+            <div className={classes['cart-wrapper']}>
+              <CartIcon />
+            </div>
+          </Link>
+        </div>
+      </nav>
+    </header>
   );
 };
 
