@@ -4,9 +4,9 @@ import { getToken } from "./AuthService";
 
 export const queryClient = new QueryClient();
 
-const PRODUCTS_URL = "http://13.60.5.92:8080/api/product/list";
-const ADD_NEW_PRODUCT_URL: string = "http://13.60.5.92:8080/api/product/add";
-const DELETE_PRODUCT_URL: string = "http://13.60.5.92:8080/api/product/remove/";
+const PRODUCTS_URL = "http://localhost:8090/api/phone/list";
+const ADD_NEW_PRODUCT_URL: string = "http://localhost:8090/api/phone/add";
+const DELETE_PRODUCT_URL: string = "http://localhost:8090/api/phone/remove/";
 
 
 //this function add new header (Authorization) with jwt, backend can recognize authorization

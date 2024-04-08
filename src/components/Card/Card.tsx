@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = (props) => {
 
   return (
     <div className={classes.card}>
-      <img src={props.pictureURL} alt={props.model} />
+      <img src={props.mainPictureURL} alt={props.model} />
       <div className={classes["card-text-wrapper"]}>
         <h2>{props.brand}</h2>
         <h3>{props.model}</h3>

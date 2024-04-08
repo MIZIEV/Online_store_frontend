@@ -36,7 +36,7 @@ const HomePage = () => {
               model={item.model}
               description={item.description}
               price={item.price}
-              pictureURL={item.pictureURL}
+              mainPictureURL={item.mainPictureURL}
               rating={item.rating}
             />
           ))}

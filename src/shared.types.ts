@@ -1,10 +1,10 @@
 export type CardProps = {
-  id: number,
+  id: number;
   brand: string;
   model: string;
   description: string;
   price: number;
-  pictureURL: string;
+  mainPictureURL: string;
   categoryId?: string;
   rating: number;
 };
@@ -12,4 +12,4 @@ export type CardProps = {
 export type Category = {
   id: number;
   categoryName: string;
-}
+};
