@@ -10,12 +10,10 @@ export interface CartProduct {
 }
 
 export interface CartState {
-  modalVisible: boolean;
   items: CartProduct[];
 }
 
 const initialState: CartState = {
-  modalVisible: false,
   items: [],
 };
 
@@ -23,9 +21,6 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    toggleModalVisibility: (state) => {
-      state.modalVisible = !state.modalVisible;
-    },
     addToCart: (state, action) => {
       const { id } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
@@ -45,6 +40,8 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { toggleModalVisibility, addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+
