@@ -27,7 +27,9 @@ const CartModal = () => {
           <div className={classes.cartModalContainer}>
             <div className={classes.cartModal}>
               <p className={classes.modalTop}>
-                <button onClick={handleCartModalVisibility}>Close</button>
+                <Link to="..">
+                  <button onClick={handleCartModalVisibility}>Close</button>
+                </Link>
               </p>
               <div>
                 {cart.items &&

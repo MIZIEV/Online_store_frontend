@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService"; // Додана функція logout
 import Button from "../../UI/Button/Button";
 import classes from "./Navbar.module.scss";
-import CartIcon from "./Cart/CartIcon";
+import CartButton from "./Cart/CartButton";
 
 const Navbar = () => {
   const loggedInUser = getLoggedInUser();
@@ -75,11 +75,7 @@ const Navbar = () => {
         </div>
         <div className={classes['search-cart-group']}>
           <input type="text" name="" id="" placeholder="Пошук"/>
-          <Link to="cart">
-            <div className={classes['cart-wrapper']}>
-              <CartIcon />
-            </div>
-          </Link>
+          <CartButton/>
         </div>
       </nav>
     </header>

@@ -1,0 +1,13 @@
+.cart-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 50%;
+  .cart {
+    height: 1.5rem;
+    cursor: pointer;
+  }
+}
