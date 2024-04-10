@@ -26,15 +26,28 @@ const router = createBrowserRouter([
         element: <HomePage />,
         children: [{ path: "cart", element: <CartModal /> }],
       },
-      { path: "signin", element: <SignInPage /> },
-      { path: "signup", element: <SignUpPage /> },
-      { path: "checkout", element: <CheckOutPage /> },
+      {
+        path: "signin",
+        element: <SignInPage />,
+        children: [{ path: "cart", element: <CartModal /> }],
+      },
+      {
+        path: "signup",
+        element: <SignUpPage />,
+        children: [{ path: "cart", element: <CartModal /> }],
+      },
+      {
+        path: "checkout",
+        element: <CheckOutPage />,
+        children: [{ path: "cart", element: <CartModal /> }],
+      },
       {
         path: "admin",
         element: <AdminPage />,
         children: [
           { path: "new", element: <AddNewModal /> },
           { path: ":productId/edit", element: <EditModal /> },
+          { path: "cart", element: <CartModal /> },
         ],
       },
     ],
