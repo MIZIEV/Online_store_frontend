@@ -13,8 +13,6 @@ interface RootState {
 const CartModal = () => {
   const cart = useSelector((state: RootState) => state.cart.items);
 
-  console.log(cart);
-
   return (
     <>
       {createPortal(
@@ -24,8 +22,8 @@ const CartModal = () => {
               <CloseButton />
             </p>
             <div>
-              {cart.items &&
-                cart.items.map((item) => (
+              {cart &&
+                cart.map((item) => (
                   <CartItem key={item.id} item={item} />
                 ))}
             </div>

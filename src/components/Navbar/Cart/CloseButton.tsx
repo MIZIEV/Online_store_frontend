@@ -1,23 +1,15 @@
-import React from 'react';
-import classes from './CartModal.module.scss';
-import { useDispatch } from "react-redux";
-import { toggleModalVisibility } from '../../../redux/cartSlice'
-import { Link } from 'react-router-dom';
+import classes from "./CartModal.module.scss";
+import { Link } from "react-router-dom";
 
 const CloseButton = () => {
-  const dispatch = useDispatch();
-
-  const handleCartModalVisibility = () => {
-    dispatch(toggleModalVisibility());
-  };
-
   return (
     <Link to="..">
-      <button className={classes.closeButton} onClick={() => handleCartModalVisibility}>
+      <button className={classes.closeButton}>
         <span className={classes.closeIcon} aria-label="Close">
           {/* Green circle and "X" symbol styles */}
           <span className={classes.closeCircle}>
-            <span className={classes.closeSymbol}>&#10006;</span>  {/* "X" symbol using character code */}
+            <span className={classes.closeSymbol}>&#10006;</span>{" "}
+            {/* "X" symbol using character code */}
           </span>
         </span>
       </button>
