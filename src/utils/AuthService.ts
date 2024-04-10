@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://13.60.5.92:8080/api/auth";
+const HOST_PORT = "localhost:8090";
+const BASE_URL = "http://" + HOST_PORT + "/api/auth";
 
 interface RegistrationData {
 	firstName: string;
@@ -60,7 +61,7 @@ export const getLoggedInUser = () => {
 }
 
 export function saveToken(token: string) {
-	localStorage.setItem('token',"Bearer "+ token);
+	localStorage.setItem('token', "Bearer " + token);
 }
 
 export function getToken(): string | null {
