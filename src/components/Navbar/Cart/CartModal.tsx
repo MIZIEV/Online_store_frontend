@@ -5,6 +5,7 @@ import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
 import CloseButton from "./CloseButton";
 import { CardProps } from "../../../shared.types";
+import { totalPrice } from "../../../redux/cartSlice";
 
 interface RootState {
   cart: { items: CardProps[] };
@@ -12,6 +13,7 @@ interface RootState {
 
 const CartModal = () => {
   const cart = useSelector((state: RootState) => state.cart.items);
+  const totalPriceValue = useSelector(totalPrice);
 
   return (
     <>
@@ -21,17 +23,32 @@ const CartModal = () => {
             <p className={classes.modalTop}>
               <CloseButton />
             </p>
-            <div>
-              {cart &&
-                cart.map((item) => (
-                  <CartItem key={item.id} item={item} />
-                ))}
-            </div>
-            <p className={classes.modalDown}>
-              <Link to="/checkout" relative="path">
-                <button>CheckOut</button>
-              </Link>
-            </p>
+            <p className={classes.header}>Кошик</p>
+            {cart.length > 0 ? (
+              <div className={classes.products}>
+                {cart &&
+                  cart.map((item) => <CartItem key={item.id} item={item} />)}
+              </div>
+            ) : (
+              <p className={classes.fallback}>Ваш кошик пустий</p>
+            )}
+            {cart.length > 0 && (
+              <div className={classes.modalDown}>
+                <p className={classes.total}>Загалом: {totalPriceValue}грн</p>
+                <p className={classes.buttons}>
+                  <Link to="/">
+                    <button className={classes.return}>
+                      Повернутись до вибору
+                    </button>
+                  </Link>
+                  <Link to="/checkout" relative="path">
+                    <button className={classes.checkout}>
+                      Оформити замовлення
+                    </button>
+                  </Link>
+                </p>
+              </div>
+            )}
           </div>
         </div>,
         document.getElementById("modal")!

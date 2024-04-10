@@ -30,6 +30,7 @@ const Card: React.FC<CardProps> = (props) => {
               model: props.model,
               price: props.price,
               quantity: 1,
+              image: props.mainPictureURL,
             })
           }
         >

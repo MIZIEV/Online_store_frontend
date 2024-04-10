@@ -11,14 +11,36 @@
   .cartModal {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     background-color: white;
     max-width: 1100px;
     width: 100%;
     min-height: 532px;
     border-radius: 4px;
-    padding: 1rem;
+    padding: 10px;
     position: relative; /* Add relative positioning for ::after */
+
+    .header {
+      font-family: "Arsenal", sans-serif;
+      font-weight: bold;
+      font-size: 36px;
+      padding-left: 110px;
+      margin-bottom: 32px;
+    }
+
+    .products {
+      overflow-y: scroll;
+      max-height: 410px;
+      max-width: 900px;
+      margin-left: 110px;
+      border-bottom: 1px solid rgb(108, 108, 108);
+      margin-bottom: 12.5px;
+    }
+
+    .fallback {
+      margin-left: 110px;
+      font-family: Arsenal;
+      font-size: 32px;
+    }
 
     .modalTop {
       display: flex;
@@ -28,7 +50,54 @@
 
     .modalDown {
       display: flex;
-      justify-content: flex-end;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-right: 120px;
+      .total {
+        color: rgb(0, 0, 0);
+        font-family: Arsenal;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 30px;
+        letter-spacing: 0%;
+        text-align: left;
+      }
+      .buttons {
+        display: flex;
+        gap: 24px;
+
+        button {
+          font-family: Work Sans;
+          font-size: 16px;
+          font-weight: 400;
+        }
+
+        font-family: Work Sans;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21px;
+        letter-spacing: 0%;
+        text-align: center;
+        .return {
+          box-sizing: border-box;
+          border: 1px solid rgb(67, 104, 80);
+          border-radius: 4px;
+          background: rgb(255, 255, 244);
+          width: 271px;
+          height: 43px;
+          padding: 8px 50px 8px 50px;
+          color: rgb(13, 12, 12);
+        }
+        .checkout {
+          border-radius: 4px;
+          background: rgb(67, 104, 80);
+          width: 344px;
+          height: 43px;
+          align-items: center;
+          padding: 8px 50px 8px 50px;
+          color: rgb(255, 255, 244);
+        }
+      }
     }
   }
 }
