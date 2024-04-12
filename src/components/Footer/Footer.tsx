@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import classes from "./Footer.module.scss";
 
 const Footer = () => {
@@ -16,7 +17,10 @@ const Footer = () => {
             <p>З’явились питання - support@TalkieTech.ua</p>
           </div>
           <div>
-            <p>Оплата і доставка</p>
+            <NavLink to="/payment-delivery">
+              <p>Оплата і доставка</p>
+
+            </NavLink>
             <p>Особистий кабінет</p>
             <p>Гарантія</p>
             <p>Блог</p>

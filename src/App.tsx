@@ -14,6 +14,7 @@ import CartModal from "./components/Navbar/Cart/CartModal";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import CheckOutPage from "./pages/CheckOut";
+import PaymentDeliveryPage from "./pages/PaymentDeliveryPage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
           { path: "cart", element: <CartModal /> },
         ],
       },
+      {
+        path: "payment-delivery",
+        element:<PaymentDeliveryPage/>
+      }
     ],
   },
 ]);
