@@ -1,14 +1,17 @@
 .footer-wrapper {
   max-width: 1920px;
   width: 100%;
+
   footer {
     background-color: #436850;
     height: 450px;
+
     .footer-sections {
       padding: 0 5rem;
       display: flex;
       justify-content: space-between;
       margin-bottom: 4rem;
+
       p {
         color: white;
         font-family: "Work Sans", sans-serif;
@@ -18,12 +21,19 @@
         font-size: 18px;
         padding-bottom: 2rem;
       }
+
+      .link {
+        text-decoration: none;
+      }
+
       .phone-section {
         display: flex;
         align-items: center;
+
         img {
           margin-right: 1rem;
         }
+
         .phone {
           font-family: "Judson", serif;
           font-weight: 700;
@@ -33,6 +43,7 @@
         }
       }
     }
+
     h1 {
       padding: 0 5rem;
       padding-top: 4rem;
@@ -45,6 +56,7 @@
       display: inline-block;
     }
   }
+
   .footer-botom {
     border-top: 3px solid white;
     padding: 1rem 5rem;
