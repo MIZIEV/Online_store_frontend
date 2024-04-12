@@ -15,6 +15,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import CheckOutPage from "./pages/CheckOut";
 import PaymentDeliveryPage from "./pages/PaymentDeliveryPage";
+import GuaranteePage from "./pages/GuaranteePage";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,11 @@ const router = createBrowserRouter([
       },
       {
         path: "payment-delivery",
-        element:<PaymentDeliveryPage/>
+        element: <PaymentDeliveryPage />
+      },
+      {
+        path: "guarantee",
+        element: <GuaranteePage />
       }
     ],
   },
