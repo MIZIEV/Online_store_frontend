@@ -23,13 +23,13 @@ const Footer = () => {
           </div>
 
           <div>
-            <NavLink to="/payment-delivery">
+            <NavLink className={classes.link} to="/payment-delivery">
               <p>Оплата і доставка</p>
             </NavLink>
 
             <p>Особистий кабінет</p>
 
-            <NavLink to="guarantee">
+            <NavLink className={classes.link} to="guarantee">
               <p>Гарантія</p>
             </NavLink>
 
