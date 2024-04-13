@@ -16,6 +16,7 @@ import { store } from "./redux/store";
 import CheckOutPage from "./pages/CheckOut";
 import PaymentDeliveryPage from "./pages/PaymentDeliveryPage";
 import GuaranteePage from "./pages/GuaranteePage";
+import BlogPage from "./pages/BlogPage";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "guarantee",
         element: <GuaranteePage />
+      },
+      {
+        path: "blog",
+        element: <BlogPage />
       }
     ],
   },

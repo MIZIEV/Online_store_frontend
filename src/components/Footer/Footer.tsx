@@ -29,11 +29,13 @@ const Footer = () => {
 
             <p>Особистий кабінет</p>
 
-            <NavLink className={classes.link} to="guarantee">
+            <NavLink className={classes.link} to="/guarantee">
               <p>Гарантія</p>
             </NavLink>
 
-            <p>Блог</p>
+            <NavLink className={classes.link} to={"/blog"}>
+              <p>Блог</p>
+            </NavLink>
 
           </div>
 
