@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BlogProps } from "../shared.types"
 import BlogCard from "../components/Blog/BlogCard";
 
+import classes from "./BlogPage.module.scss"
 
 const BlogPage: React.FC = () => {
 
@@ -15,7 +16,7 @@ const BlogPage: React.FC = () => {
     return (
         <>
             {data && data.length === 0 && <p>No blogs found!</p>}
-            <div>
+            <div className={classes.container}>
                 {
                     data && data.map((item: BlogProps) => (
                         <BlogCard
@@ -29,6 +30,7 @@ const BlogPage: React.FC = () => {
                     ))
                 }
             </div>
+
         </>
     )
 }

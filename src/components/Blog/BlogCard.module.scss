@@ -1,18 +1,38 @@
-.card {
-  display: inline-block;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  max-width: 15rem;
-  background-color: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  .card {
+    margin: 0 auto;
+    display: inline-block;
+    max-width: 292px;
+    max-height: 371px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
-  img {
-    height: 15rem;
-    width: 15rem;
-    object-fit: contain;
-    margin-bottom: 0.45rem;
+
+    h3 {
+      font-family: "Arsenal", sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    span {
+      display: flex;
+      justify-content: space-between;
+
+      h6 {
+        font-family: "Work Sans", sans-serif;
+        ;
+        font-weight: 400;
+        font-size: 6px;
+        color: #767676;
+      }
+    }
+
+    img {
+      border-radius: 4px;
+      width: 292px;
+      height: 270px;
+      object-fit: contain;
+      margin-bottom: 0.45rem;
+    }
   }
-}
