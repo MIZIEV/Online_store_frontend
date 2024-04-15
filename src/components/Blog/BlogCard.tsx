@@ -4,6 +4,8 @@ import classes from "./BlogCard.module.scss";
 
 const BlogCard: React.FC<BlogProps> = (props) => {
 
+    let slicedText = props.text.slice(0, 80)+"...";
+
     return (
         <>
             <div className={classes.card}>
@@ -21,7 +23,8 @@ const BlogCard: React.FC<BlogProps> = (props) => {
                         <path d="M16 25.3327C24 25.3327 29.3333 15.9993 29.3333 15.9993C29.3333 15.9993 24 6.66602 16 6.66602C7.99999 6.66602 2.66666 15.9993 2.66666 15.9993C2.66666 15.9993 7.99999 25.3327 16 25.3327ZM16 10.666C18.9453 10.666 21.3333 13.054 21.3333 15.9993C21.3333 18.9447 18.9453 21.3327 16 21.3327C13.0547 21.3327 10.6667 18.9447 10.6667 15.9993C10.6667 13.054 13.0547 10.666 16 10.666Z" fill="#12372A" />
                     </svg>
                 </span>
-                <button>More info</button>
+
+                <span className={classes.previewText}>{slicedText}</span>
             </div>
         </>
     )

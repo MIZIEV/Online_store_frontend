@@ -15,22 +15,25 @@ const BlogPage: React.FC = () => {
 
     return (
         <>
-            {data && data.length === 0 && <p>No blogs found!</p>}
             <div className={classes.container}>
-                {
-                    data && data.map((item: BlogProps) => (
-                        <BlogCard
-                            key={item.id}
-                            id={item.id}
-                            blogPictureUrl={item.blogPictureUrl}
-                            title={item.title}
+                <h1>Блог</h1>
+                {data && data.length === 0 && <p>No blogs found!</p>}
+                <div className={classes.cardList}>
 
-                        />
+                    {
+                        data && data.map((item: BlogProps) => (
+                            <BlogCard
+                                key={item.id}
+                                id={item.id}
+                                blogPictureUrl={item.blogPictureUrl}
+                                title={item.title}
+                                text={item.text}
+                            />
 
-                    ))
-                }
+                        ))
+                    }
+                </div>
             </div>
-
         </>
     )
 }

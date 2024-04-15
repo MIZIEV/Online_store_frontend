@@ -11,8 +11,13 @@
 
     h3 {
       font-family: "Arsenal", sans-serif;
+      margin-top: 20px;
       font-weight: 700;
       font-size: 24px;
+    }
+
+    svg {
+      margin-top: 20px;
     }
 
     span {
@@ -34,5 +39,12 @@
       height: 270px;
       object-fit: contain;
       margin-bottom: 0.45rem;
+    }
+
+    .previewText {
+      font-family: "Work Sans", sans-serif;
+      margin-top: 10px;
+      font-weight: 400;
+      font-size: 9px;
     }
   }
