@@ -15,3 +15,10 @@ export type Category = {
   id: number;
   categoryName: string;
 };
+
+export type BlogProps = {
+  id: number;
+  blogPictureUrl: string;
+  title: string;
+  text: string;
+};

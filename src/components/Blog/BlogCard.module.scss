@@ -1,0 +1,50 @@
+  .card {
+    margin: 0 auto;
+    display: inline-block;
+    max-width: 292px;
+    max-height: 371px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+
+    h3 {
+      font-family: "Arsenal", sans-serif;
+      margin-top: 20px;
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    svg {
+      margin-top: 20px;
+    }
+
+    span {
+      display: flex;
+      justify-content: space-between;
+
+      h6 {
+        font-family: "Work Sans", sans-serif;
+        ;
+        font-weight: 400;
+        font-size: 6px;
+        color: #767676;
+      }
+    }
+
+    img {
+      border-radius: 4px;
+      width: 292px;
+      height: 270px;
+      object-fit: contain;
+      margin-bottom: 0.45rem;
+    }
+
+    .previewText {
+      font-family: "Work Sans", sans-serif;
+      margin-top: 10px;
+      font-weight: 400;
+      font-size: 9px;
+    }
+  }
