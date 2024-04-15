@@ -18,6 +18,7 @@ export type Category = {
 
 export type BlogProps = {
   id: number;
+  blogPictureUrl: string;
   title: string;
   text: string;
 };
