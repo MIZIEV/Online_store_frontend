@@ -17,6 +17,7 @@ import CheckOutPage from "./pages/CheckOut";
 import PaymentDeliveryPage from "./pages/PaymentDeliveryPage";
 import GuaranteePage from "./pages/GuaranteePage";
 import BlogPage from "./pages/BlogPage";
+import Blog from "./components/Blog/Blog";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "blog",
         element: <BlogPage />
+      },
+      {
+        path: "blog/:id",
+        element: <Blog />
       }
     ],
   },
