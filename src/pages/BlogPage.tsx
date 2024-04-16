@@ -24,7 +24,7 @@ const BlogPage: React.FC = () => {
                 <div className={classes.cardList}>
                     {
                         data && data.map((item: BlogProps) => (
-                            <NavLink to={blogUrl + item.id}>
+                            <NavLink className={classes.link} to={blogUrl + item.id}>
                                 <BlogCard
                                     key={item.id}
                                     id={item.id}
