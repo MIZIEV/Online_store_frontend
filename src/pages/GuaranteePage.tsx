@@ -1,10 +1,16 @@
 import React from "react"
 import classes from "./GuaranteePage.module.scss";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 
 const GuaranteePage: React.FC = () => {
     return (
         <>
             <div className={classes.container}>
+
+                <div className={classes.BreadCrumb}>
+                    <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "guarantee", title: "/гарантія" }]} />
+                </div>
+
                 <h1>Гарантія</h1>
 
                 <p>При купівлі товару в нашому магазині, надається гарантія від 14 днів до 12 місяців, в залежності від
