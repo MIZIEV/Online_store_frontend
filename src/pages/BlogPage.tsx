@@ -22,11 +22,17 @@ const BlogPage: React.FC = () => {
             <div className={classes.container}>
 
                 <div className={classes.containerTop}>
-                    <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "/blog", title: "/блог" }]} />
+                    <div className={classes.BreadCrumb}>
+
+                        <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "/blog", title: "/блог" }]} />
+                    </div>
+
                     <h1>Блог</h1>
-                    {data && data.length === 0 && <p>No blogs found!</p>}
                 </div>
-                
+
+
+                {data && data.length === 0 && <p>No blogs found!</p>}
+
                 <div className={classes.cardList}>
                     {
                         data && data.map((item: BlogProps) => (
