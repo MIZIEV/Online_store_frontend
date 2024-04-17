@@ -45,10 +45,10 @@ const Navbar = () => {
             <Link className={classes.link} to="">
               Контакти
             </Link>
-            <Link className={classes.link} to="">
+            <Link className={classes.link} to="/payment-delivery">
               Оплата та доставка
             </Link>
-            <Link className={classes.link} to="">
+            <Link className={classes.link} to="/blog">
               Блог
             </Link>
             <NavLink to="/signin">
