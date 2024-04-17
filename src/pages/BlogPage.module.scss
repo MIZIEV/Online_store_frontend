@@ -1,11 +1,14 @@
 .container {
-    h1 {
-        font-family: "Arsenal", sans-serif;
-        font-weight: 700;
-        font-size: 48px;
-        margin-top: 50px;
-        margin-left: 40px;
+    .containerTop {
+        h1 {
+            font-family: "Arsenal", sans-serif;
+            font-weight: 700;
+            font-size: 48px;
+            margin-top: 50px;
+            margin-left: 40px;
+        }
     }
+
 
     .cardList {
         margin: 0 auto;
