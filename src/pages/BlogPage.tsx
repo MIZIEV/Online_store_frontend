@@ -6,6 +6,7 @@ import BlogCard from "../components/Blog/BlogCard";
 
 import classes from "./BlogPage.module.scss"
 import { NavLink } from "react-router-dom";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 
 const BlogPage: React.FC = () => {
 
@@ -19,6 +20,7 @@ const BlogPage: React.FC = () => {
     return (
         <>
             <div className={classes.container}>
+                <BreadCrumb items={[{ path: "/", title: "home" }, { path: "blog", title: "blog" }]} />
                 <h1>Блог</h1>
                 {data && data.length === 0 && <p>No blogs found!</p>}
                 <div className={classes.cardList}>
