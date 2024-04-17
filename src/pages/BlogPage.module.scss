@@ -1,8 +1,8 @@
 .container {
     .containerTop {
         .BreadCrumb {
-            margin-top: 50px;
-            margin-left: 40px;
+            padding-top: 50px;
+            padding-left: 40px;
         }
 
         h1 {
@@ -16,13 +16,14 @@
 
 
     .cardList {
+        padding: 0px 40px;
         margin: 0 auto;
         max-width: 90rem;
         margin-top: 3rem;
-        margin-bottom: 3rem;
+        padding-bottom: 3rem;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        gap: 15px;
     }
 
     .link {
