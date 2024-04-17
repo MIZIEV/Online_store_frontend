@@ -1,6 +1,11 @@
 .container {
 
-    margin: 5% 5%;
+    margin: 0% 5%;
+
+    .BreadCrumb {
+        margin-top: 40px;
+        margin-bottom: 50px;
+    }
 
     h1 {
         font-family: "Arsenal", sans-serif;
@@ -26,4 +31,6 @@
             margin: 0px 20px;
         }
     }
+
+    margin-bottom: 40px;
 }
