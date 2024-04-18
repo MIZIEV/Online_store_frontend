@@ -2,9 +2,10 @@ import axios from "axios";
 
 const HOST = "localhost:8090"
 const GET_ALL_BLOGS = "http://" + HOST + "/api/blog/list"
+const GET_ONE_BLOG = "http://" + HOST + "/api/blog/"
 
 export async function getAllBlogs({
-    signal,
+    signal
 }:
     {
         signal: any,
@@ -18,6 +19,17 @@ export async function getAllBlogs({
         console.log(responce);
 
         return responce.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export async function getOneBlog(blogId: number) {
+    try {
+        const response = await axios.get(GET_ONE_BLOG + `${blogId}`);
+
+        return response.data;
     } catch (error) {
         console.error(error);
         throw error;
