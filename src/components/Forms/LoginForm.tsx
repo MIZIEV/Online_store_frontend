@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import classes from "./Form.module.scss";
 import { loginUser, saveLoggedInUser } from "../../utils/AuthService";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -102,7 +102,7 @@ const LoginForm: React.FC = () => {
         </button>
       </div>
       <p className={classes['no-account']}>
-        <a href="">Немає особистого кабінету? Зареєструватись</a>
+        <a href="">Немає особистого кабінету? <NavLink to="/signup">Зареєструватись</NavLink></a>
       </p>
     </div>
   );
