@@ -1,0 +1,31 @@
+.container {
+
+    padding: 50px;
+
+    h2 {
+        padding-top: 50px;
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+        text-align: left;
+    }
+
+    .imageBlock {
+        display: flex;
+        justify-content: center;
+
+        .image {
+
+            max-height: 400px;
+
+        }
+    }
+
+    .textBlock {
+        p {
+            font-family: "Work Sans", sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+        }
+    }
+}

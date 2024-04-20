@@ -29,6 +29,8 @@ export async function getOneBlog(blogId: number) {
     try {
         const response = await axios.get(GET_ONE_BLOG + `${blogId}`);
 
+        console.log("service function - ")
+        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
