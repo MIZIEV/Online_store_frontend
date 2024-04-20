@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Form.module.scss";
 import { registerUser } from "../../utils/AuthService";
+import classes from "./RegistrationForm.module.scss"
+import { NavLink } from "react-router-dom";
 
 const RegistrationForm: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -59,69 +61,108 @@ const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <h2>Sign Up</h2>
-      {loading && <div>Loading...</div>}
-      {error && <div className="error">{error}</div>}
-      {success && <div>Registration successful!</div>}
-      <div className="form-group">
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          placeholder="First Name"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          placeholder="Last Name"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm Password"
-          required
-        />
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Sign Up
-      </button>
-    </form>
+    <div className={classes["register-form"]}>
+      <form className={classes["form"]} onSubmit={handleSubmit}>
+
+        <h2 className={classes["title"]}>Створити особистий кабінет</h2>
+        {loading && <div>Loading...</div>}
+        {error && <div className="error">{error}</div>}
+        {success && <div>Registration successful!</div>}
+
+        <div className={classes["inputs-container"]}>
+          <div className={classes["input-container"]}>
+            <input
+              className={classes["input-field"]}
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Ім'я"
+              required
+            />
+          </div>
+          <div className={classes["input-container"]}>
+            <input
+              className={classes["input-field"]}
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Прізвище"
+              required
+            />
+          </div>
+          <div className={classes["input-container"]}>
+            <input
+              className={classes["input-field"]}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div className={classes["input-container"]}>
+            <input
+              className={classes["input-field"]}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Пошта"
+              required
+            />
+          </div>
+          <div className={classes["input-container"]}>
+            <input
+              className={classes["input-field"]}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Пароль"
+              required
+            />
+          </div>
+          <div className={classes["input-container"]}>
+            <input
+              className={classes["input-field"]}
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Повторити пароль"
+              required
+            />
+          </div>
+        </div>
+
+
+        <div className={classes["or"]}>
+          <h2>
+            <span>або</span>
+          </h2>
+        </div>
+
+        <div className={classes["buttons-section"]}>
+          <button>
+            <img src="/public/icons/googlebtn.svg" alt="" />
+          </button>
+          <button>
+            <img src="/public/icons/facebookbtn.svg" alt="" />
+          </button>
+        </div>
+
+        <button type="submit" className={classes["register-button"]}>
+          Зареєструватися
+        </button>
+        <p className={classes['no-account']}>
+          <a>Вже є особистий кабінет? <NavLink to="/signin">Увійти</NavLink></a>
+        </p>
+      </form>
+
+
+      <div className={classes["image"]}>image</div>
+
+    </div>
+
+
+
   );
 };
 
