@@ -27,19 +27,9 @@
             height: 25px;
             margin-bottom: 15px;
 
-            .icon {
-                padding: 10px;
-                background: #adbc9f;
-                color: white;
-                width: 24px;
-                min-height: 24px;
-                text-align: center;
-                border-radius: 4px 0px 0px 4px;
-            }
 
             .input-field::placeholder {
                 color: #767676;
-                /* Change placeholder color to gray (#999) */
                 font-weight: 400;
                 font-size: 18px;
                 padding-left: 1rem;
@@ -55,7 +45,6 @@
                 background-color: #fffff4;
                 border-radius: 0px 4px 4px 0px;
                 color: white;
-                /* Change placeholder color to gray (#999) */
                 font-size: 18px;
                 padding-left: 1rem;
             }
@@ -97,18 +86,6 @@
                 background: #fffff4;
                 padding: 0 30px;
             }
-        }
-    }
-
-    .forgot-password {
-        text-align: center;
-        padding-bottom: 2rem;
-
-        a {
-            font-family: "Work Sans", sans-serif;
-            font-size: 18px;
-            color: #12372a;
-            text-decoration: none;
         }
     }
 
