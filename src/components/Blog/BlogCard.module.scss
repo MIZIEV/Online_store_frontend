@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: center;
 
-
+    transition: box-shadow 0.5s ease;
     h3 {
       font-family: "Arsenal", sans-serif;
       margin-top: 20px;
@@ -47,5 +47,6 @@
   }
 
   .card:hover {
+    
     box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.45);
   }
