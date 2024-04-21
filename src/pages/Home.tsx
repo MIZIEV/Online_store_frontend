@@ -6,9 +6,11 @@ import Filter from "../components/HomePage/Filter/Filter";
 import { useState } from "react";
 import classes from "./Home.module.scss";
 import { Outlet } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const HomePage = () => {
   const [filter, setFilter] = useState("?sort=maxRating");
+  const PHONE_URL = "/phone/";
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["products", { filter: filter }],
@@ -58,16 +60,18 @@ const HomePage = () => {
       <div className={classes.products}>
         {data &&
           data.map((item: CardProps) => (
-            <Card
-              key={item.id}
-              id={item.id}
-              brand={item.brand}
-              model={item.model}
-              description={item.description}
-              price={item.price}
-              mainPictureURL={item.mainPictureURL}
-              rating={item.rating}
-            />
+            <NavLink className={classes.link} to={PHONE_URL + item.id}>
+              <Card
+                key={item.id}
+                id={item.id}
+                brand={item.brand}
+                model={item.model}
+                description={item.description}
+                price={item.price}
+                mainPictureURL={item.mainPictureURL}
+                rating={item.rating}
+              />
+            </NavLink>
           ))}
       </div>
       {isPending && <p>Loading...</p>}

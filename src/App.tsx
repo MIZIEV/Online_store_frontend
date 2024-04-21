@@ -18,6 +18,7 @@ import PaymentDeliveryPage from "./pages/PaymentDeliveryPage";
 import GuaranteePage from "./pages/GuaranteePage";
 import BlogPage from "./pages/BlogPage";
 import Blog from "./components/Blog/Blog";
+import Phone from "./components/Products/Phone";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "blog/:id",
         element: <Blog />
+      },
+      {
+        path: "phone/:id",
+        element: <Phone />
       }
     ],
   },
