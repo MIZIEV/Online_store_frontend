@@ -7,3 +7,104 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 0.5rem;
 }
+
+.title {
+  padding-top: 20px;
+  font-weight: 700;
+  font-size: 34px;
+  text-align: center;
+  font-family: "Arsenal", sans-serif;
+}
+
+.topContainer {
+  padding-top: 60px;
+  display: flex;
+  align-items: center;
+
+  .leftBlock {
+    background-color: #436850;
+    border-radius: 0 250px 250px 0;
+    width: 560px;
+    height: 200px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.5s ease;
+
+    svg,
+    .leftImage {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    svg {
+      margin-right: 10px;
+      height: 90px;
+      width: 90px;
+    }
+
+    .leftImage {
+      background-color: black;
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .leftBlock:hover {
+    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.55);
+
+    svg {
+      height: 95px;
+      width: 95px;
+    }
+  }
+
+  .middleBlock {
+    flex-grow: 1;
+    background-color: black;
+
+    height: 350px;
+    height: 350px;
+  }
+
+  .rightBlock {
+
+    background-color: #436850;
+    border-radius: 250px 0 0 250px;
+    width: 560px;
+    height: 200px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.5s ease;
+
+    svg,
+    .leftImage {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    svg {
+      height: 90px;
+      width: 90px;
+      margin-left: 10px;
+    }
+
+    .rigthImage {
+      background-color: black;
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .rightBlock:hover {
+    box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.55);
+
+    svg {
+      height: 95px;
+      width: 95px;
+    }
+  }
+}
