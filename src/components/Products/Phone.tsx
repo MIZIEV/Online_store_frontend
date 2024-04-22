@@ -5,12 +5,22 @@ import { getOnePhone } from "../../utils/phoneService";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import Rating from "../../UI/Rating/Rating";
 
+interface PageState {
+    selectedOption: string;
+}
+
 const Phone: React.FC = () => {
 
     const { id } = useParams();
     const [phone, setPhone] = useState(null);
 
+    const [pageState, setPageState] = useState<PageState>({
+        selectedOption: 'option1' // первая кнопка выбрана по умолчанию
+    });
 
+    const handleOptionChange = (option: string) => {
+        setPageState({ selectedOption: option });
+    };
     useEffect(() => {
         getPhone();
     }, [])
@@ -113,11 +123,24 @@ const Phone: React.FC = () => {
                                 <button className={classes.buyButton}>Купити</button>
                                 <button className={classes.addToFavorite}>Додати в обране</button>
                             </div>
-
+                        </div>
+                    </div>
+                    <div className={classes.bottomBlock}>
+                        <div className={classes.radioButtonsBlock}>
+                            <button className={pageState.selectedOption === 'option1' ? `${classes.selected}` : `${classes.RadioButton}`} onClick={() => handleOptionChange('option1')} disabled={pageState.selectedOption === 'option1'}>Опис</button>
+                            <button className={pageState.selectedOption === 'option2' ? `${classes.selected}` : `${classes.RadioButton}`} onClick={() => handleOptionChange('option2')} disabled={pageState.selectedOption === 'option2'}>Характеристики</button>
+                            <button className={pageState.selectedOption === 'option3' ? `${classes.selected}` : `${classes.RadioButton}`} onClick={() => handleOptionChange('option3')} disabled={pageState.selectedOption === 'option3'}>Відгуки</button>
                         </div>
 
-
+                        {pageState.selectedOption && (
+                            <div className={classes.bottomContent}>
+                                {pageState.selectedOption === 'option1' && <div>Опис</div>}
+                                {pageState.selectedOption === 'option2' && <div>Характеристики</div>}
+                                {pageState.selectedOption === 'option3' && <div>Відгуки</div>}
+                            </div>
+                        )}
                     </div>
+
                 </div>
             ) : (
                 <h3>Error</h3>

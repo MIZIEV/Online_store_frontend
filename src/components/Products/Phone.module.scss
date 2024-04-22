@@ -193,4 +193,46 @@
             font-family: "Work Sans", sans-serif;
         }
     }
+
+    .bottomBlock {
+
+        margin: 0px auto;
+
+        .radioButtonsBlock {
+            display: flex;
+            justify-content: center;
+
+            .RadioButton {
+                font-family: "Work Sans", sans-serif;
+                margin: 0px 50px;
+                border: 1px solid #767676;
+
+                border-radius: 4px;
+                width: 246px;
+                height: 37px;
+                background-color: transparent;
+
+                font-weight: 400;
+                font-size: 18px;
+            }
+
+            .selected {
+                font-family: "Work Sans", sans-serif;
+                margin: 0px 50px;
+                border: 1px solid #767676;
+                
+                border-radius: 4px;
+                width: 246px;
+                height: 37px;
+                background-color: #adbc9f;
+
+                font-weight: 400;
+                font-size: 18px;
+                color: black;
+            }
+
+        }
+
+        .bottomContent {}
+    }
 }
