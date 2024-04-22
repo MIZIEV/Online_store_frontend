@@ -71,6 +71,49 @@ const Phone: React.FC = () => {
                             </div>
                             <h2 className={classes.price}>{phone.price} грн.</h2>
 
+                            <div className={classes.colorBlock}>
+                                <p>Колір: </p>
+                                <div className={classes.colorItems}>
+
+                                    <div className={classes.colorItem}>c</div>
+                                    <div className={classes.colorItem}>c</div>
+                                    <div className={classes.colorItem}>c</div>
+
+                                </div>
+                            </div>
+
+                            <div className={classes.romBlock}>
+                                <p>Обсяг пам'яті: </p>
+                                <div className={classes.romItems}>
+
+                                    <span className={classes.romItem}>128 Гб</span>
+                                    <span className={classes.romItem}>64 Гб</span>
+
+                                </div>
+                            </div>
+
+                            <div className={classes.countBlock}>
+                                <div className={classes.countImage}>
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 12H16" stroke="black" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+
+                                <div className={classes.count}>1</div>
+
+                                <div className={classes.countImage}>
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 8V16" stroke="black" stroke-linecap="round" />
+                                        <path d="M8 12H16" stroke="black" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div className={classes.buttonsBlock}>
+                                <button className={classes.buyButton}>Купити</button>
+                                <button className={classes.addToFavorite}>Додати в обране</button>
+                            </div>
+
                         </div>
 
 

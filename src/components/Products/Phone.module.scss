@@ -105,5 +105,92 @@
         .price {
             padding-top: 30px;
         }
+
+        .colorBlock {
+            padding-top: 30px;
+
+            .colorItems {
+                margin-top: 5px;
+                display: flex;
+
+                .colorItem {
+                    font-family: "Work Sans", sans-serif;
+                    margin-right: 5px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 4px;
+                    background-color: black;
+                }
+            }
+        }
+
+        .romBlock {
+            padding-top: 30px;
+
+            .romItems {
+                margin-top: 5px;
+                display: flex;
+
+                .romItem {
+                    font-family: "Work Sans", sans-serif;
+                    text-align: center;
+                    margin-right: 5px;
+                    border: 1px solid #767676;
+
+                    border-radius: 4px;
+                    padding: 4px 16px;
+                    width: 63px;
+                    height: 18px;
+                }
+            }
+        }
+    }
+
+    .countBlock {
+        padding-top: 30px;
+        display: flex;
+        text-align: center;
+
+        .countImage {
+            margin-right: 5px;
+            height: 22px;
+            width: 22px;
+        }
+
+        .count {
+            margin-right: 5px;
+            font-size: 20px;
+            text-align: center;
+        }
+    }
+
+    .buttonsBlock {
+        padding-top: 30px;
+
+        .buyButton {
+            background: #436850;
+            border-radius: 4px;
+            width: 164px;
+            height: 37px;
+
+            color: #fffff4;
+            font-weight: 400;
+            font-size: 18px;
+            font-family: "Work Sans", sans-serif;
+
+            margin-right: 20px;
+        }
+
+        .addToFavorite {
+
+            border: 1px solid #436850;
+            border-radius: 4px;
+            width: 252px;
+            height: 37px;
+
+            font-weight: 400;
+            font-size: 18px;
+            font-family: "Work Sans", sans-serif;
+        }
     }
 }
