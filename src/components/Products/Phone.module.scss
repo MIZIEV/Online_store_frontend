@@ -82,10 +82,6 @@
 
 
 
-
-
-
-
     .rightImagesBlock {
         padding-left: 50px;
 
@@ -167,30 +163,25 @@
     .buttonsBlock {
         padding-top: 30px;
 
-        .buyButton {
-            background: #436850;
-            border-radius: 4px;
-            width: 164px;
-            height: 37px;
-
-            color: #fffff4;
+        .buyButton,
+        .addToFavorite {
+            font-family: "Work Sans", sans-serif;
             font-weight: 400;
             font-size: 18px;
-            font-family: "Work Sans", sans-serif;
+            border-radius: 4px;
+            height: 37px;
+        }
 
+        .buyButton {
+            background: #436850;
+            width: 164px;
+            color: #fffff4;
             margin-right: 20px;
         }
 
         .addToFavorite {
-
             border: 1px solid #436850;
-            border-radius: 4px;
             width: 252px;
-            height: 37px;
-
-            font-weight: 400;
-            font-size: 18px;
-            font-family: "Work Sans", sans-serif;
         }
     }
 
@@ -202,32 +193,24 @@
             display: flex;
             justify-content: center;
 
-            .RadioButton {
-                font-family: "Work Sans", sans-serif;
-                margin: 0px 50px;
-                border: 1px solid #767676;
-
-                border-radius: 4px;
-                width: 246px;
-                height: 37px;
-                background-color: transparent;
-
-                font-weight: 400;
-                font-size: 18px;
-            }
-
+            .RadioButton,
             .selected {
                 font-family: "Work Sans", sans-serif;
                 margin: 0px 50px;
                 border: 1px solid #767676;
-                
                 border-radius: 4px;
                 width: 246px;
                 height: 37px;
-                background-color: #adbc9f;
-
                 font-weight: 400;
                 font-size: 18px;
+            }
+
+            .RadioButton {
+                background-color: transparent;
+            }
+
+            .selected {
+                background-color: #adbc9f;
                 color: black;
             }
 
