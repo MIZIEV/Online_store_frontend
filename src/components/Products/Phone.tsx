@@ -5,6 +5,7 @@ import { getOnePhone } from "../../utils/phoneService";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import Rating from "../../UI/Rating/Rating";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
+import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
 
 interface PageState {
     selectedOption: string;
@@ -136,7 +137,7 @@ const Phone: React.FC = () => {
                         {pageState.selectedOption && (
                             <div className={classes.bottomContent}>
                                 {pageState.selectedOption === 'option1' && <DescriptionComponent phoneId={id} />}
-                                {pageState.selectedOption === 'option2' && <div>Характеристики</div>}
+                                {pageState.selectedOption === 'option2' && <CharacteristicComponent />}
                                 {pageState.selectedOption === 'option3' && <div>Відгуки</div>}
                             </div>
                         )}
