@@ -121,7 +121,22 @@
                     width: 20px;
                     height: 20px;
                     border-radius: 4px;
-                    background-color: black;
+                    border: 1px solid #767676;
+                    cursor: pointer;
+
+                    .colorRadioButton {
+                        display: none;
+                    }
+
+                }
+
+                .selected {
+                    border: 2px solid black;
+                }
+
+                .colorItem:hover {
+                    border: 2px solid black;
+
                 }
             }
         }

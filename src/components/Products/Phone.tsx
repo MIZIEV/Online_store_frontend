@@ -27,7 +27,13 @@ interface phoneCharacteristic {
     rom: number,
     weight: number,
     batteryCapacity: number,
-    countOfSimCard: number
+    countOfSimCard: number,
+    colors: Color[]
+}
+
+interface Color {
+    id: number,
+    colorName: string
 }
 
 interface PageState {
@@ -38,6 +44,7 @@ const Phone: React.FC = () => {
 
     const { id } = useParams();
     const [phone, setPhone] = useState<phoneCharacteristic>();
+    const [selectedColor, setSelectedColor] = useState<number | null>(null);
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1' // первая кнопка выбрана по умолчанию
@@ -62,6 +69,11 @@ const Phone: React.FC = () => {
         })
     }
 
+
+
+    const handleColorChange = (colorId: number) => {
+        setSelectedColor(colorId);
+    };
 
 
 
@@ -107,13 +119,24 @@ const Phone: React.FC = () => {
                             <h2 className={classes.price}>{phone.price} грн.</h2>
 
                             <div className={classes.colorBlock}>
-                                <p>Колір: </p>
+                                <p>Колір: {selectedColor}</p>
                                 <div className={classes.colorItems}>
+                                    {phone.colors.map((color) => (
+                                        
+                                        <div key={color.id}
+                                            style={{ backgroundColor: color.colorName }}
+                                            onClick={() => handleColorChange(color.id)}
+                                            className={`${classes.colorItem} ${selectedColor === color.id ? classes.selected : ''}`}>
 
-                                    <div className={classes.colorItem}>c</div>
-                                    <div className={classes.colorItem}>c</div>
-                                    <div className={classes.colorItem}>c</div>
-
+                                            <input
+                                                className={classes.colorRadioButton}
+                                                type="radio"
+                                                id={`color-${color.id}`}
+                                                name="phoneColor"
+                                                checked={selectedColor === color.id}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
 
