@@ -1,7 +1,12 @@
 import React from "react";
 import classes from "./CharacteristicComponent.module.scss";
 
-const CharacteristicComponent: React.FC = () => {
+
+const CharacteristicComponent: React.FC = (props) => {
+
+    const phoneCharacteristic = props.phone;
+
+
     return (
         <>
             <div className={classes.container}>
@@ -11,11 +16,11 @@ const CharacteristicComponent: React.FC = () => {
                 </div>
                 <div className={classes.textRow}>
                     <span>Кількість SIM-карт</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.countOfSimCard}</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Діагональ екрана</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.screenSize}</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Виробник процесора</span>
@@ -23,19 +28,19 @@ const CharacteristicComponent: React.FC = () => {
                 </div>
                 <div className={classes.textRow}>
                     <span>Модель центрального процесора</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.processor}</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Внутрішня пам'ять</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.rom} Гб</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Оперативна пам'ять</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.ram} Гб</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Основна камера</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.mainCamera}</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Світосила основної камери</span>
@@ -43,15 +48,15 @@ const CharacteristicComponent: React.FC = () => {
                 </div>
                 <div className={classes.textRow}>
                     <span>Фронтальна камера</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.frontCamera} Мп</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Ємність акумулятора мА/год</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.batteryCapacity}</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Операційна система</span>
-                    <span>value</span>
+                    <span>{phoneCharacteristic.os}</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Основний ітерфейс</span>

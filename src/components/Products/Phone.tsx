@@ -7,6 +7,28 @@ import Rating from "../../UI/Rating/Rating";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
 
+interface phoneCharacteristic {
+    id: number,
+    brand: string,
+    model: string,
+    rating: number,
+    voteCount: number,
+    price: number,
+    os: string,
+    osVersion: number,
+    screenSize: number,
+    resolution: string,
+    mainCamera: string,
+    frontCamera: number,
+    processor: string,
+    countOfCores: number,
+    ram: number,
+    rom: number,
+    weight: number,
+    batteryCapacity: number,
+    countOfSimCard: number
+}
+
 interface PageState {
     selectedOption: string;
 }
@@ -14,7 +36,7 @@ interface PageState {
 const Phone: React.FC = () => {
 
     const { id } = useParams();
-    const [phone, setPhone] = useState(null);
+    const [phone, setPhone] = useState<phoneCharacteristic>();
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1' // первая кнопка выбрана по умолчанию
@@ -137,7 +159,7 @@ const Phone: React.FC = () => {
                         {pageState.selectedOption && (
                             <div className={classes.bottomContent}>
                                 {pageState.selectedOption === 'option1' && <DescriptionComponent phoneId={id} />}
-                                {pageState.selectedOption === 'option2' && <CharacteristicComponent />}
+                                {pageState.selectedOption === 'option2' && <CharacteristicComponent phone={phone} />}
                                 {pageState.selectedOption === 'option3' && <div>Відгуки</div>}
                             </div>
                         )}
