@@ -9,6 +9,7 @@ import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicC
 
 interface phoneCharacteristic {
     id: number,
+    mainPictureURL: string,
     brand: string,
     model: string,
     rating: number,
@@ -75,7 +76,7 @@ const Phone: React.FC = () => {
                         <div className={classes.leftImagesBlock}>
 
                             <div className={classes.mainImage}>
-                                mainImage
+                                <img src={phone.mainPictureURL} alt="Main picture" />
                             </div>
 
                             <div className={classes.additionImagePanel}>
