@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Phone.module.scss"
+import { GetColorName } from 'hex-color-to-color-name';
+
 import { useParams } from "react-router";
 import { getOnePhone } from "../../utils/phoneService";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
@@ -69,11 +71,15 @@ const Phone: React.FC = () => {
         })
     }
 
-
-
     const handleColorChange = (colorId: number) => {
         setSelectedColor(colorId);
     };
+
+    const converteColorCodeToColorName = (colorCode: string) => {
+        colorCode = colorCode.replace(/^#/, '');
+        const colorName = GetColorName(colorCode);
+        return colorName ? colorName : "Unknown color code"
+    }
 
 
 
@@ -119,10 +125,12 @@ const Phone: React.FC = () => {
                             <h2 className={classes.price}>{phone.price} грн.</h2>
 
                             <div className={classes.colorBlock}>
-                                <p>Колір: {selectedColor}</p>
+                                <p>Колір: {selectedColor !== null ?
+                                    converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName) : 'Колір не обраний'}</p>
+
                                 <div className={classes.colorItems}>
                                     {phone.colors.map((color) => (
-                                        
+
                                         <div key={color.id}
                                             style={{ backgroundColor: color.colorName }}
                                             onClick={() => handleColorChange(color.id)}
