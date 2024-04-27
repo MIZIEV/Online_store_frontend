@@ -127,7 +127,6 @@
                     .colorRadioButton {
                         display: none;
                     }
-
                 }
 
                 .selected {
@@ -136,7 +135,6 @@
 
                 .colorItem:hover {
                     border: 2px solid black;
-
                 }
             }
         }
@@ -158,6 +156,19 @@
                     padding: 4px 16px;
                     width: 63px;
                     height: 18px;
+                    cursor: pointer;
+
+                    .romRadioButton {
+                        display: none;
+                    }
+                }
+
+                .romItemhover {
+                    border: 2px solid black;
+                }
+
+                .selected {
+                    border: 2px solid black;
                 }
             }
         }

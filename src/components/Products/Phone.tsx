@@ -26,16 +26,21 @@ interface phoneCharacteristic {
     processor: string,
     countOfCores: number,
     ram: number,
-    rom: number,
     weight: number,
     batteryCapacity: number,
     countOfSimCard: number,
-    colors: Color[]
+    colors: Color[],
+    romList: Rom[]
 }
 
 interface Color {
     id: number,
     colorName: string
+}
+
+interface Rom {
+    id: number,
+    romSize: number
 }
 
 interface PageState {
@@ -47,6 +52,7 @@ const Phone: React.FC = () => {
     const { id } = useParams();
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
+    const [selectedRom, setSelectedRom] = useState<number | null>(null);
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1' // первая кнопка выбрана по умолчанию
@@ -80,6 +86,10 @@ const Phone: React.FC = () => {
         const colorName = GetColorName(colorCode);
         return colorName ? colorName : "Unknown color code"
     }
+
+    const handleRomChange = (romId: number) => {
+        setSelectedRom(romId);
+    };
 
 
 
@@ -123,7 +133,7 @@ const Phone: React.FC = () => {
                                 <p className={classes.voteCount}>{phone.voteCount} відгуків</p>
                             </div>
                             <h2 className={classes.price}>{phone.price} грн.</h2>
-
+                            {/*---------------------------------color functional------------------------------------*/}
                             <div className={classes.colorBlock}>
                                 <p>Колір: {selectedColor !== null ?
                                     converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName) : 'Колір не обраний'}</p>
@@ -147,13 +157,29 @@ const Phone: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
-
+                            {/*---------------------------------rom functional---------------------------------------*/}
                             <div className={classes.romBlock}>
-                                <p>Обсяг пам'яті: </p>
-                                <div className={classes.romItems}>
 
-                                    <span className={classes.romItem}>128 Гб</span>
-                                    <span className={classes.romItem}>64 Гб</span>
+                                <p>Обсяг пам'яті: {selectedRom !== null ?
+                                    phone.romList.find(rom => rom.id === selectedRom)?.romSize : "Об'єм пам'яті не обрано "}</p>
+
+                                <div className={classes.romItems}>
+                                    {phone.romList.map((rom) => (
+
+                                        <div key={rom.id}
+                                            onClick={() => handleRomChange(rom.id)}
+                                            className={`${classes.romItem} ${selectedRom === rom.id ? classes.selected : ''}`}>
+
+                                            <input
+                                                className={classes.romRadioButton}
+                                                type="radio"
+                                                id={`rom-${rom.id}`}
+                                                name="phoneRom"
+                                                checked={selectedRom === rom.id}
+                                            />
+                                            {rom.romSize} Гб
+                                        </div>
+                                    ))}
 
                                 </div>
                             </div>
