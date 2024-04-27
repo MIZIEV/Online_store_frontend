@@ -1,11 +1,47 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Phone.module.scss"
+import { GetColorName } from 'hex-color-to-color-name';
+
 import { useParams } from "react-router";
 import { getOnePhone } from "../../utils/phoneService";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import Rating from "../../UI/Rating/Rating";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
+
+interface phoneCharacteristic {
+    id: number,
+    mainPictureURL: string,
+    brand: string,
+    model: string,
+    rating: number,
+    voteCount: number,
+    price: number,
+    os: string,
+    osVersion: number,
+    screenSize: number,
+    resolution: string,
+    mainCamera: string,
+    frontCamera: number,
+    processor: string,
+    countOfCores: number,
+    ram: number,
+    weight: number,
+    batteryCapacity: number,
+    countOfSimCard: number,
+    colors: Color[],
+    romList: Rom[]
+}
+
+interface Color {
+    id: number,
+    colorName: string
+}
+
+interface Rom {
+    id: number,
+    romSize: number
+}
 
 interface PageState {
     selectedOption: string;
@@ -14,7 +50,9 @@ interface PageState {
 const Phone: React.FC = () => {
 
     const { id } = useParams();
-    const [phone, setPhone] = useState(null);
+    const [phone, setPhone] = useState<phoneCharacteristic>();
+    const [selectedColor, setSelectedColor] = useState<number | null>(null);
+    const [selectedRom, setSelectedRom] = useState<number | null>(null);
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1' // первая кнопка выбрана по умолчанию
@@ -39,6 +77,19 @@ const Phone: React.FC = () => {
         })
     }
 
+    const handleColorChange = (colorId: number) => {
+        setSelectedColor(colorId);
+    };
+
+    const converteColorCodeToColorName = (colorCode: string) => {
+        colorCode = colorCode.replace(/^#/, '');
+        const colorName = GetColorName(colorCode);
+        return colorName ? colorName : "Unknown color code"
+    }
+
+    const handleRomChange = (romId: number) => {
+        setSelectedRom(romId);
+    };
 
 
 
@@ -53,7 +104,7 @@ const Phone: React.FC = () => {
                         <div className={classes.leftImagesBlock}>
 
                             <div className={classes.mainImage}>
-                                mainImage
+                                <img src={phone.mainPictureURL} alt="Main picture" />
                             </div>
 
                             <div className={classes.additionImagePanel}>
@@ -82,24 +133,53 @@ const Phone: React.FC = () => {
                                 <p className={classes.voteCount}>{phone.voteCount} відгуків</p>
                             </div>
                             <h2 className={classes.price}>{phone.price} грн.</h2>
-
+                            {/*---------------------------------color functional------------------------------------*/}
                             <div className={classes.colorBlock}>
-                                <p>Колір: </p>
+                                <p>Колір: {selectedColor !== null ?
+                                    converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName) : 'Колір не обраний'}</p>
+
                                 <div className={classes.colorItems}>
+                                    {phone.colors.map((color) => (
 
-                                    <div className={classes.colorItem}>c</div>
-                                    <div className={classes.colorItem}>c</div>
-                                    <div className={classes.colorItem}>c</div>
+                                        <div key={color.id}
+                                            style={{ backgroundColor: color.colorName }}
+                                            onClick={() => handleColorChange(color.id)}
+                                            className={`${classes.colorItem} ${selectedColor === color.id ? classes.selected : ''}`}>
 
+                                            <input
+                                                className={classes.colorRadioButton}
+                                                type="radio"
+                                                id={`color-${color.id}`}
+                                                name="phoneColor"
+                                                checked={selectedColor === color.id}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-
+                            {/*---------------------------------rom functional---------------------------------------*/}
                             <div className={classes.romBlock}>
-                                <p>Обсяг пам'яті: </p>
-                                <div className={classes.romItems}>
 
-                                    <span className={classes.romItem}>128 Гб</span>
-                                    <span className={classes.romItem}>64 Гб</span>
+                                <p>Обсяг пам'яті: {selectedRom !== null ?
+                                    phone.romList.find(rom => rom.id === selectedRom)?.romSize : "Об'єм пам'яті не обрано "}</p>
+
+                                <div className={classes.romItems}>
+                                    {phone.romList.map((rom) => (
+
+                                        <div key={rom.id}
+                                            onClick={() => handleRomChange(rom.id)}
+                                            className={`${classes.romItem} ${selectedRom === rom.id ? classes.selected : ''}`}>
+
+                                            <input
+                                                className={classes.romRadioButton}
+                                                type="radio"
+                                                id={`rom-${rom.id}`}
+                                                name="phoneRom"
+                                                checked={selectedRom === rom.id}
+                                            />
+                                            {rom.romSize} Гб
+                                        </div>
+                                    ))}
 
                                 </div>
                             </div>
@@ -137,7 +217,7 @@ const Phone: React.FC = () => {
                         {pageState.selectedOption && (
                             <div className={classes.bottomContent}>
                                 {pageState.selectedOption === 'option1' && <DescriptionComponent phoneId={id} />}
-                                {pageState.selectedOption === 'option2' && <CharacteristicComponent />}
+                                {pageState.selectedOption === 'option2' && <CharacteristicComponent phone={phone} />}
                                 {pageState.selectedOption === 'option3' && <div>Відгуки</div>}
                             </div>
                         )}
