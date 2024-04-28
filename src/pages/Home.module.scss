@@ -1,4 +1,4 @@
-.products {
+.phones {
   margin: 0 auto;
   max-width: 90rem;
   margin-top: 3rem;
@@ -6,6 +6,23 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding-bottom: 50px;
+
+}
+
+.phoneBlockTitle {
+  margin: 0 50px;
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-family: "Arsenal", sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+  }
+
+  svg {
+    margin: 0 20px;
+  }
 }
 
 .link {
@@ -25,6 +42,7 @@
   padding-top: 60px;
   display: flex;
   align-items: center;
+  margin-bottom: 50px;
 
   .leftBlock,
   .rightBlock {
