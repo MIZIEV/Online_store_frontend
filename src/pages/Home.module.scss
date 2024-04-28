@@ -1,4 +1,4 @@
-.products {
+.phones {
   margin: 0 auto;
   max-width: 90rem;
   margin-top: 3rem;
@@ -6,6 +6,23 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding-bottom: 50px;
+
+}
+
+.phoneBlockTitle {
+  margin: 0 50px;
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-family: "Arsenal", sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+  }
+
+  svg {
+    margin: 0 20px;
+  }
 }
 
 .link {
@@ -25,16 +42,25 @@
   padding-top: 60px;
   display: flex;
   align-items: center;
+  margin-bottom: 50px;
 
   .leftBlock,
   .rightBlock {
     background-color: #436850;
-    width: 560px;
+    width: 600px;
     height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: box-shadow 0.5s ease;
+
+    h5 {
+      font-family: "Arsenal", sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      text-align: center;
+      color: white;
+    }
   }
 
   .leftBlock {
@@ -53,27 +79,42 @@
     }
 
     .leftImage {
-      background-color: black;
-      width: 100px;
-      height: 100px;
+      background-color: transparent;
+      height: 75%;
+      width: auto;
+      padding-left: 10%;
+
+      img {
+        height: 100%;
+        width: auto;
+      }
     }
   }
 
-  .leftBlock:hover, .rightBlock:hover {
+  .leftBlock:hover,
+  .rightBlock:hover {
     box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.55);
-
-    svg {
-      height: 95px;
-      width: 95px;
-    }
   }
 
   .middleBlock {
     flex-grow: 1;
-    background-color: black;
+    background-color: transparent;
+    text-align: center;
+    height: 370px;
+    width: auto;
 
-    height: 350px;
-    height: 350px;
+    h2 {
+      margin-top: 30px;
+      font-family: "Arsenal", sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      text-align: center;
+    }
+
+    img {
+      height: 100%;
+      width: auto;
+    }
   }
 
   .rightBlock {
@@ -92,9 +133,15 @@
     }
 
     .rigthImage {
-      background-color: black;
-      width: 100px;
-      height: 100px;
+      background-color: transparent;
+      height: 75%;
+      width: auto;
+      padding-right: 10%;
+
+      img {
+        height: 100%;
+        width: auto;
+      }
     }
   }
 }
