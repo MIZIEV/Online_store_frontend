@@ -30,12 +30,18 @@ interface phoneCharacteristic {
     batteryCapacity: number,
     countOfSimCard: number,
     colors: Color[],
-    romList: Rom[]
+    romList: Rom[],
+    phonePictureUrls: PictureUrl[]
 }
 
 interface Color {
     id: number,
     colorName: string
+}
+
+interface PictureUrl {
+    id: number,
+    url: string
 }
 
 interface Rom {
@@ -109,15 +115,15 @@ const Phone: React.FC = () => {
 
                             <div className={classes.additionImagePanel}>
                                 <div className={classes.additionImagesContainer}>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
-                                    <div className={classes.additionImages}>addition image</div>
+
+                                    {phone.phonePictureUrls.map((pictureUrl) => (
+
+                                        <div className={classes.additionImages} key={pictureUrl.id}>
+                                            <img src={pictureUrl.url} alt="additional picture" />
+                                        </div>
+
+                                    ))}
+
                                 </div>
                             </div>
 
