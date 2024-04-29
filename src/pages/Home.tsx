@@ -2,11 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../utils/http";
 import Card from "../components/Card/Card";
 import { CardProps } from "../shared.types";
-import Filter from "../components/HomePage/Filter/Filter";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import classes from "./Home.module.scss";
 import { Outlet } from "react-router";
 import { NavLink } from "react-router-dom";
+
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 import xiaomiImage from "../images/xiaomi_image.png";
 import samsungImage from "../images/samsung_image.png";
@@ -27,6 +29,58 @@ const HomePage = () => {
   };
 
   console.log(data);
+
+  const carouselRef = useRef(null);
+  const carouselRef2 = useRef(null);
+  const carouselRef3 = useRef(null);
+
+  const handlePrevSlide = () => {
+    if (carouselRef.current) {
+      carouselRef.current.previous();
+    }
+  };
+
+  const handleNextSlide = () => {
+    if (carouselRef.current) {
+      carouselRef.current.next();
+    }
+  };
+
+  const handlePrevSlide2 = () => {
+    if (carouselRef2.current) {
+      carouselRef2.current.previous();
+    }
+  };
+
+  const handleNextSlide2 = () => {
+    if (carouselRef2.current) {
+      carouselRef2.current.next();
+    }
+  };
+
+  const handlePrevSlide3 = () => {
+    if (carouselRef3.current) {
+      carouselRef3.current.previous();
+    }
+  };
+
+  const handleNextSlide3 = () => {
+    if (carouselRef3.current) {
+      carouselRef3.current.next();
+    }
+  };
+
+
+
+
+
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+    }
+  };
+
 
   return (
     <div>
@@ -63,68 +117,105 @@ const HomePage = () => {
 
       <div className={classes.phoneBlockTitle}>
         <span>Лідер продажу</span>
-        <span>
-          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <span >
+          <svg onClick={handlePrevSlide} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.4141 32.0861L5.82906 17.5001L20.4141 2.91406L17.5861 0.0860634L0.171064 17.5001L17.5861 34.9141L20.4141 32.0861Z" fill="black" />
           </svg>
-          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={handleNextSlide} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.585938 2.91394L15.1709 17.4999L0.585938 32.0859L3.41394 34.9139L20.8289 17.4999L3.41394 0.0859375L0.585938 2.91394Z" fill="black" />
           </svg>
         </span>
       </div>
-      {data && data.length === 0 && <p>Nothing was found for your search</p>}
 
-      <div className={classes.phones}>
-        {data &&
-          data.map((item: CardProps) => (
-            <NavLink className={classes.link} to={PHONE_URL + item.id}>
-              <Card
-                key={item.id}
-                id={item.id}
-                brand={item.brand}
-                model={item.model}
-                description={item.description}
-                price={item.price}
-                mainPictureURL={item.mainPictureURL}
-                rating={item.rating}
-              />
-            </NavLink>
-          ))}
+
+      <div className={classes.phonesContainer}>
+        <Carousel
+          ref={carouselRef}
+          responsive={responsive}
+          additionalTransfrom={0}
+          arrows={false} // Disable default arrows
+          draggable={false} // Disable dragging for swipe
+          customButtonGroup={<div />} // Disable default button group
+          infinite={false} // Disable infinite loop
+          showDots={false} // Disable default dots
+        >
+          {data && data.length > 0 ? (
+            data
+              .filter((item: CardProps) => item.used === false)
+              .map((item) => (
+                <div className={classes.phone}>
+
+                  <NavLink className={classes.link} to={PHONE_URL + item.id} key={item.id}>
+                    <Card
+                      id={item.id}
+                      brand={item.brand}
+                      model={item.model}
+                      description={item.description}
+                      price={item.price}
+                      mainPictureURL={item.mainPictureURL}
+                      rating={item.rating}
+                    />
+                  </NavLink>
+                </div>
+              ))
+          ) : (
+            <p>Nothing was found for your search</p>
+          )}
+        </Carousel>
       </div>
-      {isPending && <p>Loading...</p>}
-      {isError && "Failed to fetch data"}
+
+
+
+
+
 
       <div className={classes.phoneBlockTitle}>
         <span>Спеціальні пропозиції</span>
         <span>
-          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={handlePrevSlide2} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.4141 32.0861L5.82906 17.5001L20.4141 2.91406L17.5861 0.0860634L0.171064 17.5001L17.5861 34.9141L20.4141 32.0861Z" fill="black" />
           </svg>
-          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={handleNextSlide2} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.585938 2.91394L15.1709 17.4999L0.585938 32.0859L3.41394 34.9139L20.8289 17.4999L3.41394 0.0859375L0.585938 2.91394Z" fill="black" />
           </svg>
         </span>
       </div>
 
-      <div className={classes.phones}>
-        {data &&
-          data.map((item: CardProps) => (
-            <NavLink className={classes.link} to={PHONE_URL + item.id}>
-              <CardIsUsed
-                key={item.id}
-                id={item.id}
-                brand={item.brand}
-                model={item.model}
-                description={item.description}
-                price={item.price}
-                mainPictureURL={item.mainPictureURL}
-                rating={item.rating}
-              />
-            </NavLink>
-          ))}
+      <div className={classes.phonesContainer}>
+        <Carousel
+          ref={carouselRef2}
+          responsive={responsive}
+          additionalTransfrom={0}
+          arrows={false} // Disable default arrows
+          draggable={false} // Disable dragging for swipe
+          customButtonGroup={<div />} // Disable default button group
+          infinite={false} // Disable infinite loop
+          showDots={false} // Disable default dots
+        >
+          {data && data.length > 0 ? (
+            data
+              .filter((item: CardProps) => item.used === true)
+              .map((item) => (
+                <div className={classes.phone}>
+
+                  <NavLink className={classes.link} to={PHONE_URL + item.id} key={item.id}>
+                    <CardIsUsed
+                      id={item.id}
+                      brand={item.brand}
+                      model={item.model}
+                      description={item.description}
+                      price={item.price}
+                      mainPictureURL={item.mainPictureURL}
+                      rating={item.rating}
+                    />
+                  </NavLink>
+                </div>
+              ))
+          ) : (
+            <p>Nothing was found for your search</p>
+          )}
+        </Carousel>
       </div>
-      {isPending && <p>Loading...</p>}
-      {isError && "Failed to fetch data"}
 
       <div className={classes.subscribeBlock}>
 
@@ -154,34 +245,48 @@ const HomePage = () => {
       <div className={classes.phoneBlockTitle}>
         <span>Новинки</span>
         <span>
-          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={handlePrevSlide3} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.4141 32.0861L5.82906 17.5001L20.4141 2.91406L17.5861 0.0860634L0.171064 17.5001L17.5861 34.9141L20.4141 32.0861Z" fill="black" />
           </svg>
-          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={handleNextSlide3} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.585938 2.91394L15.1709 17.4999L0.585938 32.0859L3.41394 34.9139L20.8289 17.4999L3.41394 0.0859375L0.585938 2.91394Z" fill="black" />
           </svg>
         </span>
       </div>
 
-      <div className={classes.phones}>
-        {data &&
-          data.map((item: CardProps) => (
-            <NavLink className={classes.link} to={PHONE_URL + item.id}>
-              <Card
-                key={item.id}
-                id={item.id}
-                brand={item.brand}
-                model={item.model}
-                description={item.description}
-                price={item.price}
-                mainPictureURL={item.mainPictureURL}
-                rating={item.rating}
-              />
-            </NavLink>
-          ))}
+      <div className={classes.phonesContainer}>
+        <Carousel
+          ref={carouselRef3}
+          responsive={responsive}
+          additionalTransfrom={0}
+          arrows={false} // Disable default arrows
+          draggable={false} // Disable dragging for swipe
+          customButtonGroup={<div />} // Disable default button group
+          infinite={false} // Disable infinite loop
+          showDots={false} // Disable default dots
+        >
+          {data && data.length > 0 ? (
+            data.map((item) => (
+              <div className={classes.phone}>
+
+                <NavLink className={classes.link} to={PHONE_URL + item.id} key={item.id}>
+                  <Card
+                    id={item.id}
+                    brand={item.brand}
+                    model={item.model}
+                    description={item.description}
+                    price={item.price}
+                    mainPictureURL={item.mainPictureURL}
+                    rating={item.rating}
+                  />
+                </NavLink>
+              </div>
+            ))
+          ) : (
+            <p>Nothing was found for your search</p>
+          )}
+        </Carousel>
       </div>
-      {isPending && <p>Loading...</p>}
-      {isError && "Failed to fetch data"}
 
     </div>
   );

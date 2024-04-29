@@ -1,11 +1,18 @@
-.phones {
-  margin: 0 auto;
-  max-width: 90rem;
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  padding-bottom: 50px;
+.phonesContainer {
+  .phone {
+    padding: 50px 0;
+  }
+
+  .phones {
+    margin: 0 auto;
+    max-width: 90rem;
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-bottom: 50px;
+
+  }
 
 }
 
@@ -14,7 +21,10 @@
   display: flex;
   justify-content: space-between;
 
+  transform: translateY(-50%);
+
   span {
+    cursor: pointer;
     font-family: "Arsenal", sans-serif;
     font-weight: 700;
     font-size: 36px;
