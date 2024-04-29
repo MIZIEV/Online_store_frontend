@@ -149,8 +149,39 @@ const HomePage = () => {
             </svg>
           </button>
         </div>
-
       </div>
+
+      <div className={classes.phoneBlockTitle}>
+        <span>Новинки</span>
+        <span>
+          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.4141 32.0861L5.82906 17.5001L20.4141 2.91406L17.5861 0.0860634L0.171064 17.5001L17.5861 34.9141L20.4141 32.0861Z" fill="black" />
+          </svg>
+          <svg width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.585938 2.91394L15.1709 17.4999L0.585938 32.0859L3.41394 34.9139L20.8289 17.4999L3.41394 0.0859375L0.585938 2.91394Z" fill="black" />
+          </svg>
+        </span>
+      </div>
+
+      <div className={classes.phones}>
+        {data &&
+          data.map((item: CardProps) => (
+            <NavLink className={classes.link} to={PHONE_URL + item.id}>
+              <Card
+                key={item.id}
+                id={item.id}
+                brand={item.brand}
+                model={item.model}
+                description={item.description}
+                price={item.price}
+                mainPictureURL={item.mainPictureURL}
+                rating={item.rating}
+              />
+            </NavLink>
+          ))}
+      </div>
+      {isPending && <p>Loading...</p>}
+      {isError && "Failed to fetch data"}
 
     </div>
   );
