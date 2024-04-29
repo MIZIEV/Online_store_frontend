@@ -3,6 +3,7 @@ import "./Form.module.scss";
 import { registerUser } from "../../utils/AuthService";
 import classes from "./RegistrationForm.module.scss"
 import { NavLink } from "react-router-dom";
+import mainImage from "../../images/main_image.png";
 
 const RegistrationForm: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -157,7 +158,9 @@ const RegistrationForm: React.FC = () => {
       </form>
 
 
-      <div className={classes["image"]}>image</div>
+      <div className={classes["image"]}>
+        <img src={mainImage} alt="main image" />
+      </div>
 
     </div>
 
