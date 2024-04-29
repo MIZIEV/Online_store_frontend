@@ -1,11 +1,18 @@
-.phones {
-  margin: 0 auto;
-  max-width: 90rem;
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  padding-bottom: 50px;
+.phonesContainer {
+  .phone {
+    padding: 50px 0;
+  }
+
+  .phones {
+    margin: 0 auto;
+    max-width: 90rem;
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-bottom: 50px;
+
+  }
 
 }
 
@@ -14,7 +21,10 @@
   display: flex;
   justify-content: space-between;
 
+  transform: translateY(-50%);
+
   span {
+    cursor: pointer;
     font-family: "Arsenal", sans-serif;
     font-weight: 700;
     font-size: 36px;
@@ -36,6 +46,85 @@
   font-size: 34px;
   text-align: center;
   font-family: "Arsenal", sans-serif;
+}
+
+.subscribeBlock {
+  display: flex;
+  border-radius: 24px;
+  padding: 0 80px;
+  height: 140px;
+  background-color: #adbc9f;
+  margin: 0 50px;
+  margin-bottom: 50px;
+
+  .iconBlock {
+    margin: auto;
+    flex: 1;
+  }
+
+  .textBlock {
+    flex: 2;
+    margin: auto;
+    display: block;
+
+    .topText {
+      font-family: "Arsenal", sans-serif;
+      font-weight: 700;
+      font-size: 27px;
+      color: #2b2d33;
+    }
+
+    .bottomText {
+      font-family: "Work Sans", sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      color: #555a65;
+    }
+
+  }
+}
+
+.inputBlock {
+  flex: 1;
+  margin: auto;
+  display: flex;
+
+  input {
+    border: 1px solid #767676;
+    border-radius: 4px 0 0 4px;
+    width: 400px;
+    height: 30px;
+  }
+
+  input::placeholder {
+    padding-left: 20px;
+    font-family: "Work Sans", sans-serif;
+    color: #767676;
+    font-weight: 400;
+    font-size: 13px;
+
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #12372a;
+    border-radius: 0 4px 4px 0;
+    width: 178px;
+    height: 33px;
+
+    font-family: "Work Sans", sans-serif;
+    color: #fffff4;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+
+    svg {
+      padding-left: 10px;
+    }
+  }
 }
 
 .topContainer {

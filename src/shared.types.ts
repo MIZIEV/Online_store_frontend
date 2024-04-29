@@ -9,6 +9,7 @@ export type CardProps = {
   rating: number;
   quantity: number;
   image: string;
+  used: boolean;
 };
 
 export type Category = {
