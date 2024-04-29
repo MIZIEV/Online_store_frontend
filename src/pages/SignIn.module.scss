@@ -1,8 +1,10 @@
 .page {
   padding: 4rem 5rem;
+
   .container {
     display: flex;
     justify-content: space-between;
+
     h1 {
       font-family: "Arsenal", sans-serif;
       color: #171725;
@@ -10,15 +12,19 @@
       font-weight: 700;
       margin-bottom: 1rem;
     }
+
     .login-section {
       display: flex;
       flex-direction: column;
     }
+
     .hero-section {
-      .banner {
-        min-height: 100%;
-        width: 828px;
-        background-color: #d9d9d9;
+      height: 500px;
+      width: 500px;
+
+      img {
+        height: 100%;
+        width: auto;
       }
     }
   }

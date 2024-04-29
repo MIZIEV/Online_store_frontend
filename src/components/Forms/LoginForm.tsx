@@ -1,5 +1,3 @@
-// LoginForm.tsx
-
 import React, { useState } from "react";
 import classes from "./Form.module.scss";
 import { loginUser, saveLoggedInUser } from "../../utils/AuthService";
