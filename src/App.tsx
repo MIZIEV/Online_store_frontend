@@ -7,7 +7,7 @@ import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import ErrorPage from "./pages/Error";
 import AdminPage from "./pages/Admin";
-import AddNewModal from "./components/AdminMenu/AdminModals/AddNewModal";
+import AddNewPhoneComponent from "./components/AdminMenu/AdminModals/AddNewPhoneComponent";
 import { queryClient } from "./utils/http";
 import EditModal from "./components/AdminMenu/AdminModals/EditModal";
 import CartModal from "./components/Navbar/Cart/CartModal";
@@ -50,7 +50,6 @@ const router = createBrowserRouter([
         path: "admin",
         element: <AdminPage />,
         children: [
-          { path: "new", element: <AddNewModal /> },
           { path: ":productId/edit", element: <EditModal /> },
           { path: "cart", element: <CartModal /> },
         ],
@@ -74,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "phone/:id",
         element: <Phone />
+      },
+      {
+        path: "admin/new",
+        element: <AddNewPhoneComponent />
       }
     ],
   },

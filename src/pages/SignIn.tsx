@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginForm from "../components/Forms/LoginForm";
 import classes from "./SignIn.module.scss";
 import { Outlet } from "react-router";
 import mainImage from "../images/main_image.png";
+import { logout } from "../utils/AuthService";
 
 const SignInPage: React.FC = () => {
+  useEffect(() => {
+    logout();
+  }, []);
   return (
     <>
       <Outlet />

@@ -26,7 +26,6 @@ const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
       <td>{props.id}</td>
       <td>{props.model}</td>
       <td>{props.brand}</td>
-      <td>{props.description}</td>
       <td>{props.price} UAH</td>
       <td>
         <div className={classes.manage}>

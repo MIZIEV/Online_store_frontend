@@ -1,0 +1,44 @@
+.container {
+    margin: 50px;
+
+    .inputsContainer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+
+
+        .inputContainer {
+            display: flex;
+            width: 350px;
+            height: 25px;
+            margin-bottom: 15px;
+
+
+            .inputField::placeholder {
+                color: #767676;
+                font-weight: 400;
+                font-size: 18px;
+                padding-left: 1rem;
+                font-family: "Work Sans", sans-serif
+            }
+
+            .inputField {
+                width: 100%;
+                padding: 10px;
+                outline: none;
+                border: 2px solid #767676;
+                padding: 16px 0;
+                background-color: #fffff4;
+                border-radius: 0px 4px 4px 0px;
+                color: white;
+                font-size: 18px;
+                padding-left: 1rem;
+            }
+
+            .inputField:focus {
+                border: 2px solid black;
+            }
+        }
+    }
+}
