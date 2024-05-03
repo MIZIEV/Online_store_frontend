@@ -15,15 +15,15 @@ const AdminProductsDashboard: React.FC = () => {
   const navigator = useNavigate();
 
   function navigateToAddNewPhone() {
-    navigator("/admin/new");
+    navigator("/admin/phone-managment/new");
   }
 
   return (
     <div className={classes.dashboard}>
       <div className={classes["dashboard-header"]}>
-        <input type="text" placeholder="Search..." />
+        <input type="text" placeholder="Знайти..." />
 
-        <Button onClick={navigateToAddNewPhone} className={classes["add-new-button"]}>+ Add New</Button>
+        <Button onClick={navigateToAddNewPhone} className={classes["add-new-button"]}>Додати новий смартфон</Button>
 
       </div>
       {isPending && <p>Fetching items...</p>}
