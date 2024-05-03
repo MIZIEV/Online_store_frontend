@@ -48,172 +48,172 @@ const AddNewPhoneComponent = () => {
         <div className={classes.inputsContainer}>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="model">Model </label>
+            <label htmlFor="model">Модель </label>
             <input
               id="model"
               name="model"
               type="text"
-              placeholder="model"
+              placeholder="назва моделі"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="mainPictureURL">Main picture URL</label>
+            <label htmlFor="mainPictureURL">URL головної картинки</label>
             <input
               id="mainPictureURL"
               name="mainPictureURL"
               type="text"
-              placeholder="main picture URL"
+              placeholder="URL"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="os">Operation system</label>
+            <label htmlFor="os">Операційна система</label>
             <input
               id="os"
               type="text"
               name="os"
-              placeholder="operation system"
+              placeholder="Операційна система"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="osVersion">Os version</label>
+            <label htmlFor="osVersion">Версія ос</label>
             <input
               id="osVersion"
               name="osVersion"
               type="text"
-              placeholder="version of operation system "
+              placeholder="Версія ос "
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="">Screen size</label>
+            <label htmlFor="">Розмір екрану</label>
             <input
               id="screenSize"
               type="text"
               name="screenSize"
-              placeholder="screen size"
+              placeholder="розмір екрану"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="resolution">Resolution</label>
+            <label htmlFor="resolution">Роздільна здатність</label>
             <input
               id="resolution"
               type="text"
               name="resolution"
-              placeholder="resolution"
+              placeholder="роздільна здатність"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="mainCamera">Main camera</label>
+            <label htmlFor="mainCamera">Головна камера</label>
             <input
               id="mainCamera"
               type="text"
               name="mainCamera"
-              placeholder="main camera"
+              placeholder="Головна камера"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="frontCamera">Front camera</label>
+            <label htmlFor="frontCamera">Фронтальна камера</label>
             <input
               id="frontCamera"
               name="frontCamera"
               type="text"
-              placeholder="front camera"
+              placeholder="Фронтальна камера"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="processor">Processor</label>
+            <label htmlFor="processor">Процесор</label>
             <input
               id="processor"
               name="processor"
               type="text"
-              placeholder="processor"
+              placeholder="Процесор"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="countOfCores">Count of cores</label>
+            <label htmlFor="countOfCores">Кількість ядер</label>
             <input
               id="countOfCores"
               name="countOfCores"
               type="text"
-              placeholder="count of cores"
+              placeholder="Кількість ядер"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="ram">Ram</label>
+            <label htmlFor="ram">Озу</label>
             <input
               id="ram"
               name="ram"
               type="text"
-              placeholder="ram"
+              placeholder="Озу"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="rom">Rom</label>
+            <label htmlFor="rom">Озп</label>
             <input
               id="rom"
               name="rom"
               type="text"
-              placeholder="rom"
+              placeholder="Озп"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="weight">Weight</label>
+            <label htmlFor="weight">Вага</label>
             <input
               id="weight"
               name="weight"
               type="text"
-              placeholder="weight"
+              placeholder="Вага "
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="batteryCapacity">Battery capacity</label>
+            <label htmlFor="batteryCapacity">Ємність акумулятора</label>
             <input
               id="batteryCapacity"
               name="batteryCapacity"
               type="text"
-              placeholder="battery capacity"
+              placeholder="Ємність акумулятора"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price">Ціна</label>
             <input
               id="price"
               name="price"
               type="text"
-              placeholder="price"
+              placeholder="Ціна"
               className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="countOfSim">Count of sim cards</label>
+            <label htmlFor="countOfSim">Кількість сім карток</label>
             <Select id="countOfSim"
               value={countOfSimCard}
               onChange={(e) => setcountOfSimCard(e.target.value as number)}>
@@ -224,7 +224,7 @@ const AddNewPhoneComponent = () => {
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="brand">Brand</label>
+            <label htmlFor="brand">Бренд</label>
             <Select id="brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value as string)}>
@@ -251,7 +251,7 @@ const AddNewPhoneComponent = () => {
                     backgroundColor: '#adbc9f'
                   }
                 }}
-              />} label="Is used?" />
+              />} label="Вживаний?" />
             </FormGroup>
           </div>
         </div>

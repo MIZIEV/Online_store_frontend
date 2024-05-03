@@ -4,12 +4,6 @@ import AdminProductsDashboard from "../components/AdminMenu/AdminProductsDashboa
 const AdminPage = () => {
   return (
     <>
-      <h1>
-        <Outlet />
-        <Link to=".." relative="path">
-          Back
-        </Link>
-      </h1>
       <AdminProductsDashboard />
     </>
   );

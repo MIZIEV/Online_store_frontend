@@ -22,19 +22,14 @@ const Navbar = () => {
           <h1>TalkieTech</h1>
         </NavLink>
 
-        {loggedInUser && (
-          <div className={classes["welcome-message"]}>
-            Welcome, {loggedInUser}
-          </div>
-        )}
         {isAdmin && ( // Перевіряємо, чи користувач є адміністратором
           <NavLink to="/admin">
-            <Button>ADMIN</Button>{" "}
+            <Button className={classes["signin-button"]}>ADMIN</Button>{" "}
             {/* Відображаємо кнопку "ADMIN" тільки для адміністраторів */}
           </NavLink>
         )}
         {loggedInUser ? ( // Перевіряємо, чи користувач увійшов у систему
-          <Button onClick={handleLogout}>Log Out</Button> // Якщо так, то відображаємо кнопку LogOut
+          <Button className={classes["signin-button"]} onClick={handleLogout}>Вийти</Button> // Якщо так, то відображаємо кнопку LogOut
         ) : (
           <>
             {" "}
@@ -74,8 +69,8 @@ const Navbar = () => {
           </Link>
         </div>
         <div className={classes['search-cart-group']}>
-          <input type="text" name="" id="" placeholder="Пошук"/>
-          <CartButton/>
+          <input type="text" name="" id="" placeholder="Пошук" />
+          <CartButton />
         </div>
       </nav>
     </header>
