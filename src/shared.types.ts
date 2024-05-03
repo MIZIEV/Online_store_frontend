@@ -2,20 +2,25 @@ export type CardProps = {
   id: number;
   brand: string;
   model: string;
-  description: string;
+  os: string;
+  osVersion: number;
+  resolution: string;
+  mainCamera: string;
+  frontCamera: number;
+  processor: number;
+  countOfCores: number;
+  ram: number;
+  rom: number;
+  weight: number;
+  batteryCapacity: number;
+  countOfSimCard: number;
   price: number;
   mainPictureURL: string;
-  categoryId?: string;
   rating: number;
-  quantity: number;
-  image: string;
+  vote_count: number;
   used: boolean;
 };
 
-export type Category = {
-  id: number;
-  categoryName: string;
-};
 
 export type BlogProps = {
   id: number;
