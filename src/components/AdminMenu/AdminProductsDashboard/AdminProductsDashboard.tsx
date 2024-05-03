@@ -15,7 +15,7 @@ const AdminProductsDashboard: React.FC = () => {
   const navigator = useNavigate();
 
   function navigateToAddNewPhone() {
-    navigator("/admin/new");
+    navigator("/admin/phone-managment/new");
   }
 
   return (

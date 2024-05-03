@@ -19,6 +19,7 @@ import GuaranteePage from "./pages/GuaranteePage";
 import BlogPage from "./pages/BlogPage";
 import Blog from "./components/Blog/Blog";
 import Phone from "./components/Products/Phone";
+import TransferComponent from "./components/AdminMenu/AdminModals/TransferComponent";
 
 const router = createBrowserRouter([
   {
@@ -47,14 +48,6 @@ const router = createBrowserRouter([
         children: [{ path: "cart", element: <CartModal /> }],
       },
       {
-        path: "admin",
-        element: <AdminPage />,
-        children: [
-          { path: ":productId/edit", element: <EditModal /> },
-          { path: "cart", element: <CartModal /> },
-        ],
-      },
-      {
         path: "payment-delivery",
         element: <PaymentDeliveryPage />
       },
@@ -75,8 +68,19 @@ const router = createBrowserRouter([
         element: <Phone />
       },
       {
-        path: "admin/new",
+        path: "admin/phone-managment",
+        element: <AdminPage />,
+        children: [
+          { path: ":productId/edit", element: <EditModal /> },
+          { path: "cart", element: <CartModal /> },
+        ],
+      },
+      {
+        path: "admin/phone-managment/new",
         element: <AddNewPhoneComponent />
+      }, {
+        path: "admin",
+        element: <TransferComponent />
       }
     ],
   },
