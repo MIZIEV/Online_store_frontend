@@ -1,18 +1,36 @@
 .container {
-    margin: 50px;
+    padding: 50px;
+
+    h1 {
+        text-align: center;
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        padding-bottom: 40px;
+    }
 
     .inputsContainer {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
         gap: 10px;
 
 
         .inputContainer {
             display: flex;
-            width: 350px;
+            width: 80%;
             height: 25px;
             margin-bottom: 15px;
+            justify-content: space-between;
+
+
+            label {
+                margin: auto 0;
+                width: 30%;
+                font-weight: 400;
+                font-size: 16px;
+                padding-left: 1rem;
+                font-family: "Work Sans", sans-serif
+            }
 
 
             .inputField::placeholder {
@@ -24,7 +42,7 @@
             }
 
             .inputField {
-                width: 100%;
+                width: 70%;
                 padding: 10px;
                 outline: none;
                 border: 2px solid #767676;
@@ -39,6 +57,27 @@
             .inputField:focus {
                 border: 2px solid black;
             }
+
+        }
+    }
+
+    .bottomSection {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+
+        button {
+            padding: 30px 0px;
+            border-radius: 4px;
+            padding: 14px 143px;
+            width: 370px;
+            height: 49px;
+            background-color: #436850;
+
+            font-family: "Work Sans", sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            color: #fffff4;
         }
     }
 }

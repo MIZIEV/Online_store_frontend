@@ -6,7 +6,12 @@ import { FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select,
 import { useState } from "react";
 
 const AddNewPhoneComponent = () => {
+
   const navigate = useNavigate();
+
+  const [brand, setBrand] = useState<string>("");
+  const [countOfSimCard, setcountOfSimCard] = useState<number>(1);
+  const [used, setUsed] = useState<boolean>(false);
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: postProduct,
@@ -16,220 +21,246 @@ const AddNewPhoneComponent = () => {
     },
   });
 
-  const [brand, setBrand] = useState<string>("");
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const formData = new FormData(e.target as HTMLFormElement);
-
-
     const data = {
+      rating: 0.0,
+      used: used,
+      countOfSimCard: countOfSimCard,
       brand: brand,
       ...Object.fromEntries(formData),
     };
-
-
     mutate(data);
   };
 
-  //const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  /* const handleOptionChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-     setSelectedOptions(event.target.value as string[]);
-   };*/
-
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
-
+  function handleUsed() {
+    setUsed(!used);
+    console.log(used);
+  }
 
   return (
     <div className={classes.container}>
       <form onSubmit={handleSubmit}>
 
-        <h2>Додати новий смартфон</h2>
+        <h1>Додати новий смартфон</h1>
 
         <div className={classes.inputsContainer}>
 
           <div className={classes.inputContainer}>
+            <label htmlFor="model">Model </label>
             <input
-              className={classes.inputField}
+              id="model"
+              name="model"
               type="text"
               placeholder="model"
-              name="model"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="mainPictureURL">Main picture URL</label>
             <input
-              className={classes.inputField}
+              id="mainPictureURL"
+              name="mainPictureURL"
               type="text"
               placeholder="main picture URL"
-              name="mainPictureURL"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="os">Operation system</label>
             <input
-              className={classes.inputField}
+              id="os"
               type="text"
-              placeholder="operation system"
               name="os"
+              placeholder="operation system"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="osVersion">Os version</label>
             <input
-              className={classes.inputField}
+              id="osVersion"
+              name="osVersion"
               type="text"
               placeholder="version of operation system "
-              name="osVersion"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="">Screen size</label>
             <input
-              className={classes.inputField}
+              id="screenSize"
               type="text"
-              placeholder="screen size"
               name="screenSize"
+              placeholder="screen size"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="resolution">Resolution</label>
             <input
-              className={classes.inputField}
+              id="resolution"
               type="text"
-              placeholder="resolution"
               name="resolution"
+              placeholder="resolution"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="mainCamera">Main camera</label>
             <input
-              className={classes.inputField}
+              id="mainCamera"
               type="text"
-              placeholder="main camera"
               name="mainCamera"
+              placeholder="main camera"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="frontCamera">Front camera</label>
             <input
-              className={classes.inputField}
+              id="frontCamera"
+              name="frontCamera"
               type="text"
               placeholder="front camera"
-              name="frontCamera"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="processor">Processor</label>
             <input
-              className={classes.inputField}
+              id="processor"
+              name="processor"
               type="text"
               placeholder="processor"
-              name="processor"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="countOfCores">Count of cores</label>
             <input
-              className={classes.inputField}
+              id="countOfCores"
+              name="countOfCores"
               type="text"
               placeholder="count of cores"
-              name="countOfCores"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="ram">Ram</label>
             <input
-              className={classes.inputField}
+              id="ram"
+              name="ram"
               type="text"
               placeholder="ram"
-              name="ram"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="rom">Rom</label>
             <input
-              className={classes.inputField}
+              id="rom"
+              name="rom"
               type="text"
               placeholder="rom"
-              name="rom"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="weight">Weight</label>
             <input
-              className={classes.inputField}
+              id="weight"
+              name="weight"
               type="text"
               placeholder="weight"
-              name="weight"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="batteryCapacity">Battery capacity</label>
             <input
-              className={classes.inputField}
+              id="batteryCapacity"
+              name="batteryCapacity"
               type="text"
               placeholder="battery capacity"
-              name="batteryCapacity"
+              className={classes.inputField}
             />
           </div>
+
           <div className={classes.inputContainer}>
+            <label htmlFor="price">Price</label>
             <input
-              className={classes.inputField}
-              type="text"
-              placeholder="count Of Sim Card"
-              name="countOfSimCard"
-            />
-          </div>
-          <div className={classes.inputContainer}>
-            <input
-              className={classes.inputField}
+              id="price"
+              name="price"
               type="text"
               placeholder="price"
-              name="price"
+              className={classes.inputField}
             />
           </div>
 
           <div className={classes.inputContainer}>
-
-            <Select label="Num of sim">
+            <label htmlFor="countOfSim">Count of sim cards</label>
+            <Select id="countOfSim"
+              value={countOfSimCard}
+              onChange={(e) => setcountOfSimCard(e.target.value as number)}>
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
             </Select>
           </div>
 
           <div className={classes.inputContainer}>
-
-            <Select label="Brand"
+            <label htmlFor="brand">Brand</label>
+            <Select id="brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value as string)}>
               <MenuItem value="SAMSUNG">Samsung</MenuItem>
               <MenuItem value="XIAOMI">Xiaomi</MenuItem>
               <MenuItem value="APPLE">Apple</MenuItem>
             </Select>
-
           </div>
 
           <div className={classes.inputContainer}>
             <FormGroup>
-              <FormControlLabel control={<Switch />} label="Is used?" />
+              <FormControlLabel control={<Switch
+                checked={used}
+                onChange={handleUsed}
+
+                sx={{
+                  '& .MuiSwitch-thumb': {
+                    backgroundColor: '#436850'
+                  },
+                  '& .Mui-checked + .MuiSwitch-track': {
+                    backgroundColor: '#767676'
+                  },
+                  '& .MuiSwitch-track': {
+                    backgroundColor: '#adbc9f'
+                  }
+                }}
+              />} label="Is used?" />
             </FormGroup>
           </div>
-
-          {/*<FormControl fullWidth>
-            <InputLabel id="multi-select-dropdown-label">Select Options</InputLabel>
-            <Select
-                labelId="multi-select-dropdown-label"
-                id="multi-select-dropdown"
-                multiple
-                value={selectedOptions}
-                onChange={handleOptionChange}
-                renderValue={(selected) => (selected as string[]).join(', ')}
-            >
-                <MenuItem value="Option 1">Option 1</MenuItem>
-                <MenuItem value="Option 2">Option 2</MenuItem>
-                <MenuItem value="Option 3">Option 3</MenuItem>
-            </Select>
-        </FormControl>*/}
-
-
         </div>
 
-
-
-        <button type="submit" >
-          Зберегти
-        </button>
+        <div className={classes.bottomSection}>
+          <button type="submit" >
+            Зберегти
+          </button>
+        </div>
       </form>
     </div>
   );
