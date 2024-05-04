@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { getAllColors } from "../../../utils/ColorService";
+import { addNewColor, getAllColors } from "../../../utils/ColorService";
 import classes from "./ColorControlComponent.module.scss"
 import { GetColorName } from "hex-color-to-color-name";
+import { Color } from "../../../shared.types";
 
-interface Color {
-    id: number,
-    colorName: string
-}
 
 const ColorControleComponent: React.FC = () => {
 
     const [data, setData] = useState<Color[]>([]);
+    const [colorName, setColorName] = useState("");
 
     useEffect(() => {
         getAllColors().then((response) => {
             setData(response);
-
-            console.log(response)
-            console.log("--- data size --- " + data.length)
         }).catch(error => console.error(error));
     }, [])
-
 
     const converteColorCodeToColorName = (colorCode: string) => {
         colorCode = colorCode.replace(/^#/, '');
         const colorName = GetColorName(colorCode);
         return colorName ? colorName : "Unknown color code"
+    }
+
+    const handleNewColor = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.target as HTMLFormElement);
+
+        try {
+            await addNewColor(formData as string);
+            const updatedColors = await getAllColors();
+            setData(updatedColors);
+            setColorName("");
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -54,14 +62,21 @@ const ColorControleComponent: React.FC = () => {
                 </div>
 
                 <div className={classes.inputBlock}>
-                    <input type="text" placeholder="Введіть код" />
-                    <button >
-                        Додати
-                        <svg width="20" height="21" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12.5H19" stroke="#F7F8FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M12 5.5L19 12.5L12 19.5" stroke="#F7F8FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
+                    <form onSubmit={handleNewColor}>
+                        <input
+                            value={colorName}
+                            onChange={(e) => setColorName(e.target.value)}
+                            type="text"
+                            name="colorName"
+                            placeholder="Введіть код" />
+                        <button type="submit">
+                            Додати
+                            <svg width="20" height="21" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12.5H19" stroke="#F7F8FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12 5.5L19 12.5L12 19.5" stroke="#F7F8FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
             </div>
 

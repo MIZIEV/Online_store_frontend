@@ -44,40 +44,44 @@
         margin: auto;
         display: flex;
 
-        input {
-            border: 1px solid #767676;
-            border-radius: 4px 0 0 4px;
-            width: 400px;
-            height: 30px;
-        }
-
-        input::placeholder {
-            padding-left: 20px;
-            font-family: "Work Sans", sans-serif;
-            color: #767676;
-            font-weight: 400;
-            font-size: 13px;
-
-        }
-
-        button {
+        form {
             display: flex;
-            align-items: center;
-            justify-content: center;
 
-            background-color: #12372a;
-            border-radius: 0 4px 4px 0;
-            width: 178px;
-            height: 33px;
+            input {
+                border: 1px solid #767676;
+                border-radius: 4px 0 0 4px;
+                width: 400px;
+                height: 30px;
+            }
 
-            font-family: "Work Sans", sans-serif;
-            color: #fffff4;
-            font-weight: 400;
-            font-size: 18px;
-            text-align: center;
+            input::placeholder {
+                padding-left: 20px;
+                font-family: "Work Sans", sans-serif;
+                color: #767676;
+                font-weight: 400;
+                font-size: 13px;
 
-            svg {
-                padding-left: 10px;
+            }
+
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                background-color: #12372a;
+                border-radius: 0 4px 4px 0;
+                width: 178px;
+                height: 33px;
+
+                font-family: "Work Sans", sans-serif;
+                color: #fffff4;
+                font-weight: 400;
+                font-size: 18px;
+                text-align: center;
+
+                svg {
+                    padding-left: 10px;
+                }
             }
         }
     }

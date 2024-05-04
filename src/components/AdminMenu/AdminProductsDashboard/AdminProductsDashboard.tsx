@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const AdminProductsDashboard: React.FC = () => {
   const { data, isPending, isError } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getMethod("http://192.168.31.15:8090/api/phone/list"),
+    queryFn: () => getMethod("http://localhost:8090/api/phone/list"),
   });
 
   const navigator = useNavigate();

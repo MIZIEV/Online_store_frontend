@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const HOST = "192.168.31.15:8090"
-const GET_ALL_COLORS = "http://" + HOST + "/api/color/list"
+const HOST = "localhost:8090";
+const GET_ALL_COLORS = "http://" + HOST + "/api/color/list";
+const ADD_NEW_COLOR = "http://" + HOST + "/api/color/add";
 
 export const getAllColors = async () => {
     let url = GET_ALL_COLORS;
@@ -18,3 +19,19 @@ export const getAllColors = async () => {
     }
 };
 
+export const addNewColor = async (colorCode: string) => {
+    try {
+        const response = await axios.post(ADD_NEW_COLOR, colorCode, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        console.log(colorCode)
+        console.log("add new color func")
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};

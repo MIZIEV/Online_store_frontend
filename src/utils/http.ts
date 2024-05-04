@@ -7,7 +7,7 @@ export const queryClient = new QueryClient();
 const HOST_PORT = "localhost:8090";
 
 const PRODUCTS_URL = "http://" + HOST_PORT + "/api/phone/list";
-const ADD_NEW_PRODUCT_URL: string = "http://" + HOST_PORT + "/api/phone/add";
+const ADD_NEW_PHONE_URL: string = "http://" + HOST_PORT + "/api/phone/add";
 const DELETE_PRODUCT_URL: string = "http://" + HOST_PORT + "/api/phone/remove/";
 
 
@@ -58,7 +58,7 @@ export async function getProducts({
 export async function postProduct(data: unknown) {
   console.log(data);
   try {
-    const response = await axios.post(ADD_NEW_PRODUCT_URL, data);
+    const response = await axios.post(ADD_NEW_PHONE_URL, data);
     console.log(response);
     return response.data;
   } catch (error) {
