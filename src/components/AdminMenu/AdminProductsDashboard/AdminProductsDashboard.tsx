@@ -4,7 +4,7 @@ import AdminProductsDashboardItem from "../AdminProductsDashboardItem/AdminProdu
 import classes from "./AdminProductsDashboard.module.scss";
 import { getMethod } from "../../../utils/http";
 import { CardProps } from "../../../shared.types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminProductsDashboard: React.FC = () => {
   const { data, isPending, isError } = useQuery({
@@ -18,10 +18,16 @@ const AdminProductsDashboard: React.FC = () => {
     navigator("/admin/phone-managment/new");
   }
 
+  function navigateToColorControl() {
+    navigator("/admin/phone-managment/colors")
+  }
+
   return (
     <div className={classes.dashboard}>
       <div className={classes["dashboard-header"]}>
         <input type="text" placeholder="Знайти..." />
+
+        <Button onClick={navigateToColorControl} className={classes["add-new-button"]}>Керування кольорами</Button>
 
         <Button onClick={navigateToAddNewPhone} className={classes["add-new-button"]}>Додати новий смартфон</Button>
 

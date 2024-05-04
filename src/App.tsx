@@ -7,9 +7,9 @@ import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import ErrorPage from "./pages/Error";
 import AdminPage from "./pages/Admin";
-import AddNewPhoneComponent from "./components/AdminMenu/AdminModals/AddNewPhoneComponent";
+import AddNewPhoneComponent from "./components/AdminMenu/AdminTools/AddNewPhoneComponent";
 import { queryClient } from "./utils/http";
-import EditModal from "./components/AdminMenu/AdminModals/EditModal";
+import EditModal from "./components/AdminMenu/AdminTools/EditModal";
 import CartModal from "./components/Navbar/Cart/CartModal";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
@@ -19,7 +19,8 @@ import GuaranteePage from "./pages/GuaranteePage";
 import BlogPage from "./pages/BlogPage";
 import Blog from "./components/Blog/Blog";
 import Phone from "./components/Products/Phone";
-import TransferComponent from "./components/AdminMenu/AdminModals/TransferComponent";
+import TransferComponent from "./components/AdminMenu/AdminTools/TransferComponent";
+import ColorControleComponent from "./components/AdminMenu/AdminTools/ColorControlComponent";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
           { path: ":productId/edit", element: <EditModal /> },
           { path: "cart", element: <CartModal /> },
         ],
+      },
+      {
+        path: "/admin/phone-managment/colors",
+        element: <ColorControleComponent />
       },
       {
         path: "admin/phone-managment/new",
