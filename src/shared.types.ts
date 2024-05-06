@@ -28,3 +28,8 @@ export type BlogProps = {
   title: string;
   text: string;
 };
+
+export type Color = {
+  id: number,
+  colorName: string
+}

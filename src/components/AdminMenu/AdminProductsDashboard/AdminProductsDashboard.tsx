@@ -4,12 +4,12 @@ import AdminProductsDashboardItem from "../AdminProductsDashboardItem/AdminProdu
 import classes from "./AdminProductsDashboard.module.scss";
 import { getMethod } from "../../../utils/http";
 import { CardProps } from "../../../shared.types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminProductsDashboard: React.FC = () => {
   const { data, isPending, isError } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getMethod("http://192.168.31.15:8090/api/phone/list"),
+    queryFn: () => getMethod("http://localhost:8090/api/phone/list"),
   });
 
   const navigator = useNavigate();
@@ -18,13 +18,18 @@ const AdminProductsDashboard: React.FC = () => {
     navigator("/admin/phone-managment/new");
   }
 
+  function navigateToColorControl() {
+    navigator("/admin/phone-managment/colors")
+  }
+
   return (
     <div className={classes.dashboard}>
       <div className={classes["dashboard-header"]}>
         <input type="text" placeholder="Знайти..." />
 
-        <Button onClick={navigateToAddNewPhone} className={classes["add-new-button"]}>Додати новий смартфон</Button>
+        <Button onClick={navigateToColorControl} className={classes["add-new-button"]}>Керування кольорами</Button>
 
+        <Button onClick={navigateToAddNewPhone} className={classes["add-new-button"]}>Додати новий смартфон</Button>
       </div>
       {isPending && <p>Fetching items...</p>}
       {isError && <p>Failed to fetch items</p>}
@@ -32,10 +37,10 @@ const AdminProductsDashboard: React.FC = () => {
         <tbody>
           <tr>
             <th>ID</th>
-            <th>Model</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Manage</th>
+            <th>Модель</th>
+            <th>Бренд</th>
+            <th>Ціна</th>
+            <th>Керування</th>
           </tr>
           {data?.map((item: CardProps) => (
             <AdminProductsDashboardItem
@@ -43,9 +48,7 @@ const AdminProductsDashboard: React.FC = () => {
               id={item.id}
               brand={item.brand}
               model={item.model}
-              description={item.description}
               price={item.price}
-              pictureURL={item.pictureURL}
             />
           ))}
         </tbody>
