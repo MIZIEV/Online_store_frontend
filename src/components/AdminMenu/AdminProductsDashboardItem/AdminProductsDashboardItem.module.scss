@@ -1,15 +1,13 @@
 .admin-product-item {
   button {
-    border: none;
-    border-radius: 1rem;
     color: white;
     cursor: pointer;
   }
   .delete-button {
-    background-color: red;
+    background-color:  #ed3f3f;
   }
   .edit-button {
-    background-color: black;
+    background-color: #767676;
   }
   .manage {
     display: flex;

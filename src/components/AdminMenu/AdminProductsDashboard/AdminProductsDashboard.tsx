@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const AdminProductsDashboard: React.FC = () => {
   const { data, isPending, isError } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getMethod("http://192.168.31.15:8090/api/phone/list"),
+    queryFn: () => getMethod("http://localhost:8090/api/phone/list"),
   });
 
   const navigator = useNavigate();
@@ -37,10 +37,10 @@ const AdminProductsDashboard: React.FC = () => {
         <tbody>
           <tr>
             <th>ID</th>
-            <th>Model</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Manage</th>
+            <th>Модель</th>
+            <th>Бренд</th>
+            <th>Ціна</th>
+            <th>Керування</th>
           </tr>
           {data?.map((item: CardProps) => (
             <AdminProductsDashboardItem
@@ -48,9 +48,7 @@ const AdminProductsDashboard: React.FC = () => {
               id={item.id}
               brand={item.brand}
               model={item.model}
-              description={item.description}
               price={item.price}
-              pictureURL={item.pictureURL}
             />
           ))}
         </tbody>

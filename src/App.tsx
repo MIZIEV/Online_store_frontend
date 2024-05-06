@@ -70,10 +70,9 @@ const router = createBrowserRouter([
         element: <Phone />
       },
       {
-        path: "admin/phone-managment",
+        path: "admin/phone-managment/",
         element: <AdminPage />,
         children: [
-          { path: ":productId/edit", element: <EditModal /> },
           { path: "cart", element: <CartModal /> },
         ],
       },

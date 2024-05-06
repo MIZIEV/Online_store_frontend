@@ -6,10 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
-  /*----------------------TODO-----------------------
-                 when the product is removed, it removed from DB, but stayed in the page
-                 think how to fix it!!!
-  */
+
   const { mutate } = useMutation({
     mutationFn: deleteProduct,
     onSuccess: () => {
@@ -30,13 +27,16 @@ const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
       <td>
         <div className={classes.manage}>
           <Link to={`${props.id}/edit`}>
-            <Button className={classes["edit-button"]}>✏️Edit</Button>
+            <Button className={classes["edit-button"]}>Оновити</Button>
           </Link>
           <Link to={`/admin/phone-managment/${props.id}/description`}>
-            <Button className={classes["edit-button"]}>Description</Button>
+            <Button className={classes["edit-button"]}>Опис</Button>
           </Link>
           <Button onClick={handleDelete} className={classes["delete-button"]}>
-            🗑️Delete
+            Видалити
+          </Button>
+          <Button  className={classes["edit-button"]}>
+            Встановити кольори
           </Button>
         </div>
       </td>
