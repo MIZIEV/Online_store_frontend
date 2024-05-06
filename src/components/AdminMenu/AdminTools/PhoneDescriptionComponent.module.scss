@@ -16,11 +16,17 @@
             margin: auto;
 
             textarea {
-                border: 2px solid #767676;
+                border: 3px solid #767676;
                 border-radius: 4px;
                 height: 250px;
                 width: 550px;
                 margin-bottom: 50px;
+                padding: 10px;
+                background-color: transparent;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
             }
 
             button {

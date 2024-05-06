@@ -3,15 +3,19 @@ import classes from "./PhoneDescriptionComponent.module.scss";
 import { addNewDescription, deleteDescription, getDescriptions } from "../../../utils/descriptionService";
 import { useParams } from "react-router";
 
+interface PhoneDescription {
+    ind: number,
+    descriptionText: string
+}
 
 const PhoneDescriptionComponent: React.FC = () => {
 
     const [descriptionText, setDescriptionText] = useState("");
-    const [descriptionList, setDescriptionList] = useState([]);
+    const [descriptionList, setDescriptionList] = useState<PhoneDescription[]>([]);
     const { phoneId } = useParams();
 
     useEffect(() => {
-        getDescriptions(phoneId)
+        getDescriptions(Number(phoneId))
             .then((response) => {
                 setDescriptionList(response)
             })
@@ -23,8 +27,8 @@ const PhoneDescriptionComponent: React.FC = () => {
         const formData = new FormData(e.target as HTMLFormElement);
 
         try {
-            await addNewDescription(phoneId, formData);
-            const updatedDescriptionList = await getDescriptions(phoneId);
+            await addNewDescription(Number(phoneId), formData);
+            const updatedDescriptionList = await getDescriptions(Number(phoneId));
             setDescriptionList(updatedDescriptionList)
             setDescriptionText("");
         } catch (error) {
@@ -32,12 +36,11 @@ const PhoneDescriptionComponent: React.FC = () => {
         }
     }
 
-
     const deleteDescriptionText = async (descriptionId: number) => {
 
         try {
-            await deleteDescription(phoneId, descriptionId);
-            const updatedDescriptionList = await getDescriptions(phoneId);
+            await deleteDescription(Number(phoneId), descriptionId);
+            const updatedDescriptionList = await getDescriptions(Number(phoneId));
             setDescriptionList(updatedDescriptionList)
             setDescriptionText("");
         } catch (error) {
