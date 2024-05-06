@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addNewColor, getAllColors } from "../../../utils/ColorService";
+import { addNewColor, deleteColor, getAllColors } from "../../../utils/ColorService";
 import classes from "./ColorControlComponent.module.scss"
 import { GetColorName } from "hex-color-to-color-name";
 import { Color } from "../../../shared.types";
@@ -31,6 +31,16 @@ const ColorControleComponent: React.FC = () => {
             const updatedColors = await getAllColors();
             setData(updatedColors);
             setColorName("");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleDeleteColor = async (id: number) => {
+        try {
+            await deleteColor(id);
+            const updatedColors = await getAllColors();
+            setData(updatedColors);
         } catch (error) {
             console.error(error);
         }
@@ -84,9 +94,18 @@ const ColorControleComponent: React.FC = () => {
                 {
                     data.map((color: Color) => (
                         <div key={color.id} className={classes.colorCard}>
-                            <div className={classes.textBlock}>
-                                <h4>{converteColorCodeToColorName(color.colorName)}</h4>
-                                <h5>{color.colorName}</h5>
+                            <div className={classes.topBlock}>
+                                <div className={classes.textBlock}>
+                                    <h4>{converteColorCodeToColorName(color.colorName)}</h4>
+                                    <h5>{color.colorName}</h5>
+                                </div>
+
+                                <div className={classes.iconBlock}>
+                                    <svg onClick={() => handleDeleteColor(color.id)} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M42 8H32C32 5.794 30.206 4 28 4H20C17.794 4 16 5.794 16 8H6V12H42V8Z" fill="black" />
+                                        <path d="M22 36H18V16H10V40.286C10 42.334 11.794 44 14 44H34C36.206 44 38 42.334 38 40.286V16H30V36H26V16H22V36Z" fill="black" />
+                                    </svg>
+                                </div>
                             </div>
                             <div style={{ backgroundColor: color.colorName }} className={classes.colorBlock}>
                             </div>

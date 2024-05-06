@@ -1,0 +1,57 @@
+.container {
+    padding: 50px;
+
+    h1 {
+        text-align: center;
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        padding-bottom: 40px;
+    }
+
+    form {
+        display: flex;
+
+        .textAreaBlock {
+            margin: auto;
+
+            textarea {
+                border: 2px solid #767676;
+                border-radius: 4px;
+                height: 250px;
+                width: 550px;
+                margin-bottom: 50px;
+            }
+
+            button {
+                display: block;
+                margin: 0px auto;
+                border-radius: 4px;
+                width: 370px;
+                height: 49px;
+                background-color: #436850;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+                color: #fffff4;
+            }
+        }
+
+    }
+
+    .descriptionListBlock {
+        padding-top: 50px;
+
+        .descriptionItem {
+            background-color: #adbc9f;
+            border-radius: 4px;
+            padding: 30px;
+
+            font-family: "Work Sans", sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            color: #fff;
+        }
+    }
+}

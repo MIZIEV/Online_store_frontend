@@ -21,6 +21,7 @@ import Blog from "./components/Blog/Blog";
 import Phone from "./components/Products/Phone";
 import TransferComponent from "./components/AdminMenu/AdminTools/TransferComponent";
 import ColorControleComponent from "./components/AdminMenu/AdminTools/ColorControlComponent";
+import PhoneDescriptionComponent from "./components/AdminMenu/AdminTools/PhoneDescriptionComponent";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
       }, {
         path: "admin",
         element: <TransferComponent />
+      },
+      {
+        path: "admin/phone-managment/:phoneId/description",
+        element: <PhoneDescriptionComponent />
       }
     ],
   },

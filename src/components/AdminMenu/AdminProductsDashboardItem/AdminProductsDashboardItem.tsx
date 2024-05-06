@@ -32,6 +32,9 @@ const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
           <Link to={`${props.id}/edit`}>
             <Button className={classes["edit-button"]}>✏️Edit</Button>
           </Link>
+          <Link to={`/admin/phone-managment/${props.id}/description`}>
+            <Button className={classes["edit-button"]}>Description</Button>
+          </Link>
           <Button onClick={handleDelete} className={classes["delete-button"]}>
             🗑️Delete
           </Button>

@@ -78,6 +78,7 @@
                 font-weight: 400;
                 font-size: 18px;
                 text-align: center;
+                cursor: pointer;
 
                 svg {
                     padding-left: 10px;
@@ -105,29 +106,45 @@
             border-radius: 4px;
             transition: box-shadow 0.5s ease;
 
-            .textBlock {
-                padding-top: 10px;
-                padding-left: 10px;
-                height: 25%;
+            .topBlock {
+                display: flex;
+                justify-content: space-between;
+                height: 35%;
 
-                h4 {
-                    font-family: "Work Sans", sans-serif;
-                    font-weight: 700;
-                    font-size: 18px;
+                .textBlock {
+                    padding-top: 10px;
+                    padding-left: 10px;
+
+                    h4 {
+                        font-family: "Work Sans", sans-serif;
+                        font-weight: 700;
+                        font-size: 18px;
+                    }
+
+                    h5 {
+                        padding-top: 5px;
+                        font-family: "Work Sans", sans-serif;
+                        font-weight: 400;
+                        font-size: 12px;
+                    }
                 }
 
-                h5 {
-                    padding-top: 5px;
-                    font-family: "Work Sans", sans-serif;
-                    font-weight: 400;
-                    font-size: 12px;
+                .iconBlock {
+                    svg {
+                        cursor: pointer;
+                        padding-top: 10px;
+                        padding-right: 10px;
+                        width: 30px;
+                        height: 30px;
+                    }
                 }
+
             }
 
             .colorBlock {
                 border-radius: 4px;
 
-                height: 75%;
+                height: 65%;
                 width: 100%;
             }
         }

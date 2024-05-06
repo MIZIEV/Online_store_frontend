@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const AdminProductsDashboard: React.FC = () => {
   const { data, isPending, isError } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getMethod("http://localhost:8090/api/phone/list"),
+    queryFn: () => getMethod("http://192.168.31.15:8090/api/phone/list"),
   });
 
   const navigator = useNavigate();
@@ -30,7 +30,6 @@ const AdminProductsDashboard: React.FC = () => {
         <Button onClick={navigateToColorControl} className={classes["add-new-button"]}>Керування кольорами</Button>
 
         <Button onClick={navigateToAddNewPhone} className={classes["add-new-button"]}>Додати новий смартфон</Button>
-
       </div>
       {isPending && <p>Fetching items...</p>}
       {isError && <p>Failed to fetch items</p>}
