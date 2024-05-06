@@ -44,14 +44,33 @@
         padding-top: 50px;
 
         .descriptionItem {
+            display: flex;
             background-color: #adbc9f;
             border-radius: 4px;
             padding: 30px;
+            margin: 10px 0px;
 
-            font-family: "Work Sans", sans-serif;
-            font-weight: 400;
-            font-size: 18px;
-            color: #fff;
+            .descriptionText {
+                width: 98%;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+                color: #fff;
+            }
+
+            svg {
+                margin: auto;
+                transition: fill 0.5s ease;
+                fill: #fff;
+                height: 25px;
+                width: auto;
+                cursor: pointer;
+            }
+
+            svg:hover {
+                fill: #ed3f3f;
+            }
         }
     }
 }
