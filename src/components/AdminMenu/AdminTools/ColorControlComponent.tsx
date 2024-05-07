@@ -1,14 +1,64 @@
 import React, { useEffect, useState } from "react";
-import { addNewColor, deleteColor, getAllColors } from "../../../utils/ColorService";
+import { addNewColor, deleteColor, getAllColors, putTheColorsInPhone } from "../../../utils/ColorService";
 import classes from "./ColorControlComponent.module.scss"
 import { GetColorName } from "hex-color-to-color-name";
 import { Color } from "../../../shared.types";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { CardProps } from "@mui/material";
+import { getPhoneList } from "../../../utils/phoneService";
 
+const columns: GridColDef[] = [
+
+    { field: 'id', headerName: 'id', width: 70, headerClassName: classes.headerTable },
+    { field: 'brand', headerName: 'Бренд', width: 130, },
+    { field: 'model', headerName: 'Модель', width: 130 },
+];
 
 const ColorControleComponent: React.FC = () => {
 
     const [data, setData] = useState<Color[]>([]);
+    const [phoneList, setPhoneList] = useState([]);
     const [colorName, setColorName] = useState("");
+
+    const [selectedColors, setSelectedColors] = useState<number[]>([]);
+    const [selectedColorsDisplay, setSelectedColorsDisplay] = useState<number[]>([]);
+
+    const [rows, setRows] = useState<CardProps[]>([]);
+    const [selectedRows, setSelectedRows] = useState<number>();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getPhoneList();
+                setPhoneList(data);
+                setRows(data);
+                console.log("data list of phons")
+                console.log(data)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
+    }, [selectedColors])
+
+    const handleRowSelection = (selection: string[]) => {
+        setSelectedRows(selection);
+        setSelectedColors([]);
+
+        console.log(selection);
+
+        const selectedPhones = selection.map(selectedId => {
+            return phoneList.find(phone => phone.id === selectedId);
+        });
+
+        const selectedColors = selectedPhones.flatMap(phone => {
+            return phone ? phone.colors.map(color => color.id) : [];
+        });
+
+        setSelectedColorsDisplay(selectedColors);
+
+        console.log(selectedPhones);
+    };
 
     useEffect(() => {
         getAllColors().then((response) => {
@@ -45,6 +95,36 @@ const ColorControleComponent: React.FC = () => {
             console.error(error);
         }
     }
+
+    const toggleCardSelection = (id: number) => {
+        setSelectedColorsDisplay(prevSelectedColors => {
+            if (prevSelectedColors.includes(id)) {
+                return prevSelectedColors.filter(colorId => colorId !== id);
+            } else {
+                return [...prevSelectedColors, id];
+            }
+        });
+
+        setSelectedColors(prevSelectedColors => {
+            if (prevSelectedColors.includes(id)) {
+                return prevSelectedColors.filter(colorId => colorId !== id);
+            } else {
+                return [...prevSelectedColors, id];
+            }
+        });
+    }
+
+    useEffect(() => {
+
+        if (selectedRows) {
+
+            putTheColorsInPhone(selectedRows, selectedColors).then((response) => {
+                console.log(response);
+            })
+            console.log(selectedColors);
+        }
+    }, [selectedColors]);
+
 
     return (
         <div className={classes.container}>
@@ -93,7 +173,11 @@ const ColorControleComponent: React.FC = () => {
             <div className={classes.colorContainer}>
                 {
                     data.map((color: Color) => (
-                        <div key={color.id} className={classes.colorCard}>
+                        <div
+                            key={color.id}
+                            onClick={() => toggleCardSelection(color.id)}
+                            className={`${classes.colorCard} ${selectedColorsDisplay.includes(color.id) ? classes.selected : ""}`}>
+
                             <div className={classes.topBlock}>
                                 <div className={classes.textBlock}>
                                     <h4>{converteColorCodeToColorName(color.colorName)}</h4>
@@ -113,6 +197,22 @@ const ColorControleComponent: React.FC = () => {
                     ))
                 }
 
+            </div>
+
+            <div className={classes.tableContainer} style={{ height: 400, width: 'auto' }}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    checkboxSelection
+                    onRowSelectionModelChange={handleRowSelection}
+                    disableMultipleRowSelection={true}
+                    sx={{
+                        '& .MuiDataGrid-checkboxInput': {
+                            color: '#12372a'
+                        }
+                    }}
+                />
             </div>
         </div>
     )

@@ -149,9 +149,17 @@
             }
         }
 
+        .selected {
+            box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.45);
+        }
+
         .colorCard:hover {
             box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.45);
 
         }
+    }
+
+    .tableContainer {
+        padding: 35px;
     }
 }
