@@ -35,9 +35,6 @@ const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
           <Button onClick={handleDelete} className={classes["delete-button"]}>
             Видалити
           </Button>
-          <Button  className={classes["edit-button"]}>
-            Встановити кольори
-          </Button>
         </div>
       </td>
     </tr>
