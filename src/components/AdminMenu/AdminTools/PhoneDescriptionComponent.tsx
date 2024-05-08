@@ -58,11 +58,13 @@ const PhoneDescriptionComponent: React.FC = () => {
         }
     }
 
-    const handleNewAdditionalPcture = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleNewAdditionalPcture = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
 
-        addNewAdditionalPicture(phoneId, formData as string)
+        await addNewAdditionalPicture(Number(phoneId), formData as string)
+        const updatedPictureList = await getAllAdditionPictures(Number(phoneId));
+        setPicturesList(updatedPictureList)
         setPictureUrl("");
     }
 
@@ -88,7 +90,6 @@ const PhoneDescriptionComponent: React.FC = () => {
             </form>
 
             <div className={classes.descriptionListBlock}>
-
                 {descriptionList ? (
                     <ol>
                         {descriptionList.map((description) => (
@@ -152,7 +153,6 @@ const PhoneDescriptionComponent: React.FC = () => {
             </div>
 
             <div className={classes.picturesContainer}>
-
                 {
                     picturesList.map((picture) => (
                         <div key={picture.id} className={classes.imageCard}>
@@ -169,11 +169,8 @@ const PhoneDescriptionComponent: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-
                     ))
                 }
-
-
             </div>
         </div>
     )
