@@ -90,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: "admin/phone-managment/:phoneId/description",
         element: <PhoneDescriptionComponent />
+      },
+      {
+        path: "admin/phone-managment/edit/:phoneId",
+        element: <AddNewPhoneComponent />
       }
     ],
   },

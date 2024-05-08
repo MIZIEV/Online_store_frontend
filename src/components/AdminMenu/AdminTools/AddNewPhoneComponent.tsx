@@ -1,9 +1,14 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { postProduct, queryClient } from "../../../utils/http";
 import classes from "./AddNewPhoneComponent.module.scss"
 import { FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Switch } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getOnePhone, updatePhone } from "../../../utils/phoneService";
+
+interface PhoneRom {
+  romSize: number
+}
 
 const AddNewPhoneComponent = () => {
 
@@ -13,25 +18,103 @@ const AddNewPhoneComponent = () => {
   const [countOfSimCard, setcountOfSimCard] = useState<number>(1);
   const [used, setUsed] = useState<boolean>(false);
 
-  const { mutate, isPending, isError } = useMutation({
-    mutationFn: postProduct,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      navigate("/admin");
-    },
-  });
+  const [romList, setRomList] = useState<PhoneRom[]>([]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = {
-      rating: 0.0,
-      used: used,
-      countOfSimCard: countOfSimCard,
-      brand: brand,
-      ...Object.fromEntries(formData),
+  const [model, setModel] = useState("");
+  const [mainPictureURL, setMainPictureURL] = useState("");
+  const [os, setOs] = useState("");
+  const [osVersion, setOsVersion] = useState("");
+  const [screenSize, setScreenSize] = useState();
+  const [resolution, setResolution] = useState("");
+  const [mainCamera, setMainCamera] = useState();
+  const [frontCamera, setFrontCamera] = useState();
+  const [processor, setProcessor] = useState();
+  const [ram, setRam] = useState();
+  const [countOfCores, setCountOfCores] = useState();
+  const [weight, setWeight] = useState();
+  const [batteryCapacity, setBatteryCapacity] = useState();
+  const [price, setPrice] = useState();
+
+
+  const { phoneId } = useParams();
+
+
+  let handleSubmit;
+
+  useEffect(() => {
+    if (phoneId) {
+      getOnePhone(Number(phoneId)).then((response) => {
+
+
+        setBrand(response.brand);
+        setcountOfSimCard(response.countOfSimCard);
+        setUsed(response.used);
+
+
+        setMainPictureURL(response.mainPictureURL)
+        setModel(response.model)
+        setOs(response.os)
+        setOsVersion(response.osVersion)
+        setScreenSize(response.screenSize)
+        setResolution(response.resolution)
+        setMainCamera(response.mainCamera)
+        setFrontCamera(response.frontCamera)
+        setProcessor(response.processor)
+        setRam(response.ram)
+        setWeight(response.weight)
+        setBatteryCapacity(response.batteryCapacity)
+        setPrice(response.countOfCores)
+        setCountOfCores(response.price)
+
+
+      })
+    }
+  },[])
+
+  if (phoneId) {
+    handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      const data = {
+        romList: romList,
+        rating: 0.0,
+        used: used,
+        countOfSimCard: countOfSimCard,
+        brand: brand,
+        ...Object.fromEntries(formData),
+      };
+      updatePhone(Number(phoneId), data);
     };
-    mutate(data);
+  } else {
+
+    const { mutate, isPending, isError } = useMutation({
+      mutationFn: postProduct,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+        navigate("/admin");
+      },
+    });
+    handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      const data = {
+        romList: romList,
+        rating: 0.0,
+        used: used,
+        countOfSimCard: countOfSimCard,
+        brand: brand,
+        ...Object.fromEntries(formData),
+      };
+      mutate(data);
+    };
+  }
+
+
+
+  const handleRomSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const selectedSizes = e.target.value as number[];
+    const roms: PhoneRom[] = selectedSizes.map(size => ({ romSize: size }));
+    setRomList(roms);
   };
 
   function handleUsed() {
@@ -53,6 +136,8 @@ const AddNewPhoneComponent = () => {
               id="model"
               name="model"
               type="text"
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
               placeholder="назва моделі"
               className={classes.inputField}
             />
@@ -64,6 +149,8 @@ const AddNewPhoneComponent = () => {
               id="mainPictureURL"
               name="mainPictureURL"
               type="text"
+              value={mainPictureURL}
+              onChange={(e) => setMainPictureURL(e.target.value)}
               placeholder="URL"
               className={classes.inputField}
             />
@@ -75,6 +162,8 @@ const AddNewPhoneComponent = () => {
               id="os"
               type="text"
               name="os"
+              value={os}
+              onChange={(e) => setOs(e.target.value)}
               placeholder="Операційна система"
               className={classes.inputField}
             />
@@ -86,6 +175,8 @@ const AddNewPhoneComponent = () => {
               id="osVersion"
               name="osVersion"
               type="text"
+              value={osVersion}
+              onChange={(e) => setOsVersion(e.target.value)}
               placeholder="Версія ос "
               className={classes.inputField}
             />
@@ -97,6 +188,8 @@ const AddNewPhoneComponent = () => {
               id="screenSize"
               type="text"
               name="screenSize"
+              value={screenSize}
+              onChange={(e) => setScreenSize(e.target.value)}
               placeholder="розмір екрану"
               className={classes.inputField}
             />
@@ -108,6 +201,8 @@ const AddNewPhoneComponent = () => {
               id="resolution"
               type="text"
               name="resolution"
+              value={resolution}
+              onChange={(e) => setResolution(e.target.value)}
               placeholder="роздільна здатність"
               className={classes.inputField}
             />
@@ -119,6 +214,8 @@ const AddNewPhoneComponent = () => {
               id="mainCamera"
               type="text"
               name="mainCamera"
+              value={mainCamera}
+              onChange={(e) => setMainCamera(e.target.value)}
               placeholder="Головна камера"
               className={classes.inputField}
             />
@@ -130,6 +227,8 @@ const AddNewPhoneComponent = () => {
               id="frontCamera"
               name="frontCamera"
               type="text"
+              value={frontCamera}
+              onChange={(e) => setFrontCamera(e.target.value)}
               placeholder="Фронтальна камера"
               className={classes.inputField}
             />
@@ -141,6 +240,8 @@ const AddNewPhoneComponent = () => {
               id="processor"
               name="processor"
               type="text"
+              value={processor}
+              onChange={(e) => setProcessor(e.target.value)}
               placeholder="Процесор"
               className={classes.inputField}
             />
@@ -152,6 +253,8 @@ const AddNewPhoneComponent = () => {
               id="countOfCores"
               name="countOfCores"
               type="text"
+              value={countOfCores}
+              onChange={(e) => setCountOfCores(e.target.value)}
               placeholder="Кількість ядер"
               className={classes.inputField}
             />
@@ -163,18 +266,9 @@ const AddNewPhoneComponent = () => {
               id="ram"
               name="ram"
               type="text"
+              value={ram}
+              onChange={(e) => setRam(e.target.value)}
               placeholder="Озу"
-              className={classes.inputField}
-            />
-          </div>
-
-          <div className={classes.inputContainer}>
-            <label htmlFor="rom">Озп</label>
-            <input
-              id="rom"
-              name="rom"
-              type="text"
-              placeholder="Озп"
               className={classes.inputField}
             />
           </div>
@@ -185,6 +279,8 @@ const AddNewPhoneComponent = () => {
               id="weight"
               name="weight"
               type="text"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
               placeholder="Вага "
               className={classes.inputField}
             />
@@ -196,6 +292,8 @@ const AddNewPhoneComponent = () => {
               id="batteryCapacity"
               name="batteryCapacity"
               type="text"
+              value={batteryCapacity}
+              onChange={(e) => setBatteryCapacity(e.target.value)}
               placeholder="Ємність акумулятора"
               className={classes.inputField}
             />
@@ -207,6 +305,8 @@ const AddNewPhoneComponent = () => {
               id="price"
               name="price"
               type="text"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               placeholder="Ціна"
               className={classes.inputField}
             />
@@ -253,6 +353,29 @@ const AddNewPhoneComponent = () => {
                 }}
               />} label="Вживаний?" />
             </FormGroup>
+          </div>
+
+          <div className={classes.inputContainer}>
+            <label htmlFor="rom">Озу</label>
+            <Select
+              id="rom"
+              multiple={true}
+              value={romList.map(rom => rom.romSize)} // Extracting the sizes from the PhoneRom array
+              onChange={handleRomSelection} // Handling the ROM selection
+
+              inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
+            >
+              <MenuItem value={2}>2 гб</MenuItem>
+              <MenuItem value={4}>4 гб</MenuItem>
+              <MenuItem value={6}>6 гб</MenuItem>
+              <MenuItem value={8}>8 гб</MenuItem>
+              <MenuItem value={10}>10 гб</MenuItem>
+              <MenuItem value={12}>12 гб</MenuItem>
+              <MenuItem value={16}>16 гб</MenuItem>
+              <MenuItem value={18}>18 гб</MenuItem>
+              <MenuItem value={24}>24 гб</MenuItem>
+              <MenuItem value={32}>32 гб</MenuItem>
+            </Select>
           </div>
         </div>
 
