@@ -5,6 +5,10 @@ import classes from "./AddNewPhoneComponent.module.scss"
 import { FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Switch } from "@mui/material";
 import { useState } from "react";
 
+interface PhoneRom {
+  romSize: number
+}
+
 const AddNewPhoneComponent = () => {
 
   const navigate = useNavigate();
@@ -12,6 +16,9 @@ const AddNewPhoneComponent = () => {
   const [brand, setBrand] = useState<string>("");
   const [countOfSimCard, setcountOfSimCard] = useState<number>(1);
   const [used, setUsed] = useState<boolean>(false);
+
+  const [romList, setRomList] = useState<PhoneRom[]>([]);
+
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: postProduct,
@@ -25,6 +32,7 @@ const AddNewPhoneComponent = () => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const data = {
+      romList: romList,
       rating: 0.0,
       used: used,
       countOfSimCard: countOfSimCard,
@@ -32,6 +40,12 @@ const AddNewPhoneComponent = () => {
       ...Object.fromEntries(formData),
     };
     mutate(data);
+  };
+
+  const handleRomSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const selectedSizes = e.target.value as number[];
+    const roms: PhoneRom[] = selectedSizes.map(size => ({ romSize: size }));
+    setRomList(roms);
   };
 
   function handleUsed() {
@@ -253,6 +267,29 @@ const AddNewPhoneComponent = () => {
                 }}
               />} label="Вживаний?" />
             </FormGroup>
+          </div>
+
+          <div className={classes.inputContainer}>
+            <label htmlFor="rom">Озу</label>
+            <Select
+              id="rom"
+              multiple={true}
+              value={romList.map(rom => rom.romSize)} // Extracting the sizes from the PhoneRom array
+              onChange={handleRomSelection} // Handling the ROM selection
+
+              inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
+            >
+              <MenuItem value={2}>2 гб</MenuItem>
+              <MenuItem value={4}>4 гб</MenuItem>
+              <MenuItem value={6}>6 гб</MenuItem>
+              <MenuItem value={8}>8 гб</MenuItem>
+              <MenuItem value={10}>10 гб</MenuItem>
+              <MenuItem value={12}>12 гб</MenuItem>
+              <MenuItem value={16}>16 гб</MenuItem>
+              <MenuItem value={18}>18 гб</MenuItem>
+              <MenuItem value={24}>24 гб</MenuItem>
+              <MenuItem value={32}>32 гб</MenuItem>
+            </Select>
           </div>
         </div>
 
