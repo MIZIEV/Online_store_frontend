@@ -177,19 +177,42 @@
             transition: box-shadow 0.5s ease;
 
             .image {
-                height: 70%;
+                display: flex;
+                height: 75%;
                 width: auto;
+
+                img {
+                    margin: auto;
+                    height: 100%;
+                    width: auto;
+
+                }
             }
 
             .bottomBlock {
+                display: flex;
+                justify-content: center;
+
                 svg {
                     cursor: pointer;
                     padding-top: 10px;
                     padding-right: 10px;
                     width: 30px;
                     height: 30px;
+                    transition: fill 0.5s ease;
+                    fill: #2b2d33;
+
+                }
+
+                svg:hover {
+                    fill: #ed3f3f;
                 }
             }
+        }
+
+        .imageCard:hover {
+            box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.45);
+
         }
 
     }

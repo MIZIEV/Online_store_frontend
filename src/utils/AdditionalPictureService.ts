@@ -2,6 +2,7 @@ import axios from "axios";
 
 const HOST = "localhost:8090"
 const ADD_NEW_PICTURE = "http://" + HOST + "/api/phone/";
+const GET_ALL_PICTURES = "http://" + HOST + "/api/phone/";
 
 export async function addNewAdditionalPicture(phoneId: number, pictureUrl: string) {
     try {
@@ -17,3 +18,16 @@ export async function addNewAdditionalPicture(phoneId: number, pictureUrl: strin
         throw error;
     }
 };
+
+export async function getAllAdditionPictures(phoneId: number) {
+    try {
+        const response = await axios.get(GET_ALL_PICTURES + `${phoneId}/pctureUrl/list`);
+
+        console.log("GET ALL ADDITION PICTURE");
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error(error)
+        throw error;
+    }
+}
