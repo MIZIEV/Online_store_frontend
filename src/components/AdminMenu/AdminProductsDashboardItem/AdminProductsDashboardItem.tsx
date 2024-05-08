@@ -26,7 +26,7 @@ const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
       <td>{props.price} UAH</td>
       <td>
         <div className={classes.manage}>
-          <Link to={`${props.id}/edit`}>
+          <Link to={`/admin/phone-managment/edit/${props.id}`}>
             <Button className={classes["edit-button"]}>Оновити</Button>
           </Link>
           <Link to={`/admin/phone-managment/${props.id}/description`}>

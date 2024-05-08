@@ -1,9 +1,10 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { postProduct, queryClient } from "../../../utils/http";
 import classes from "./AddNewPhoneComponent.module.scss"
 import { FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Switch } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getOnePhone, updatePhone } from "../../../utils/phoneService";
 
 interface PhoneRom {
   romSize: number
@@ -19,28 +20,63 @@ const AddNewPhoneComponent = () => {
 
   const [romList, setRomList] = useState<PhoneRom[]>([]);
 
+  const { phoneId } = useParams();
 
-  const { mutate, isPending, isError } = useMutation({
-    mutationFn: postProduct,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      navigate("/admin");
-    },
-  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = {
-      romList: romList,
-      rating: 0.0,
-      used: used,
-      countOfSimCard: countOfSimCard,
-      brand: brand,
-      ...Object.fromEntries(formData),
+  let handleSubmit;
+
+  useEffect(() => {
+    if (phoneId) {
+      getOnePhone(Number(phoneId)).then((response) => {
+
+        setBrand(response.brand);
+        setcountOfSimCard(response.countOfSimCard);
+        setUsed(response.used);
+
+        
+      })
+    }
+  })
+
+  if (phoneId) {
+    handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      const data = {
+        romList: romList,
+        rating: 0.0,
+        used: used,
+        countOfSimCard: countOfSimCard,
+        brand: brand,
+        ...Object.fromEntries(formData),
+      };
+      updatePhone(Number(phoneId), data);
     };
-    mutate(data);
-  };
+  } else {
+
+    const { mutate, isPending, isError } = useMutation({
+      mutationFn: postProduct,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+        navigate("/admin");
+      },
+    });
+    handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      const data = {
+        romList: romList,
+        rating: 0.0,
+        used: used,
+        countOfSimCard: countOfSimCard,
+        brand: brand,
+        ...Object.fromEntries(formData),
+      };
+      mutate(data);
+    };
+  }
+
+
 
   const handleRomSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedSizes = e.target.value as number[];
