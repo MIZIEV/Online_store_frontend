@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./PhoneDescriptionComponent.module.scss";
 import { addNewDescription, deleteDescription, getDescriptions } from "../../../utils/descriptionService";
 import { useParams } from "react-router";
-import { addNewAdditionalPicture, getAllAdditionPictures } from "../../../utils/AdditionalPictureService";
+import { addNewAdditionalPicture, deleteAdditionalPicture, getAllAdditionPictures } from "../../../utils/AdditionalPictureService";
 
 interface PhoneDescription {
     ind: number,
@@ -66,6 +66,16 @@ const PhoneDescriptionComponent: React.FC = () => {
         setPictureUrl("");
     }
 
+    const handleDeletePicture = async (pictureId: number) => {
+
+        try {
+            await deleteAdditionalPicture(Number(phoneId), pictureId);
+            const updatedPictureList = await getAllAdditionPictures(Number(phoneId));
+            setPicturesList(updatedPictureList)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <div className={classes.container}>
@@ -152,7 +162,7 @@ const PhoneDescriptionComponent: React.FC = () => {
 
                             <div className={classes.bottomBlock}>
                                 <div className={classes.icon}>
-                                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg onClick={() => handleDeletePicture(picture.id)} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M42 8H32C32 5.794 30.206 4 28 4H20C17.794 4 16 5.794 16 8H6V12H42V8Z" />
                                         <path d="M22 36H18V16H10V40.286C10 42.334 11.794 44 14 44H34C36.206 44 38 42.334 38 40.286V16H30V36H26V16H22V36Z" />
                                     </svg>
