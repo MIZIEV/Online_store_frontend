@@ -20,6 +20,22 @@ const AddNewPhoneComponent = () => {
 
   const [romList, setRomList] = useState<PhoneRom[]>([]);
 
+  const [model, setModel] = useState("");
+  const [mainPictureURL, setMainPictureURL] = useState("");
+  const [os, setOs] = useState("");
+  const [osVersion, setOsVersion] = useState("");
+  const [screenSize, setScreenSize] = useState();
+  const [resolution, setResolution] = useState("");
+  const [mainCamera, setMainCamera] = useState();
+  const [frontCamera, setFrontCamera] = useState();
+  const [processor, setProcessor] = useState();
+  const [ram, setRam] = useState();
+  const [countOfCores, setCountOfCores] = useState();
+  const [weight, setWeight] = useState();
+  const [batteryCapacity, setBatteryCapacity] = useState();
+  const [price, setPrice] = useState();
+
+
   const { phoneId } = useParams();
 
 
@@ -29,14 +45,31 @@ const AddNewPhoneComponent = () => {
     if (phoneId) {
       getOnePhone(Number(phoneId)).then((response) => {
 
+
         setBrand(response.brand);
         setcountOfSimCard(response.countOfSimCard);
         setUsed(response.used);
 
-        
+
+        setMainPictureURL(response.mainPictureURL)
+        setModel(response.model)
+        setOs(response.os)
+        setOsVersion(response.osVersion)
+        setScreenSize(response.screenSize)
+        setResolution(response.resolution)
+        setMainCamera(response.mainCamera)
+        setFrontCamera(response.frontCamera)
+        setProcessor(response.processor)
+        setRam(response.ram)
+        setWeight(response.weight)
+        setBatteryCapacity(response.batteryCapacity)
+        setPrice(response.countOfCores)
+        setCountOfCores(response.price)
+
+
       })
     }
-  })
+  },[])
 
   if (phoneId) {
     handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -103,6 +136,8 @@ const AddNewPhoneComponent = () => {
               id="model"
               name="model"
               type="text"
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
               placeholder="назва моделі"
               className={classes.inputField}
             />
@@ -114,6 +149,8 @@ const AddNewPhoneComponent = () => {
               id="mainPictureURL"
               name="mainPictureURL"
               type="text"
+              value={mainPictureURL}
+              onChange={(e) => setMainPictureURL(e.target.value)}
               placeholder="URL"
               className={classes.inputField}
             />
@@ -125,6 +162,8 @@ const AddNewPhoneComponent = () => {
               id="os"
               type="text"
               name="os"
+              value={os}
+              onChange={(e) => setOs(e.target.value)}
               placeholder="Операційна система"
               className={classes.inputField}
             />
@@ -136,6 +175,8 @@ const AddNewPhoneComponent = () => {
               id="osVersion"
               name="osVersion"
               type="text"
+              value={osVersion}
+              onChange={(e) => setOsVersion(e.target.value)}
               placeholder="Версія ос "
               className={classes.inputField}
             />
@@ -147,6 +188,8 @@ const AddNewPhoneComponent = () => {
               id="screenSize"
               type="text"
               name="screenSize"
+              value={screenSize}
+              onChange={(e) => setScreenSize(e.target.value)}
               placeholder="розмір екрану"
               className={classes.inputField}
             />
@@ -158,6 +201,8 @@ const AddNewPhoneComponent = () => {
               id="resolution"
               type="text"
               name="resolution"
+              value={resolution}
+              onChange={(e) => setResolution(e.target.value)}
               placeholder="роздільна здатність"
               className={classes.inputField}
             />
@@ -169,6 +214,8 @@ const AddNewPhoneComponent = () => {
               id="mainCamera"
               type="text"
               name="mainCamera"
+              value={mainCamera}
+              onChange={(e) => setMainCamera(e.target.value)}
               placeholder="Головна камера"
               className={classes.inputField}
             />
@@ -180,6 +227,8 @@ const AddNewPhoneComponent = () => {
               id="frontCamera"
               name="frontCamera"
               type="text"
+              value={frontCamera}
+              onChange={(e) => setFrontCamera(e.target.value)}
               placeholder="Фронтальна камера"
               className={classes.inputField}
             />
@@ -191,6 +240,8 @@ const AddNewPhoneComponent = () => {
               id="processor"
               name="processor"
               type="text"
+              value={processor}
+              onChange={(e) => setProcessor(e.target.value)}
               placeholder="Процесор"
               className={classes.inputField}
             />
@@ -202,6 +253,8 @@ const AddNewPhoneComponent = () => {
               id="countOfCores"
               name="countOfCores"
               type="text"
+              value={countOfCores}
+              onChange={(e) => setCountOfCores(e.target.value)}
               placeholder="Кількість ядер"
               className={classes.inputField}
             />
@@ -213,18 +266,9 @@ const AddNewPhoneComponent = () => {
               id="ram"
               name="ram"
               type="text"
+              value={ram}
+              onChange={(e) => setRam(e.target.value)}
               placeholder="Озу"
-              className={classes.inputField}
-            />
-          </div>
-
-          <div className={classes.inputContainer}>
-            <label htmlFor="rom">Озп</label>
-            <input
-              id="rom"
-              name="rom"
-              type="text"
-              placeholder="Озп"
               className={classes.inputField}
             />
           </div>
@@ -235,6 +279,8 @@ const AddNewPhoneComponent = () => {
               id="weight"
               name="weight"
               type="text"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
               placeholder="Вага "
               className={classes.inputField}
             />
@@ -246,6 +292,8 @@ const AddNewPhoneComponent = () => {
               id="batteryCapacity"
               name="batteryCapacity"
               type="text"
+              value={batteryCapacity}
+              onChange={(e) => setBatteryCapacity(e.target.value)}
               placeholder="Ємність акумулятора"
               className={classes.inputField}
             />
@@ -257,6 +305,8 @@ const AddNewPhoneComponent = () => {
               id="price"
               name="price"
               type="text"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               placeholder="Ціна"
               className={classes.inputField}
             />
