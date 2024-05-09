@@ -63,10 +63,9 @@ const AddNewPhoneComponent = () => {
         setRam(response.ram)
         setWeight(response.weight)
         setBatteryCapacity(response.batteryCapacity)
-        setPrice(response.countOfCores)
-        setCountOfCores(response.price)
-
-
+        setPrice(response.price)
+        setCountOfCores(response.countOfCores)
+        setRomList(response.romList)
       })
     }
   },[])
@@ -84,6 +83,7 @@ const AddNewPhoneComponent = () => {
         ...Object.fromEntries(formData),
       };
       updatePhone(Number(phoneId), data);
+      navigate("/admin/phone-managment");
     };
   } else {
 
@@ -91,7 +91,7 @@ const AddNewPhoneComponent = () => {
       mutationFn: postProduct,
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["products"] });
-        navigate("/admin");
+        navigate("/admin/phone-managment");
       },
     });
     handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
