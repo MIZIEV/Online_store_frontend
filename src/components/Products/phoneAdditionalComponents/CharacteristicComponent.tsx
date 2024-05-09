@@ -12,7 +12,13 @@ const CharacteristicComponent: React.FC = (props) => {
             <div className={classes.container}>
                 <div className={classes.textRow}>
                     <span>Стандарт мобільного зв'язку</span>
-                    <span>value</span>
+                    <div style={{ display: "block", textAlign: "right" }}>
+                        {
+                            phoneCharacteristic.communicationStandardList.map((communicationStandard) => (
+                                <span style={{ display: "block", padding: "5px 0px" }} >{communicationStandard.standardName}</span>
+                            ))
+                        }
+                    </div>
                 </div>
                 <div className={classes.textRow}>
                     <span>Кількість SIM-карт</span>
