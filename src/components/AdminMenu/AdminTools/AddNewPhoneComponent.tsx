@@ -10,6 +10,10 @@ interface PhoneRom {
   romSize: number
 }
 
+interface CommunicationStandardList {
+  standardName: string
+}
+
 const AddNewPhoneComponent = () => {
 
   const navigate = useNavigate();
@@ -19,6 +23,7 @@ const AddNewPhoneComponent = () => {
   const [used, setUsed] = useState<boolean>(false);
 
   const [romList, setRomList] = useState<PhoneRom[]>([]);
+  const [communicationStandardList, setCommunicationStandardList] = useState<CommunicationStandardList[]>([]);
 
   const [model, setModel] = useState("");
   const [mainPictureURL, setMainPictureURL] = useState("");
@@ -65,16 +70,19 @@ const AddNewPhoneComponent = () => {
         setBatteryCapacity(response.batteryCapacity)
         setPrice(response.price)
         setCountOfCores(response.countOfCores)
+
         setRomList(response.romList)
+        setCommunicationStandardList(response.communicationStandardList);
       })
     }
-  },[])
+  }, [])
 
   if (phoneId) {
     handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.target as HTMLFormElement);
       const data = {
+        communicationStandardList: communicationStandardList,
         romList: romList,
         rating: 0.0,
         used: used,
@@ -98,6 +106,7 @@ const AddNewPhoneComponent = () => {
       e.preventDefault();
       const formData = new FormData(e.target as HTMLFormElement);
       const data = {
+        communicationStandardList: communicationStandardList,
         romList: romList,
         rating: 0.0,
         used: used,
@@ -115,6 +124,11 @@ const AddNewPhoneComponent = () => {
     const selectedSizes = e.target.value as number[];
     const roms: PhoneRom[] = selectedSizes.map(size => ({ romSize: size }));
     setRomList(roms);
+  };
+  const handleCommunicationStandardSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const selectedSizes = e.target.value as string[];
+    const standarts: CommunicationStandardList[] = selectedSizes.map(standardName => ({ standardName: standardName }));
+    setCommunicationStandardList(standarts);
   };
 
   function handleUsed() {
@@ -335,6 +349,44 @@ const AddNewPhoneComponent = () => {
           </div>
 
           <div className={classes.inputContainer}>
+            <label htmlFor="rom">Ппз</label>
+            <Select
+              id="rom"
+              multiple={true}
+              value={romList.map(rom => rom.romSize)} // Extracting the sizes from the PhoneRom array
+              onChange={handleRomSelection} // Handling the ROM selection
+
+              inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
+            >
+              <MenuItem value={16}>16 гб</MenuItem>
+              <MenuItem value={32}>32 гб</MenuItem>
+              <MenuItem value={64}>64 гб</MenuItem>
+              <MenuItem value={128}>128 гб</MenuItem>
+              <MenuItem value={256}>256 гб</MenuItem>
+              <MenuItem value={512}>512 гб</MenuItem>
+              <MenuItem value={1}>1 Тб</MenuItem>
+            </Select>
+          </div>
+
+          <div className={classes.inputContainer}>
+            <label htmlFor="communicationStandardList">Стандарти зв'язку</label>
+            <Select
+              id="communicationStandardList"
+              multiple={true}
+              value={communicationStandardList.map(standard => standard.standardName)} // Extracting the sizes from the PhoneRom array
+              onChange={handleCommunicationStandardSelection} // Handling the ROM selection
+
+              inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
+            >
+              <MenuItem value="2G (GPRS/EDGE)">2G (GPRS/EDGE)</MenuItem>
+              <MenuItem value="3G (WCDMA/UMTS/HSPA)">3G (WCDMA/UMTS/HSPA)</MenuItem>
+              <MenuItem value="4G (LTE)">4G (LTE)</MenuItem>
+              <MenuItem value="5G">5G</MenuItem>
+
+            </Select>
+          </div>
+
+          <div className={classes.inputContainer}>
             <FormGroup>
               <FormControlLabel control={<Switch
                 checked={used}
@@ -353,29 +405,6 @@ const AddNewPhoneComponent = () => {
                 }}
               />} label="Вживаний?" />
             </FormGroup>
-          </div>
-
-          <div className={classes.inputContainer}>
-            <label htmlFor="rom">Озу</label>
-            <Select
-              id="rom"
-              multiple={true}
-              value={romList.map(rom => rom.romSize)} // Extracting the sizes from the PhoneRom array
-              onChange={handleRomSelection} // Handling the ROM selection
-
-              inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
-            >
-              <MenuItem value={2}>2 гб</MenuItem>
-              <MenuItem value={4}>4 гб</MenuItem>
-              <MenuItem value={6}>6 гб</MenuItem>
-              <MenuItem value={8}>8 гб</MenuItem>
-              <MenuItem value={10}>10 гб</MenuItem>
-              <MenuItem value={12}>12 гб</MenuItem>
-              <MenuItem value={16}>16 гб</MenuItem>
-              <MenuItem value={18}>18 гб</MenuItem>
-              <MenuItem value={24}>24 гб</MenuItem>
-              <MenuItem value={32}>32 гб</MenuItem>
-            </Select>
           </div>
         </div>
 
