@@ -1,11 +1,11 @@
 import Button from "../../../UI/Button/Button";
-import { CardProps } from "../../../shared.types";
+import { Phone } from "../../../shared.types";
 import classes from "./AdminProductsDashboardItem.module.scss";
 import { deleteProduct, queryClient } from "../../../utils/http";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
-const AdminProductsDashboardItem: React.FC<CardProps> = (props) => {
+const AdminProductsDashboardItem: React.FC<Phone> = (props) => {
 
   const { mutate } = useMutation({
     mutationFn: deleteProduct,

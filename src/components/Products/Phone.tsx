@@ -5,7 +5,7 @@ import { GetColorName } from 'hex-color-to-color-name';
 import { useParams } from "react-router";
 import { getOnePhone } from "../../utils/phoneService";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
-import Rating from "../../UI/Rating/Rating";
+import RatingComponent from "../../UI/Rating/RatingComponent";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
 
@@ -133,9 +133,9 @@ const Phone: React.FC = () => {
 
                             <h2>{phone.brand + " " + phone.model}</h2>
                             <p>Код товару: {phone.id}</p>
-
+                            {/*--------------------------------rating functional----------------------------------- */}
                             <div className={classes.ratingBlock}>
-                                <Rating rating={Number(phone.rating)} />
+                                <RatingComponent phoneId={id} rating={phone.rating} />
                                 <p className={classes.voteCount}>{phone.voteCount} відгуків</p>
                             </div>
                             <h2 className={classes.price}>{phone.price} грн.</h2>

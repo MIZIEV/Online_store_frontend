@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
 import Button from "../../UI/Button/Button";
-import { CardProps } from "../../shared.types";
+import { Phone } from "../../shared.types";
 
 
 import classes from "./Card.module.scss";
 import { CartProduct, addToCart } from "../../redux/cartSlice";
 
-const Card: React.FC<CardProps> = (props) => {
+const Card: React.FC<Phone> = (props) => {
   const dispatch = useDispatch();
 
   const addProduct = (payload: CartProduct) => {

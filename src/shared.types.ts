@@ -1,4 +1,4 @@
-export type CardProps = {
+export type Phone = {
   id: number;
   brand: string;
   model: string;

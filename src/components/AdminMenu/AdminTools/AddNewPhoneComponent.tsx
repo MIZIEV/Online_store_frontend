@@ -1,8 +1,8 @@
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { postProduct, queryClient } from "../../../utils/http";
 import classes from "./AddNewPhoneComponent.module.scss"
-import { FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Switch } from "@mui/material";
+import { FormControlLabel, FormGroup, MenuItem, Select, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getOnePhone, updatePhone } from "../../../utils/phoneService";
 

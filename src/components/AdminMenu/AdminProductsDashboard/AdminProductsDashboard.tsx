@@ -3,7 +3,7 @@ import Button from "../../../UI/Button/Button";
 import AdminProductsDashboardItem from "../AdminProductsDashboardItem/AdminProductsDashboardItem";
 import classes from "./AdminProductsDashboard.module.scss";
 import { getMethod } from "../../../utils/http";
-import { CardProps } from "../../../shared.types";
+import { Phone } from "../../../shared.types";
 import { useNavigate } from "react-router-dom";
 
 const AdminProductsDashboard: React.FC = () => {
@@ -42,7 +42,7 @@ const AdminProductsDashboard: React.FC = () => {
             <th>Ціна</th>
             <th>Керування</th>
           </tr>
-          {data?.map((item: CardProps) => (
+          {data?.map((item: Phone) => (
             <AdminProductsDashboardItem
               key={item.id}
               id={item.id}
