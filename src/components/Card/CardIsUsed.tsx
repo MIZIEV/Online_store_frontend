@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import classes from "./CardIsUsed.module.scss";
-import { CardProps } from "../../shared.types";
+import { Phone } from "../../shared.types";
 
-const CardIsUsed: React.FC<CardProps> = (props) => {
+const CardIsUsed: React.FC<Phone> = (props) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
