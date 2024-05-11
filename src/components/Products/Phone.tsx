@@ -61,7 +61,7 @@ const Phone: React.FC = () => {
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
 
     const [pageState, setPageState] = useState<PageState>({
-        selectedOption: 'option1' // первая кнопка выбрана по умолчанию
+        selectedOption: 'option1'
     });
 
     const handleOptionChange = (option: string) => {
@@ -71,11 +71,18 @@ const Phone: React.FC = () => {
         getPhone();
     }, [])
 
+    const handleChangeRating = () => {
+        console.log("second getPhone handler")
+        getPhone();
+    }
+
+
+
 
     function getPhone() {
         getOnePhone(parseInt(id)).then((response) => {
 
-            console.log("function in component")
+            console.log("function GET PHONE in component")
             console.log(response);
             setPhone(response);
         }).catch((error) => {
@@ -135,7 +142,7 @@ const Phone: React.FC = () => {
                             <p>Код товару: {phone.id}</p>
                             {/*--------------------------------rating functional----------------------------------- */}
                             <div className={classes.ratingBlock}>
-                                <RatingComponent phoneId={id} rating={phone.rating} />
+                                <RatingComponent phoneId={id} rating={phone.rating} handleChangeRating={handleChangeRating} />
                                 <p className={classes.voteCount}>{phone.voteCount} відгуків</p>
                             </div>
                             <h2 className={classes.price}>{phone.price} грн.</h2>

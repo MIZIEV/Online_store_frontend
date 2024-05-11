@@ -1,23 +1,49 @@
 import Rating from '@mui/material/Rating';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { putTheMark } from '../../utils/phoneService';
+import { isUserLoggedIn } from '../../utils/AuthService';
 
 
 const customRatingStyle = {
   '& .MuiRating-iconFilled': {
-    color: 'black', 
+    color: 'black',
   },
   '& .MuiRating-iconEmpty': {
-    color: '#767676', 
+    color: '#767676',
   },
 };
 
-const RatingComponent: React.FC = ({ phoneId, rating }) => {
-  const [value, setValue] = React.useState<number | null>(rating);
+const RatingComponent: React.FC = ({ phoneId, rating, handleChangeRating }) => {
+  const [value, setValue] = useState<number | null>(rating);
+  const [hasRated, setHasRated] = useState<boolean>(false);
+  const isAuthenticated = isUserLoggedIn();
 
-  const hanleRating = (newValue) => {
-    console.log("value in hanler - " + newValue)
-    putTheMark(phoneId, newValue);
+
+  useEffect(() => {
+    const userHasRated = sessionStorage.getItem(`rated_${phoneId}`);
+
+    if (userHasRated) {
+      setHasRated(true);
+    }
+  }, [phoneId]);
+
+  const handleRating = async (newValue) => {
+
+    if (isAuthenticated) {
+      if (!hasRated) {
+        await putTheMark(phoneId, newValue);
+        setHasRated(true);
+
+        console.log("second calling after put the mark")
+        handleChangeRating();
+
+        sessionStorage.setItem(`rated_${phoneId}`, `true`);
+      } else {
+        console.log("User has already rated this phone");
+      }
+    } else {
+      console.log("user is not authenticated")
+    }
   }
 
   return (
@@ -26,11 +52,10 @@ const RatingComponent: React.FC = ({ phoneId, rating }) => {
         sx={customRatingStyle}
         name="simple-controlled"
         value={value}
-
+        disabled={hasRated || !isAuthenticated}
         onChange={(event, newValue) => {
-          console.log("new value" + newValue)
           setValue(newValue);
-          hanleRating(newValue)
+          handleRating(newValue);
         }}
       />
     </div>
