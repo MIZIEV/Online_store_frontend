@@ -8,6 +8,7 @@ import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import RatingComponent from "../../UI/Rating/RatingComponent";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
+import ReviewsComponent from "./phoneAdditionalComponents/ReviewsComponent";
 
 interface phoneCharacteristic {
     id: number,
@@ -231,7 +232,7 @@ const Phone: React.FC = () => {
                             <div className={classes.bottomContent}>
                                 {pageState.selectedOption === 'option1' && <DescriptionComponent phoneId={id} />}
                                 {pageState.selectedOption === 'option2' && <CharacteristicComponent phone={phone} />}
-                                {pageState.selectedOption === 'option3' && <div>Відгуки</div>}
+                                {pageState.selectedOption === 'option3' && <ReviewsComponent />}
                             </div>
                         )}
                     </div>
