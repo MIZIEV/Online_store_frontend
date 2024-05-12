@@ -1,0 +1,59 @@
+.container {
+    border: 1px solid #adbc9f;
+    width: 100%;
+    height: 90px;
+    padding: 20px;
+    margin: 15px 0px;
+
+    .topBlock {
+        display: flex;
+        justify-content: space-between;
+
+        .author {
+
+            font-family: "Arsenal", sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .createdAt {
+            font-family: "Work Sans", sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            color: #000;
+        }
+
+    }
+
+    .bottomBlock {
+        display: flex;
+        justify-content: space-between;
+        height: 80%;
+
+        .comment {
+            padding-top: 20px;
+            font-family: "Work Sans", sans-serif;
+
+            font-weight: 400;
+            font-size: 18px;
+            color: #000;
+
+        }
+
+        .deleteIcon {
+            align-self: flex-end;
+
+            svg {
+                cursor: pointer;
+                transition: fill 0.5s ease;
+                height: 25px;
+                width: auto;
+                fill: #2b2d33;
+            }
+
+            svg:hover {
+                fill: #ed3f3f;
+            }
+        }
+    }
+}

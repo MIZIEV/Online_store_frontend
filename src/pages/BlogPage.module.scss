@@ -1,0 +1,33 @@
+.container {
+    .containerTop {
+        .BreadCrumb {
+            padding-top: 50px;
+            padding-left: 40px;
+        }
+
+        h1 {
+            font-family: "Arsenal", sans-serif;
+            font-weight: 700;
+            font-size: 48px;
+            margin-top: 50px;
+            margin-left: 40px;
+        }
+    }
+
+
+    .cardList {
+        padding: 0px 40px;
+        margin: 0 auto;
+        max-width: 90rem;
+        margin-top: 3rem;
+        padding-bottom: 3rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .link {
+        text-decoration: none;
+        color: black;
+    }
+}

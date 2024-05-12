@@ -1,0 +1,261 @@
+.container {
+    padding: 50px;
+
+    h2 {
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+    }
+
+    p {
+        font-family: "Work Sans", sans-serif;
+        color: #767676;
+        font-weight: 400;
+        font-size: 12px;
+    }
+
+    .topInfoBlock {
+        display: flex;
+
+        .leftImagesBlock {
+
+            display: flex;
+            width: 570px;
+            height: 500px;
+            padding: 30px 0px;
+
+            .mainImage {
+                border-radius: 4px;
+                height: 100%;
+                width: 75%;
+                background-color: transparent;
+                text-align: center;
+
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+
+            .additionImagePanel {
+                height: 100%;
+                overflow: hidden;
+                position: relative;
+
+                .additionImagesContainer {
+                    overflow-y: auto;
+                    width: 100%;
+                    height: 100%;
+                    padding-right: 10px;
+                    scrollbar-width: none;
+
+                    -webkit-scrollbar {
+                        display: none;
+                    }
+                }
+
+                .additionImages {
+                    margin: 10px;
+                    border-radius: 4px;
+                    width: 83px;
+                    height: 91px;
+                    background-color: transparent;
+                    text-align: center;
+
+                    img {
+                        height: 100%;
+                        width: auto;
+                    }
+                }
+
+                &:before,
+                &:after {
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    height: 20px;
+                    background: transparent;
+
+                    z-index: 1;
+                }
+
+                &:before {
+                    top: 0;
+                    background: linear-gradient(to bottom, rgba(255, 255, 244, 1) 0%, rgba(217, 217, 217, 0) 100%);
+                }
+
+                &:after {
+                    bottom: 0;
+                    background: linear-gradient(to bottom, rgba(217, 217, 217, 0) 0%, rgba(255, 255, 244, 1) 100%);
+                }
+            }
+        }
+    }
+
+
+
+    .rightImagesBlock {
+        padding-left: 50px;
+
+        .ratingBlock {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+
+            .voteCount {
+                font-family: "Work Sans", sans-serif;
+                padding-left: 10px;
+                font-weight: 400;
+                font-size: 10px;
+            }
+        }
+
+        .price {
+            padding-top: 30px;
+        }
+
+        .colorBlock {
+            padding-top: 30px;
+
+            .colorItems {
+                margin-top: 5px;
+                display: flex;
+
+                .colorItem {
+                    font-family: "Work Sans", sans-serif;
+                    margin-right: 5px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 4px;
+                    border: 1px solid #767676;
+                    cursor: pointer;
+
+                    .colorRadioButton {
+                        display: none;
+                    }
+                }
+
+                .selected {
+                    border: 2px solid black;
+                }
+
+                .colorItem:hover {
+                    border: 2px solid black;
+                }
+            }
+        }
+
+        .romBlock {
+            padding-top: 30px;
+
+            .romItems {
+                margin-top: 5px;
+                display: flex;
+
+                .romItem {
+                    font-family: "Work Sans", sans-serif;
+                    text-align: center;
+                    margin-right: 5px;
+                    border: 1px solid #767676;
+
+                    border-radius: 4px;
+                    padding: 4px 16px;
+                    width: 63px;
+                    height: 18px;
+                    cursor: pointer;
+
+                    .romRadioButton {
+                        display: none;
+                    }
+                }
+
+                .romItemhover {
+                    border: 2px solid black;
+                }
+
+                .selected {
+                    border: 2px solid black;
+                }
+            }
+        }
+    }
+
+    .countBlock {
+        padding-top: 30px;
+        display: flex;
+        text-align: center;
+
+        .countImage {
+            margin-right: 5px;
+            height: 22px;
+            width: 22px;
+        }
+
+        .count {
+            margin-right: 5px;
+            font-size: 20px;
+            text-align: center;
+        }
+    }
+
+    .buttonsBlock {
+        padding-top: 30px;
+
+        .buyButton,
+        .addToFavorite {
+            cursor: pointer;
+            font-family: "Work Sans", sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            border-radius: 4px;
+            height: 37px;
+        }
+
+        .buyButton {
+            background: #436850;
+            width: 164px;
+            color: #fffff4;
+            margin-right: 20px;
+        }
+
+        .addToFavorite {
+            border: 1px solid #436850;
+            width: 252px;
+        }
+    }
+
+    .bottomBlock {
+
+        margin: 0px auto;
+
+        .radioButtonsBlock {
+            display: flex;
+            justify-content: center;
+
+            .RadioButton,
+            .selected {
+                cursor: pointer;
+                font-family: "Work Sans", sans-serif;
+                margin: 0px 50px;
+                border: 1px solid #767676;
+                border-radius: 4px;
+                width: 246px;
+                height: 37px;
+                font-weight: 400;
+                font-size: 18px;
+            }
+
+            .RadioButton {
+                background-color: transparent;
+            }
+
+            .selected {
+                background-color: #adbc9f;
+                color: black;
+            }
+
+        }
+
+        .bottomContent {}
+    }
+}

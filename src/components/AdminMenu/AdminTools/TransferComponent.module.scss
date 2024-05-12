@@ -1,0 +1,33 @@
+.container {
+    padding: 50px;
+
+    .buttonContainer {
+        display: flex;
+        justify-content: center;
+
+        .linkBlock {
+
+            height: 250px;
+            margin: 50px;
+            text-align: center;
+
+            h3 {
+                font-family: "Arsenal", sans-serif;
+                font-weight: 700;
+                font-size: 18px;
+                padding-bottom: 40px;
+            }
+
+            svg {
+                height: 100%;
+                width: auto;
+                fill: #767676;
+                transition: fill 0.5s ease;
+            }
+
+            svg:hover {
+                fill: #436850;
+            }
+        }
+    }
+}

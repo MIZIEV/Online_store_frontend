@@ -1,0 +1,15 @@
+.breadCrumbNav {
+    ol {
+        display: flex;
+        font-family: "Work Sans", sans-serif;
+        list-style: none;
+        font-weight: 400;
+        font-size: 12px;
+        color: #767676;
+    }
+
+    .Link {
+        color: inherit;
+        text-decoration: none;
+    }
+}

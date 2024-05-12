@@ -1,0 +1,31 @@
+.page {
+  padding: 4rem 5rem;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      font-family: "Arsenal", sans-serif;
+      color: #171725;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .login-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-section {
+      height: 500px;
+      width: 500px;
+
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
+}

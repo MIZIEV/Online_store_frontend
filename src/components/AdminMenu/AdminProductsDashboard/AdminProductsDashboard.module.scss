@@ -1,0 +1,60 @@
+.dashboard {
+  margin-top: 2rem;
+  padding: 50px;
+
+  button {
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    cursor: pointer;
+  }
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    input {
+      width: 25%;
+      padding: 10px;
+      outline: none;
+      border: 2px solid #767676;
+      padding: 16px 0;
+      background-color: #fffff4;
+      border-radius: 0px 4px 4px 0px;
+      color: black;
+      font-size: 18px;
+      padding-left: 1rem;
+    }
+
+    .add-new-button {
+      border-radius: 4px;
+      width: 370px;
+      background-color: #436850;
+
+      font-family: "Work Sans", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      color: #fffff4;
+    }
+  }
+
+  .table {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    border-collapse: collapse;
+    width: 100%;
+
+    td,
+    th {
+      border: 1px solid #767676;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #adbc9f;
+    }
+  }
+}
