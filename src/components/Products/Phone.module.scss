@@ -203,6 +203,7 @@
 
         .buyButton,
         .addToFavorite {
+            cursor: pointer;
             font-family: "Work Sans", sans-serif;
             font-weight: 400;
             font-size: 18px;
@@ -233,6 +234,7 @@
 
             .RadioButton,
             .selected {
+                cursor: pointer;
                 font-family: "Work Sans", sans-serif;
                 margin: 0px 50px;
                 border: 1px solid #767676;

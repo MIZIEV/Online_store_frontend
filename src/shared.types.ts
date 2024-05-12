@@ -33,3 +33,10 @@ export type Color = {
   id: number,
   colorName: string
 }
+
+export type Comment = {
+  id: number,
+  commentText: string,
+  createdAt: string,
+  authorName: string
+}
