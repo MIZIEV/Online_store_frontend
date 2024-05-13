@@ -4,7 +4,7 @@ import Card from "../components/Card/Card";
 import { CardProps } from "../shared.types";
 import { useRef, useState } from "react";
 import classes from "./Home.module.scss";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 
 import Carousel from 'react-multi-carousel';
@@ -18,6 +18,7 @@ import CardIsUsed from "../components/Card/CardIsUsed";
 const HomePage = () => {
   const [filter, setFilter] = useState("?sort=maxRating");
   const PHONE_URL = "/phone/";
+  const navigator = useNavigate();
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["products", { filter: filter }],
@@ -27,6 +28,10 @@ const HomePage = () => {
   const handleFilterChange = (filter: string) => {
     setFilter(filter);
   };
+
+  const handleNavigate = () => {
+    navigator("/phone/catalog");
+  }
 
   console.log(data);
 
@@ -89,7 +94,7 @@ const HomePage = () => {
       <div className={classes.topContainer}>
 
         <div className={classes.leftBlock}>
-          <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={handleNavigate} viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M-0.00225067 44.9977L90 90L77.85 49.4977L29.2477 49.4977V40.4977L77.85 40.4977L89.9978 -0.00225067L-0.00225067 44.9977Z" fill="#0D0C0C" />
           </svg>
           <div className={classes.leftImage}>
@@ -99,7 +104,7 @@ const HomePage = () => {
         </div>
 
         <div className={classes.middleBlock}>
-          <img src={appleImage} alt="apple image" />
+          <img onClick={handleNavigate} src={appleImage} alt="apple image" />
           <h2>Apple</h2>
         </div>
 
@@ -108,7 +113,7 @@ const HomePage = () => {
             <img src={samsungImage} alt="samsung image" />
             <h5>samsung</h5>
           </div>
-          <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={handleNavigate} viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M90.0023 45.0023L0 0L12.15 40.5023H60.7523V49.5023H12.15L0.00224984 90.0023L90.0023 45.0023Z" fill="#0D0C0C" />
           </svg>
         </div>
