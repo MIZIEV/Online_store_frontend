@@ -1,0 +1,36 @@
+.container {
+    border-radius: 4px;
+    width: 320px;
+    height: 330px;
+
+    .image {
+        height: 70%;
+        width: auto;
+        background-color: #d9d9d9;
+
+    }
+
+    .bottomBlock {
+        display: flex;
+        justify-content: space-between;
+
+        h4 {
+            font-family: "Arsenal", sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            margin: 5px 0px;
+        }
+
+        h5 {
+            font-family: "Work Sans", sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            color: #767676;
+        }
+
+        .likeIcon {
+            cursor: pointer;
+            margin: auto 0px;
+        }
+    }
+}

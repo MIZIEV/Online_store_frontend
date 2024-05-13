@@ -22,6 +22,7 @@ import Phone from "./components/Products/Phone";
 import TransferComponent from "./components/AdminMenu/AdminTools/TransferComponent";
 import ColorControleComponent from "./components/AdminMenu/AdminTools/ColorControlComponent";
 import PhoneDescriptionComponent from "./components/AdminMenu/AdminTools/PhoneDescriptionComponent";
+import PhoneCatalog from "./pages/PhoneCatalog";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "admin/phone-managment/edit/:phoneId",
         element: <AddNewPhoneComponent />
+      },
+      {
+        path: "phone/catalog",
+        element: <PhoneCatalog />
       }
     ],
   },
