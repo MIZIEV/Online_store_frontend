@@ -1,18 +1,38 @@
 import React from "react";
 import classes from "./CatalogCard.module.scss";
 
-const CatalogCard: React.FC = () => {
+const CatalogCard: React.FC = (props) => {
+
+    const phoneData = props.phoneData;
+    const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00'];
+
+
+
+
     return (
         <div className={classes.container}>
             <div className={classes.image}>
+
+                <img src={phoneData.mainPictureURL} />
+
+                <div className={classes.colors}>
+
+                    {
+                        colors.map((color) => (
+                            <div
+                                className={classes.circle}
+                                style={{ backgroundColor: color }}></div>
+                        ))
+                    }
+                </div>
 
             </div>
 
             <div className={classes.bottomBlock}>
                 <div className={classes.textBlock}>
-                    <h4>Назва</h4>
-                    <h5>Код товару 123123</h5>
-                    <h4>13000</h4>
+                    <h4>{phoneData.model}</h4>
+                    <h5>{`Код товару: ${phoneData.id}`}</h5>
+                    <h4>{`${phoneData.price} ₴`}</h4>
                 </div>
 
                 <div className={classes.likeIcon}>

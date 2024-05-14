@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./PhoneCatalog.module.scss"
 import CheckBoxBlock from "../UI/CheckBox/CheckBoxBlock";
 import CatalogCard from "../components/Card/CatalogCard";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "../utils/http";
+import { NavLink } from "react-router-dom";
 
 const PhoneCatalog: React.FC = () => {
 
+    const [filter, setFilter] = useState("?sort=maxRating");
+
+    const { data, isPending, isError } = useQuery({
+        queryKey: ["products", { filter: filter }],
+        queryFn: ({ signal }) => getProducts({ signal, filter }),
+    });
 
     return (
         <div className={classes.container}>
@@ -22,19 +31,16 @@ const PhoneCatalog: React.FC = () => {
             </div>
 
             <div className={classes.rightBlock}>
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
-                <CatalogCard />
+                {data && data.length > 0 ? (
+                    data.map((phone) => (
+                        <NavLink to={`/phone/${phone.id}`} className={classes.link}>
+
+                            <CatalogCard phoneData={phone} />
+                        </NavLink>
+                    ))
+                ) : (
+                    <div>No data</div>
+                )}
 
             </div>
 
