@@ -6,9 +6,6 @@ const CatalogCard: React.FC = (props) => {
     const phoneData = props.phoneData;
     const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00'];
 
-
-
-
     return (
         <div className={classes.container}>
             <div className={classes.image}>
@@ -18,8 +15,9 @@ const CatalogCard: React.FC = (props) => {
                 <div className={classes.colors}>
 
                     {
-                        colors.map((color) => (
+                        colors.map((color, index) => (
                             <div
+                                key={index}
                                 className={classes.circle}
                                 style={{ backgroundColor: color }}></div>
                         ))

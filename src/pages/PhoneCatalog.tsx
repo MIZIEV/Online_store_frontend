@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./PhoneCatalog.module.scss"
 import CheckBoxBlock from "../UI/CheckBox/CheckBoxBlock";
 import CatalogCard from "../components/Card/CatalogCard";
@@ -6,10 +6,18 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../utils/http";
 import { NavLink } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
+import { getAllPhoneDistinctCharacteristics } from "../utils/phoneService";
 
 const PhoneCatalog: React.FC = () => {
 
     const [filter, setFilter] = useState("?sort=maxRating");
+    const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState({});
+
+    useEffect(() => {
+        getAllPhoneDistinctCharacteristics().then((response) => {
+            setDistinctPhoneCharacteristic(response);
+        })
+    }, [])
 
     const { data, isPending, isError } = useQuery({
         queryKey: ["products", { filter: filter }],
@@ -27,23 +35,21 @@ const PhoneCatalog: React.FC = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.leftBlock}>
-
-                    <CheckBoxBlock title="Бренд" />
-                    <CheckBoxBlock title="Модель смартфона" />
-                    <CheckBoxBlock title="Стан" />
-                    <CheckBoxBlock title="Діагональ екрану" />
-                    <CheckBoxBlock title="Роздільна здатність екрану" />
-                    <CheckBoxBlock title="Оперативна пам'ять" />
+                    <CheckBoxBlock characteristicData={["Apple", "Samsung", "Xiaomi"]} title="Бренд" />
+                    <CheckBoxBlock characteristicData={["Новий", "Бу"]} title="Стан" />
+                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.screenSize} title="Діагональ екрану" />
+                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.resolution} title="Роздільна здатність екрану" />
+                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.ram} title="Оперативна пам'ять" />
                     <CheckBoxBlock title="Обсяг пам'яті" />
-                    <CheckBoxBlock title="Кількість ядер" />
-                    <CheckBoxBlock title="Кількість SIM-карт" />
+                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.countOfCores} title="Кількість ядер" />
+                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.countOfSimCard} title="Кількість SIM-карт" />
                 </div>
 
                 <div className={classes.rightBlock}>
                     {data && data.length > 0 ? (
                         data.map((phone) => (
-                            <NavLink to={`/phone/${phone.id}`} className={classes.link}>
-                                <CatalogCard phoneData={phone} />
+                            <NavLink key={phone.id} to={`/phone/${phone.id}`} className={classes.link}>
+                                <CatalogCard key={phone.id} phoneData={phone} />
                             </NavLink>
                         ))
                     ) : (
