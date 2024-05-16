@@ -24,6 +24,22 @@ const PhoneCatalog: React.FC = () => {
         queryFn: ({ signal }) => getProducts({ signal, filter }),
     });
 
+    const handleFilterChange = (filterParams: { [key: string]: string[] }) => {
+
+        const currentFilterParams = new URLSearchParams(filter);
+
+        for (const key in filterParams) {
+            if (Array.isArray(filterParams[key]) && filterParams[key].length > 0) {
+                currentFilterParams.set(key, filterParams[key].join(','));
+            } else {
+                currentFilterParams.delete(key);
+            }
+        }
+
+        const queryString = currentFilterParams.toString();
+        setFilter(`?${queryString}`);
+    }
+
     return (
         <div className={classes.container}>
             <div className={classes.breadCrumb}>
@@ -35,14 +51,14 @@ const PhoneCatalog: React.FC = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.leftBlock}>
-                    <CheckBoxBlock characteristicData={["Apple", "Samsung", "Xiaomi"]} title="Бренд" />
-                    <CheckBoxBlock characteristicData={["Новий", "Бу"]} title="Стан" />
-                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.screenSize} title="Діагональ екрану" />
-                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.resolution} title="Роздільна здатність екрану" />
-                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.ram} title="Оперативна пам'ять" />
-                    <CheckBoxBlock title="Обсяг пам'яті" />
-                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.countOfCores} title="Кількість ядер" />
-                    <CheckBoxBlock characteristicData={distinctPhoneCharacteristic.countOfSimCard} title="Кількість SIM-карт" />
+                    <CheckBoxBlock filterKey="brand" onFilterChange={handleFilterChange} characteristicData={["Apple", "Samsung", "Xiaomi"]} title="Бренд" />
+                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={["Новий", "Бу"]} title="Стан" />
+                    <CheckBoxBlock filterKey="screenSize" onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.screenSize} title="Діагональ екрану" />
+                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.resolution} title="Роздільна здатність екрану" />
+                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.ram} title="Оперативна пам'ять" />
+                    <CheckBoxBlock onFilterChange={handleFilterChange} title="Обсяг пам'яті" />
+                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.countOfCores} title="Кількість ядер" />
+                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.countOfSimCard} title="Кількість SIM-карт" />
                 </div>
 
                 <div className={classes.rightBlock}>
