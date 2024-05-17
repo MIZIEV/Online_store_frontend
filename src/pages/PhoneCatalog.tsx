@@ -71,7 +71,11 @@ const PhoneCatalog: React.FC = () => {
                         onFilterChange={handleFilterChange}
                         characteristicData={distinctPhoneCharacteristic.screenSize}
                         title="Діагональ екрану" />
-                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.resolution} title="Роздільна здатність екрану" />
+                    <CheckBoxBlock
+                        filterKey="resolution"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={distinctPhoneCharacteristic.resolution}
+                        title="Роздільна здатність екрану" />
                     <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.ram} title="Оперативна пам'ять" />
                     <CheckBoxBlock onFilterChange={handleFilterChange} title="Обсяг пам'яті" />
                     <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.countOfCores} title="Кількість ядер" />
