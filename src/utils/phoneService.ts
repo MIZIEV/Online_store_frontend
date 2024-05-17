@@ -5,6 +5,7 @@ const GET_ONE_PHONE_URL = "http://" + HOST + "/api/phone/";
 const ADD_NEW_PHONE_URL: string = "http://" + HOST + "/api/phone/add";
 const GET_ALL_PHONES_URL = "http://" + HOST + "/api/phone/list";
 const UPDATE_PHONE_URL = "http://" + HOST + "/api/phone/";
+const GET_ALL_PHONE_DISTINCT_CHARACTERISTICS_URL = "http://" + HOST + "/api/phone/distinct-characteristics";
 
 export async function postProduct(data: unknown) {
   console.log(data);
@@ -62,6 +63,18 @@ export async function putTheMark(phoneId: number, rating: number) {
   try {
     const response = await axios.patch(GET_ONE_PHONE_URL + `${phoneId}`, { rating });
     console.log("service function PUT THE MARK - ")
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export async function getAllPhoneDistinctCharacteristics() {
+  try {
+    const response = await axios.get(GET_ALL_PHONE_DISTINCT_CHARACTERISTICS_URL);
+    console.log("service function getAllPhoneDistinctCharacteristics - ")
     console.log(response.data)
     return response.data;
   } catch (error) {

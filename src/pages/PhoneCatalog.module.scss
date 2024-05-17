@@ -1,16 +1,36 @@
 .container {
+
     padding: 50px;
-    display: flex;
-    
-    .leftBlock {
-        width: 20%;
+
+    .breadCrumb {
+        padding-bottom: 30px;
     }
-    
-    
-    .rightBlock {
-        margin: 0px auto;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+
+    h1 {
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        padding-bottom: 30px;
+    }
+
+    .pageContent {
+        display: flex;
+
+        .leftBlock {
+            width: 20%;
+        }
+
+
+        .rightBlock {
+            margin: 0px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+
+            .link {
+                text-decoration: none;
+                color: black;
+            }
+        }
     }
 }
