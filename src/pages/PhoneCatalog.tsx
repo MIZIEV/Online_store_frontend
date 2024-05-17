@@ -25,12 +25,21 @@ const PhoneCatalog: React.FC = () => {
     });
 
     const handleFilterChange = (filterParams: { [key: string]: string[] }) => {
-
         const currentFilterParams = new URLSearchParams(filter);
 
         for (const key in filterParams) {
             if (Array.isArray(filterParams[key]) && filterParams[key].length > 0) {
-                currentFilterParams.set(key, filterParams[key].join(','));
+
+                if (key === "isUsed") {
+                    const transformedValues = filterParams[key].map(value => {
+                        if (value === "Новий") return "false";
+                        if (value === "Бу") return "true";
+                        return value;
+                    });
+                    currentFilterParams.set(key, transformedValues.join(','));
+                } else {
+                    currentFilterParams.set(key, filterParams[key].join(','));
+                }
             } else {
                 currentFilterParams.delete(key);
             }
@@ -51,9 +60,17 @@ const PhoneCatalog: React.FC = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.leftBlock}>
-                    <CheckBoxBlock filterKey="brand" onFilterChange={handleFilterChange} characteristicData={["Apple", "Samsung", "Xiaomi"]} title="Бренд" />
-                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={["Новий", "Бу"]} title="Стан" />
-                    <CheckBoxBlock filterKey="screenSize" onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.screenSize} title="Діагональ екрану" />
+                    <CheckBoxBlock
+                        filterKey="brand"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={["Apple", "Samsung", "Xiaomi"]}
+                        title="Бренд" />
+                    <CheckBoxBlock filterKey="isUsed" onFilterChange={handleFilterChange} characteristicData={["Новий", "Бу"]} title="Стан" />
+                    <CheckBoxBlock
+                        filterKey="screenSize"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={distinctPhoneCharacteristic.screenSize}
+                        title="Діагональ екрану" />
                     <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.resolution} title="Роздільна здатність екрану" />
                     <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.ram} title="Оперативна пам'ять" />
                     <CheckBoxBlock onFilterChange={handleFilterChange} title="Обсяг пам'яті" />
