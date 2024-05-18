@@ -40,3 +40,13 @@ export type Comment = {
   createdAt: string,
   authorName: string
 }
+
+export type PhoneDistinctCharacteristics = {
+  screenSize: number[];
+  resolution: string[];
+  processor: string[];
+  countOfCores: number[];
+  ram: number[];
+  batteryCapacity: number[];
+  countOfSimCard: number[];
+};
