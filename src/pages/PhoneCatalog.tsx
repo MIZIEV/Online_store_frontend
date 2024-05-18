@@ -7,11 +7,14 @@ import { getProducts } from "../utils/http";
 import { NavLink } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { getAllPhoneDistinctCharacteristics } from "../utils/phoneService";
+import ReactPaginate from 'react-paginate';
 
 const PhoneCatalog: React.FC = () => {
 
     const [filter, setFilter] = useState("?sort=maxRating");
     const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState({});
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 9;
 
     useEffect(() => {
         getAllPhoneDistinctCharacteristics().then((response) => {
@@ -47,7 +50,15 @@ const PhoneCatalog: React.FC = () => {
 
         const queryString = currentFilterParams.toString();
         setFilter(`?${queryString}`);
+        setCurrentPage(0);
     }
+
+    const handlePageClick = (event: { selected: number }) => {
+        setCurrentPage(event.selected);
+    }
+
+    const offset = currentPage * itemsPerPage;
+    const currentPageData = data ? data.slice(offset, offset + itemsPerPage) : [];
 
     return (
         <div className={classes.container}>
@@ -95,8 +106,8 @@ const PhoneCatalog: React.FC = () => {
                 </div>
 
                 <div className={classes.rightBlock}>
-                    {data && data.length > 0 ? (
-                        data.map((phone) => (
+                    {currentPageData && currentPageData.length > 0 ? (
+                        currentPageData.map((phone) => (
                             <NavLink key={phone.id} to={`/phone/${phone.id}`} className={classes.link}>
                                 <CatalogCard key={phone.id} phoneData={phone} />
                             </NavLink>
@@ -106,6 +117,21 @@ const PhoneCatalog: React.FC = () => {
                     )}
                 </div>
             </div>
+
+            {data && data.length > 0 && (
+                <ReactPaginate
+                    className={classes.pagination}
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(data.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={classes.pagination}
+                    activeClassName={classes.active}
+                />
+            )}
         </div>
     )
 }
