@@ -7,17 +7,24 @@ import { getProducts } from "../utils/http";
 import { NavLink } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { getAllPhoneDistinctCharacteristics } from "../utils/phoneService";
+import ReactPaginate from 'react-paginate';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { PhoneDistinctCharacteristics } from "../shared.types";
 
 const PhoneCatalog: React.FC = () => {
 
     const [filter, setFilter] = useState("?sort=maxRating");
-    const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState({});
+    const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState<PhoneDistinctCharacteristics>({});
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 9;
+    const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
 
     useEffect(() => {
         getAllPhoneDistinctCharacteristics().then((response) => {
             setDistinctPhoneCharacteristic(response);
         })
     }, [])
+
 
     const { data, isPending, isError } = useQuery({
         queryKey: ["products", { filter: filter }],
@@ -29,11 +36,20 @@ const PhoneCatalog: React.FC = () => {
 
         for (const key in filterParams) {
             if (Array.isArray(filterParams[key]) && filterParams[key].length > 0) {
-
-                if (key === "isUsed") {
+                if (key === "screenSize") {
+                    // Преобразуем выбранные категории диапазонов диагонали экрана в соответствующие значения
+                    const screenSizeValues = filterParams[key].map(value => {
+                        if (value === "до 4\"") return "0-4";
+                        else if (value === "4.1\" - 4.9\"") return "4.1-4.9";
+                        else if (value === "5\" - 5.5\"") return "5-5.5";
+                        else if (value === "5.6\" - 6\"") return "5.6-6";
+                        else return "6-10"; // "більше 6\""
+                    });
+                    currentFilterParams.set(key, screenSizeValues.join(','));
+                } else if (key === "isUsed") {
                     const transformedValues = filterParams[key].map(value => {
                         if (value === "Новий") return "false";
-                        if (value === "Бу") return "true";
+                        if (value === "Б/у") return "true";
                         return value;
                     });
                     currentFilterParams.set(key, transformedValues.join(','));
@@ -47,7 +63,32 @@ const PhoneCatalog: React.FC = () => {
 
         const queryString = currentFilterParams.toString();
         setFilter(`?${queryString}`);
+        setCurrentPage(0);
     }
+
+    const handlePageClick = (event: { selected: number }) => {
+        setCurrentPage(event.selected);
+    }
+
+    const offset = currentPage * itemsPerPage;
+    const currentPageData = data ? data.slice(offset, offset + itemsPerPage) : [];
+
+    const sortedResolutionData = distinctPhoneCharacteristic?.resolution?.sort((a: string, b: string) => {
+        if (!a || !b) return 0;
+
+        const [aWidth, aHeight] = a.split('x').map(Number);
+        const [bWidth, bHeight] = b.split('x').map(Number);
+
+        if (aWidth !== bWidth) {
+            return aWidth - bWidth;
+        }
+
+        return aHeight - bHeight;
+    });
+
+    const sortedRamData = distinctPhoneCharacteristic?.ram?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
+    const sortedCountOfCoresData = distinctPhoneCharacteristic?.countOfCores?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
+    const sortedCountOfSimCardData = distinctPhoneCharacteristic?.countOfSimCard?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
 
     return (
         <div className={classes.container}>
@@ -65,35 +106,79 @@ const PhoneCatalog: React.FC = () => {
                         onFilterChange={handleFilterChange}
                         characteristicData={["Apple", "Samsung", "Xiaomi"]}
                         title="Бренд" />
-                    <CheckBoxBlock filterKey="isUsed" onFilterChange={handleFilterChange} characteristicData={["Новий", "Бу"]} title="Стан" />
+                    <CheckBoxBlock
+                        filterKey="isUsed"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={["Новий", "Б/у"]}
+                        title="Стан" />
+
                     <CheckBoxBlock
                         filterKey="screenSize"
                         onFilterChange={handleFilterChange}
-                        characteristicData={distinctPhoneCharacteristic.screenSize}
+                        characteristicData={screenSizes}
                         title="Діагональ екрану" />
+
                     <CheckBoxBlock
                         filterKey="resolution"
                         onFilterChange={handleFilterChange}
-                        characteristicData={distinctPhoneCharacteristic.resolution}
+                        characteristicData={sortedResolutionData}
                         title="Роздільна здатність екрану" />
-                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.ram} title="Оперативна пам'ять" />
+                    <CheckBoxBlock
+                        filterKey="ram"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={sortedRamData}
+                        title="Оперативна пам'ять" />
                     <CheckBoxBlock onFilterChange={handleFilterChange} title="Обсяг пам'яті" />
-                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.countOfCores} title="Кількість ядер" />
-                    <CheckBoxBlock onFilterChange={handleFilterChange} characteristicData={distinctPhoneCharacteristic.countOfSimCard} title="Кількість SIM-карт" />
+                    <CheckBoxBlock
+                        filterKey="countOfCores"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={sortedCountOfCoresData}
+                        title="Кількість ядер" />
+                    <CheckBoxBlock
+                        filterKey="countOfSimCard"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={sortedCountOfSimCardData}
+                        title="Кількість SIM-карт" />
                 </div>
 
                 <div className={classes.rightBlock}>
-                    {data && data.length > 0 ? (
-                        data.map((phone) => (
-                            <NavLink key={phone.id} to={`/phone/${phone.id}`} className={classes.link}>
-                                <CatalogCard key={phone.id} phoneData={phone} />
-                            </NavLink>
+                    <TransitionGroup component={null}>{
+                        currentPageData.map((phone) => (
+                            <CSSTransition
+                                key={phone.id}
+                                timeout={300}
+                                classNames={{
+                                    enter: classes.itemEnter,
+                                    enterActive: classes.itemEnterActive,
+                                    exit: classes.itemExit,
+                                    exitActive: classes.itemExitActive,
+                                }}
+                            >
+                                <NavLink to={`/phone/${phone.id}`} className={classes.link}>
+                                    <CatalogCard phoneData={phone} />
+                                </NavLink>
+                            </CSSTransition>
                         ))
-                    ) : (
-                        <div>No data</div>
-                    )}
+                    }
+                    </TransitionGroup>
+
                 </div>
             </div>
+
+            {data && data.length > 0 && (
+                <ReactPaginate
+                    className={classes.pagination}
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(data.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={classes.pagination}
+                    activeClassName={classes.active}
+                />
+            )}
         </div>
     )
 }

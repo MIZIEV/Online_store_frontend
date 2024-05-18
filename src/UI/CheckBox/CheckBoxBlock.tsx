@@ -27,16 +27,20 @@ const CheckBoxBlock: React.FC = (props) => {
         const filterParams = { [filterKey]: newSelectedValues }
         onFilterChange(filterParams);
     }
+    
 
     return (
         <div className={classes.container}>
-            <FormGroup>
-                <label className={classes.title}>{title}</label>
+            <label className={classes.title}>{title}</label>
+            <FormGroup sx={{
+                margin: "10px 0px 30px 0px"
+            }}>
                 {dataArray ? (
                     dataArray.map((data: any, index: number) => (
                         <FormControlLabel
                             key={index}
                             control={<Checkbox sx={{
+                                margin: "2px 0px",
                                 '&.Mui-checked': {
                                     color: "#436850"
                                 }
@@ -44,7 +48,7 @@ const CheckBoxBlock: React.FC = (props) => {
                                 onChange={handleChackBoxChange}
                                 value={data}
                             />}
-                            label={<span className={classes.checkBocLabel}>{data}</span>}
+                            label={<span className={classes.checkBoxLabel}>{data}</span>}
                         />
                     ))
                 ) : (

@@ -4,7 +4,7 @@ import classes from "./CatalogCard.module.scss";
 const CatalogCard: React.FC = (props) => {
 
     const phoneData = props.phoneData;
-    const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00'];
+    const colors = props.phoneData.colors;
 
     return (
         <div className={classes.container}>
@@ -19,7 +19,7 @@ const CatalogCard: React.FC = (props) => {
                             <div
                                 key={index}
                                 className={classes.circle}
-                                style={{ backgroundColor: color }}></div>
+                                style={{ backgroundColor: color.colorName }}></div>
                         ))
                     }
                 </div>
