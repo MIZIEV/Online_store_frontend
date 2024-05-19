@@ -10,13 +10,15 @@ import { getAllPhoneDistinctCharacteristics } from "../utils/phoneService";
 import ReactPaginate from 'react-paginate';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { PhoneDistinctCharacteristics } from "../shared.types";
+import PriceSliderComponent from "../UI/PriceSlider/PriceSliderComponent";
 
 const PhoneCatalog: React.FC = () => {
 
     const [filter, setFilter] = useState("?sort=maxRating");
     const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState<PhoneDistinctCharacteristics>({});
     const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 9;
+    const [maxPrice, setMaxPrice] = useState(0);
+    const itemsPerPage = 12;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
 
     useEffect(() => {
@@ -31,19 +33,28 @@ const PhoneCatalog: React.FC = () => {
         queryFn: ({ signal }) => getProducts({ signal, filter }),
     });
 
+    useEffect(() => {
+        if (data) {
+            if (maxPrice === 0) {
+                const maxPrice = Math.max(...data.map((product: any) => product.price));
+                setMaxPrice(maxPrice);
+            }
+        }
+    }, [data]);
+
     const handleFilterChange = (filterParams: { [key: string]: string[] }) => {
         const currentFilterParams = new URLSearchParams(filter);
 
         for (const key in filterParams) {
             if (Array.isArray(filterParams[key]) && filterParams[key].length > 0) {
                 if (key === "screenSize") {
-                    // Преобразуем выбранные категории диапазонов диагонали экрана в соответствующие значения
+
                     const screenSizeValues = filterParams[key].map(value => {
                         if (value === "до 4\"") return "0-4";
                         else if (value === "4.1\" - 4.9\"") return "4.1-4.9";
                         else if (value === "5\" - 5.5\"") return "5-5.5";
                         else if (value === "5.6\" - 6\"") return "5.6-6";
-                        else return "6-10"; // "більше 6\""
+                        else return "6-10";
                     });
                     currentFilterParams.set(key, screenSizeValues.join(','));
                 } else if (key === "isUsed") {
@@ -101,6 +112,9 @@ const PhoneCatalog: React.FC = () => {
             <div className={classes.pageContent}>
 
                 <div className={classes.leftBlock}>
+
+                    <PriceSliderComponent maxPrice={maxPrice} onFilterChange={handleFilterChange} />
+
                     <CheckBoxBlock
                         filterKey="brand"
                         onFilterChange={handleFilterChange}
