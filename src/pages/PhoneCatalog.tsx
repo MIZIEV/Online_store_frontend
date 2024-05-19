@@ -35,8 +35,10 @@ const PhoneCatalog: React.FC = () => {
 
     useEffect(() => {
         if (data) {
-            const maxPrice = Math.max(...data.map((product: any) => product.price));
-            setMaxPrice(maxPrice);
+            if (maxPrice === 0) {
+                const maxPrice = Math.max(...data.map((product: any) => product.price));
+                setMaxPrice(maxPrice);
+            }
         }
     }, [data]);
 

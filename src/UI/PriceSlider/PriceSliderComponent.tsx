@@ -46,11 +46,12 @@ const PriceSliderComponent: React.FC<PriceSliderComponentProps> = ({ maxPrice: m
     const maxPercent = (maxSliderValue / maxPriceProp) * 100;
 
     const handleButtonClick = () => {
-        onFilterChange({ price: [`${minPrice}`, `${maxPrice}`] });
+        onFilterChange({ price: [`${minPrice}-${maxPrice}`] });
     };
 
     return (
         <div className={classes.container}>
+            <h3>Ціна, грн</h3>
             <div className={classes.inputs}>
                 <div className={classes.inputContainer}>
                     <input
