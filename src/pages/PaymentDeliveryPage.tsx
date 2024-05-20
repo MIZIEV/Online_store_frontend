@@ -1,11 +1,13 @@
 import React from "react";
 import classes from "./PaymentDeliveryPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
+import { Outlet } from "react-router";
 
 const PaymentDeliveryPage: React.FC = () => {
     return (
         <>
             <div className={classes.container}>
+                <Outlet />
                 <div className={classes.BreadCrumb}>
                     <BreadCrumb
                         items={[{ path: "/", title: "Головна" }, { path: "/payment-delivery", title: "/оплата і доставка" }]} />

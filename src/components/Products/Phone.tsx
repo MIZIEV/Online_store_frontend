@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./Phone.module.scss"
 import { GetColorName } from 'hex-color-to-color-name';
 
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { getOnePhone } from "../../utils/phoneService";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import RatingComponent from "../../UI/Rating/RatingComponent";
@@ -77,9 +77,6 @@ const Phone: React.FC = () => {
         getPhone();
     }
 
-
-
-
     function getPhone() {
         getOnePhone(parseInt(id)).then((response) => {
 
@@ -111,7 +108,7 @@ const Phone: React.FC = () => {
         <>
             {phone ? (
                 <div className={classes.container}>
-
+                    <Outlet />
                     <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
                     <div className={classes.topInfoBlock}>

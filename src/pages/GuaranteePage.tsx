@@ -1,12 +1,13 @@
 import React from "react"
 import classes from "./GuaranteePage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
+import { Outlet } from "react-router";
 
 const GuaranteePage: React.FC = () => {
     return (
         <>
             <div className={classes.container}>
-
+                <Outlet />
                 <div className={classes.BreadCrumb}>
                     <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "guarantee", title: "/гарантія" }]} />
                 </div>

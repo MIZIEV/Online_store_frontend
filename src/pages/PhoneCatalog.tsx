@@ -4,7 +4,7 @@ import CheckBoxBlock from "../UI/CheckBox/CheckBoxBlock";
 import CatalogCard from "../components/Card/CatalogCard";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../utils/http";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { getAllPhoneDistinctCharacteristics } from "../utils/phoneService";
 import ReactPaginate from 'react-paginate';
@@ -18,7 +18,7 @@ const PhoneCatalog: React.FC = () => {
     const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState<PhoneDistinctCharacteristics>({});
     const [currentPage, setCurrentPage] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
-    const itemsPerPage = 12;
+    const itemsPerPage = 15;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
 
     useEffect(() => {
@@ -115,6 +115,7 @@ const PhoneCatalog: React.FC = () => {
                 <div className={classes.leftBlock}>
 
                     <PriceSliderComponent maxPrice={maxPrice} onFilterChange={handleFilterChange} />
+                    <Outlet />
 
                     <CheckBoxBlock
                         filterKey="brand"

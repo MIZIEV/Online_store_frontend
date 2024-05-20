@@ -5,7 +5,7 @@ import { BlogProps } from "../shared.types"
 import BlogCard from "../components/Blog/BlogCard";
 
 import classes from "./BlogPage.module.scss"
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 
 const BlogPage: React.FC = () => {
@@ -20,7 +20,7 @@ const BlogPage: React.FC = () => {
     return (
         <>
             <div className={classes.container}>
-
+            <Outlet />
                 <div className={classes.containerTop}>
                     <div className={classes.BreadCrumb}>
 

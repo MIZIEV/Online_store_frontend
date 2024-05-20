@@ -9,7 +9,6 @@ import ErrorPage from "./pages/Error";
 import AdminPage from "./pages/Admin";
 import AddNewPhoneComponent from "./components/AdminMenu/AdminTools/AddNewPhoneComponent";
 import { queryClient } from "./utils/http";
-import EditModal from "./components/AdminMenu/AdminTools/EditModal";
 import CartModal from "./components/Navbar/Cart/CartModal";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
@@ -52,23 +51,28 @@ const router = createBrowserRouter([
       },
       {
         path: "payment-delivery",
-        element: <PaymentDeliveryPage />
+        element: <PaymentDeliveryPage />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "guarantee",
-        element: <GuaranteePage />
+        element: <GuaranteePage />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "blog",
-        element: <BlogPage />
+        element: <BlogPage />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "blog/:id",
-        element: <Blog />
+        element: <Blog />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "phone/:id",
-        element: <Phone />
+        element: <Phone />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "admin/phone-managment/",
@@ -79,26 +83,32 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/phone-managment/colors",
-        element: <ColorControleComponent />
+        element: <ColorControleComponent />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "admin/phone-managment/new",
-        element: <AddNewPhoneComponent />
+        element: <AddNewPhoneComponent />,
+        children: [{ path: "cart", element: <CartModal /> }]
       }, {
         path: "admin",
-        element: <TransferComponent />
+        element: <TransferComponent />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "admin/phone-managment/:phoneId/description",
-        element: <PhoneDescriptionComponent />
+        element: <PhoneDescriptionComponent />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "admin/phone-managment/edit/:phoneId",
-        element: <AddNewPhoneComponent />
+        element: <AddNewPhoneComponent />,
+        children: [{ path: "cart", element: <CartModal /> }]
       },
       {
         path: "phone/catalog",
-        element: <PhoneCatalog />
+        element: <PhoneCatalog />,
+        children: [{ path: "cart", element: <CartModal /> }]
       }
     ],
   },

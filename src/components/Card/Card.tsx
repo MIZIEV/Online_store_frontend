@@ -1,26 +1,29 @@
 import { useDispatch } from "react-redux";
 import Button from "../../UI/Button/Button";
 import { Phone } from "../../shared.types";
-
-
 import classes from "./Card.module.scss";
 import { CartProduct, addToCart } from "../../redux/cartSlice";
+import { useNavigate } from "react-router";
 
 const Card: React.FC<Phone> = (props) => {
   const dispatch = useDispatch();
+  const navigator = useNavigate();
 
   const addProduct = (payload: CartProduct) => {
     dispatch(addToCart(payload));
   };
 
+  const handleNavigateOnClick = () => {
+    navigator(`/phone/${props.id}`)
+  }
+
   return (
     <div className={classes.card}>
+      <img onClick={handleNavigateOnClick} src={props.mainPictureURL} alt={props.model} />
 
-      <img src={props.mainPictureURL} alt={props.model} />
-      
       <div className={classes["card-text-wrapper"]}>
         <span className={classes.cardTitle}>{props.brand + " " + props.model}</span>
-        
+
         <hr />
 
         <div className={classes.bottomCardBlock}>

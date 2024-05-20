@@ -1,4 +1,3 @@
-// Navbar.tsx
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService"; // Додана функція logout
 import Button from "../../UI/Button/Button";
