@@ -9,6 +9,8 @@ import RatingComponent from "../../UI/Rating/RatingComponent";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
 import ReviewsComponent from "./phoneAdditionalComponents/ReviewsComponent";
+import { CartProduct, addToCart } from "../../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 interface phoneCharacteristic {
     id: number,
@@ -60,6 +62,11 @@ const Phone: React.FC = () => {
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
+    const dispatch = useDispatch();
+
+    const addProduct = (payload: CartProduct) => {
+        dispatch(addToCart(payload));
+      };
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1'
@@ -101,8 +108,6 @@ const Phone: React.FC = () => {
     const handleRomChange = (romId: number) => {
         setSelectedRom(romId);
     };
-
-
 
     return (
         <>
@@ -213,7 +218,14 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.buttonsBlock}>
-                                <button className={classes.buyButton}>Купити</button>
+                                <button onClick={()=>addProduct({
+                                                    id: phone.id,
+                                                    brand: phone.brand,
+                                                    model: phone.model,
+                                                    price: phone.price,
+                                                    quantity: 1,
+                                                    image: phone.mainPictureURL,
+                                })} className={classes.buyButton}>Додати в кошик</button>
                                 <button className={classes.addToFavorite}>Додати в обране</button>
                             </div>
                         </div>
@@ -239,7 +251,6 @@ const Phone: React.FC = () => {
                 <h3>Error</h3>
             )}
         </>
-
     )
 }
 

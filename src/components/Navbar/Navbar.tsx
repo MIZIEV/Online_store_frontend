@@ -52,10 +52,7 @@ const Navbar = () => {
         )}
       </nav>
       <nav className={classes["navbar-bottom"]}>
-        <Button className={classes["categories-button"]}>
-          Категорії
-          <img src="/public/icons/arrow.svg" alt="" />
-        </Button>
+
         <div className={classes['links-group']}>
           <Link className={classes.link} to="">
             Б/У пропозиції

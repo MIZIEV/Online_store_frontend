@@ -27,6 +27,7 @@ export type BlogProps = {
   blogPictureUrl: string;
   title: string;
   text: string;
+  createdAt: string
 };
 
 export type Color = {

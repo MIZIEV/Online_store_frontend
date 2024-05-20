@@ -18,7 +18,6 @@ const ReviewsComponent: React.FC = () => {
         })
     }, [])
 
-
     const handleNewComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
@@ -39,14 +38,12 @@ const ReviewsComponent: React.FC = () => {
 
     const handleDeleteComment = async (commentId: number) => {
         try {
-            await deleteComment(id, commentId); // Call the deleteComment function
-            setComments(comments.filter(comment => comment.id !== commentId)); // Filter out the deleted comment
+            await deleteComment(id, commentId);
+            setComments(comments.filter(comment => comment.id !== commentId)); 
         } catch (error) {
             console.error(error)
         }
     }
-
-
 
     return (
         <div className={classes.container}>
@@ -77,11 +74,7 @@ const ReviewsComponent: React.FC = () => {
                             comment={comment} />
                     ))
                 }
-
-
-
             </div>
-
         </div>
     )
 }
