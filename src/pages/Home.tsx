@@ -89,7 +89,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1 className={classes.title}>Обери свй ідеальний смартфон</h1>
+      <h1 className={classes.title}>Обери свій ідеальний смартфон</h1>
 
       <div className={classes.topContainer}>
 

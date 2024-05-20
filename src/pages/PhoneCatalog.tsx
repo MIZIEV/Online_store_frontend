@@ -97,6 +97,7 @@ const PhoneCatalog: React.FC = () => {
         return aHeight - bHeight;
     });
 
+    const sortedRomData = distinctPhoneCharacteristic?.rom?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
     const sortedRamData = distinctPhoneCharacteristic?.ram?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
     const sortedCountOfCoresData = distinctPhoneCharacteristic?.countOfCores?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
     const sortedCountOfSimCardData = distinctPhoneCharacteristic?.countOfSimCard?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
@@ -142,7 +143,11 @@ const PhoneCatalog: React.FC = () => {
                         onFilterChange={handleFilterChange}
                         characteristicData={sortedRamData}
                         title="Оперативна пам'ять" />
-                    <CheckBoxBlock onFilterChange={handleFilterChange} title="Обсяг пам'яті" />
+                    <CheckBoxBlock
+                        filterKey="rom"
+                        onFilterChange={handleFilterChange}
+                        characteristicData={sortedRomData}
+                        title="Обсяг пам'яті" />
                     <CheckBoxBlock
                         filterKey="countOfCores"
                         onFilterChange={handleFilterChange}
