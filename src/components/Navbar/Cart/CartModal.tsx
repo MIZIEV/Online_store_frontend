@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
 import CloseButton from "./CloseButton";
-import { CardProps } from "../../../shared.types";
+import { Phone } from "../../../shared.types";
 import { totalPrice } from "../../../redux/cartSlice";
 
 interface RootState {
-  cart: { items: CardProps[] };
+  cart: { items: Phone[] };
 }
 
 const CartModal = () => {

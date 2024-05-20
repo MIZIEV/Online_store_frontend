@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../utils/http";
 import Card from "../components/Card/Card";
-import { CardProps } from "../shared.types";
+import { Phone } from "../shared.types";
 import { useRef, useState } from "react";
 import classes from "./Home.module.scss";
 import { Outlet, useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -17,7 +16,6 @@ import CardIsUsed from "../components/Card/CardIsUsed";
 
 const HomePage = () => {
   const [filter, setFilter] = useState("?sort=maxRating");
-  const PHONE_URL = "/phone/";
   const navigator = useNavigate();
 
   const { data, isPending, isError } = useQuery({
@@ -75,10 +73,6 @@ const HomePage = () => {
     }
   };
 
-
-
-
-
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -86,10 +80,10 @@ const HomePage = () => {
     }
   };
 
-
   return (
     <div>
-      <h1 className={classes.title}>Обери свй ідеальний смартфон</h1>
+      <Outlet />
+      <h1 className={classes.title}>Обери свій ідеальний смартфон</h1>
 
       <div className={classes.topContainer}>
 
@@ -118,7 +112,6 @@ const HomePage = () => {
           </svg>
         </div>
       </div>
-      <Outlet />
 
       <div className={classes.phoneBlockTitle}>
         <span>Лідер продажу</span>
@@ -132,35 +125,31 @@ const HomePage = () => {
         </span>
       </div>
 
-
       <div className={classes.phonesContainer}>
         <Carousel
           ref={carouselRef}
           responsive={responsive}
           additionalTransfrom={0}
-          arrows={false} // Disable default arrows
-          draggable={false} // Disable dragging for swipe
-          customButtonGroup={<div />} // Disable default button group
-          infinite={false} // Disable infinite loop
-          showDots={false} // Disable default dots
+          arrows={false}
+          draggable={false}
+          customButtonGroup={<div />}
+          infinite={false}
+          showDots={false}
         >
           {data && data.length > 0 ? (
             data
-              .filter((item: CardProps) => item.used === false)
+              .filter((item: Phone) => item.used === false)
               .map((item) => (
                 <div className={classes.phone}>
 
-                  <NavLink className={classes.link} to={PHONE_URL + item.id} key={item.id}>
-                    <Card
-                      id={item.id}
-                      brand={item.brand}
-                      model={item.model}
-                      description={item.description}
-                      price={item.price}
-                      mainPictureURL={item.mainPictureURL}
-                      rating={item.rating}
-                    />
-                  </NavLink>
+                  <Card
+                    id={item.id}
+                    brand={item.brand}
+                    model={item.model}
+                    price={item.price}
+                    mainPictureURL={item.mainPictureURL}
+                    rating={item.rating}
+                  />
                 </div>
               ))
           ) : (
@@ -168,11 +157,6 @@ const HomePage = () => {
           )}
         </Carousel>
       </div>
-
-
-
-
-
 
       <div className={classes.phoneBlockTitle}>
         <span>Спеціальні пропозиції</span>
@@ -191,29 +175,26 @@ const HomePage = () => {
           ref={carouselRef2}
           responsive={responsive}
           additionalTransfrom={0}
-          arrows={false} // Disable default arrows
-          draggable={false} // Disable dragging for swipe
-          customButtonGroup={<div />} // Disable default button group
-          infinite={false} // Disable infinite loop
-          showDots={false} // Disable default dots
+          arrows={false}
+          draggable={false}
+          customButtonGroup={<div />}
+          infinite={false}
+          showDots={false}
         >
           {data && data.length > 0 ? (
             data
-              .filter((item: CardProps) => item.used === true)
+              .filter((item: Phone) => item.used === true)
               .map((item) => (
                 <div className={classes.phone}>
 
-                  <NavLink className={classes.link} to={PHONE_URL + item.id} key={item.id}>
-                    <CardIsUsed
-                      id={item.id}
-                      brand={item.brand}
-                      model={item.model}
-                      description={item.description}
-                      price={item.price}
-                      mainPictureURL={item.mainPictureURL}
-                      rating={item.rating}
-                    />
-                  </NavLink>
+                  <CardIsUsed
+                    id={item.id}
+                    brand={item.brand}
+                    model={item.model}
+                    price={item.price}
+                    mainPictureURL={item.mainPictureURL}
+                    rating={item.rating}
+                  />
                 </div>
               ))
           ) : (
@@ -264,27 +245,24 @@ const HomePage = () => {
           ref={carouselRef3}
           responsive={responsive}
           additionalTransfrom={0}
-          arrows={false} // Disable default arrows
-          draggable={false} // Disable dragging for swipe
-          customButtonGroup={<div />} // Disable default button group
-          infinite={false} // Disable infinite loop
-          showDots={false} // Disable default dots
+          arrows={false}
+          draggable={false}
+          customButtonGroup={<div />}
+          infinite={false}
+          showDots={false}
         >
           {data && data.length > 0 ? (
             data.map((item) => (
               <div className={classes.phone}>
 
-                <NavLink className={classes.link} to={PHONE_URL + item.id} key={item.id}>
-                  <Card
-                    id={item.id}
-                    brand={item.brand}
-                    model={item.model}
-                    description={item.description}
-                    price={item.price}
-                    mainPictureURL={item.mainPictureURL}
-                    rating={item.rating}
-                  />
-                </NavLink>
+                <Card
+                  id={item.id}
+                  brand={item.brand}
+                  model={item.model}
+                  price={item.price}
+                  mainPictureURL={item.mainPictureURL}
+                  rating={item.rating}
+                />
               </div>
             ))
           ) : (
@@ -292,7 +270,6 @@ const HomePage = () => {
           )}
         </Carousel>
       </div>
-
     </div>
   );
 };

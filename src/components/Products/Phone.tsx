@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import classes from "./Phone.module.scss"
 import { GetColorName } from 'hex-color-to-color-name';
 
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { getOnePhone } from "../../utils/phoneService";
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
 import RatingComponent from "../../UI/Rating/RatingComponent";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
 import ReviewsComponent from "./phoneAdditionalComponents/ReviewsComponent";
+import { CartProduct, addToCart } from "../../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 interface phoneCharacteristic {
     id: number,
@@ -60,6 +62,11 @@ const Phone: React.FC = () => {
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
+    const dispatch = useDispatch();
+
+    const addProduct = (payload: CartProduct) => {
+        dispatch(addToCart(payload));
+      };
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1'
@@ -76,9 +83,6 @@ const Phone: React.FC = () => {
         console.log("second getPhone handler")
         getPhone();
     }
-
-
-
 
     function getPhone() {
         getOnePhone(parseInt(id)).then((response) => {
@@ -105,13 +109,11 @@ const Phone: React.FC = () => {
         setSelectedRom(romId);
     };
 
-
-
     return (
         <>
             {phone ? (
                 <div className={classes.container}>
-
+                    <Outlet />
                     <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
                     <div className={classes.topInfoBlock}>
@@ -216,7 +218,14 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.buttonsBlock}>
-                                <button className={classes.buyButton}>Купити</button>
+                                <button onClick={()=>addProduct({
+                                                    id: phone.id,
+                                                    brand: phone.brand,
+                                                    model: phone.model,
+                                                    price: phone.price,
+                                                    quantity: 1,
+                                                    image: phone.mainPictureURL,
+                                })} className={classes.buyButton}>Додати в кошик</button>
                                 <button className={classes.addToFavorite}>Додати в обране</button>
                             </div>
                         </div>
@@ -242,7 +251,6 @@ const Phone: React.FC = () => {
                 <h3>Error</h3>
             )}
         </>
-
     )
 }
 

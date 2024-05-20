@@ -1,4 +1,3 @@
-// Navbar.tsx
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService"; // Додана функція logout
 import Button from "../../UI/Button/Button";
@@ -53,10 +52,7 @@ const Navbar = () => {
         )}
       </nav>
       <nav className={classes["navbar-bottom"]}>
-        <Button className={classes["categories-button"]}>
-          Категорії
-          <img src="/public/icons/arrow.svg" alt="" />
-        </Button>
+
         <div className={classes['links-group']}>
           <Link className={classes.link} to="">
             Б/У пропозиції
