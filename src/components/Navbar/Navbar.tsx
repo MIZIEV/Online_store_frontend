@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService"; // Додана функція logout
+import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService";
 import Button from "../../UI/Button/Button";
 import classes from "./Navbar.module.scss";
 import CartButton from "./Cart/CartButton";
@@ -10,8 +10,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout(); // Викликаємо функцію logout при кліку на кнопку LogOut
-    navigate("/"); // Перенаправляємо користувача на сторінку входу після виходу
+    logout();
+    navigate("/");
   };
 
   return (
@@ -21,21 +21,29 @@ const Navbar = () => {
           <h1>TalkieTech</h1>
         </NavLink>
 
-        {isAdmin && ( // Перевіряємо, чи користувач є адміністратором
-          <NavLink to="/admin">
-            <Button className={classes["signin-button"]}>ADMIN</Button>{" "}
-            {/* Відображаємо кнопку "ADMIN" тільки для адміністраторів */}
-          </NavLink>
+        {isAdmin && (
+          <>
+            <NavLink to="/admin">
+              <Button className={classes["signin-button"]}>ADMIN</Button>{" "}
+            </NavLink>
+          </>
         )}
-        {loggedInUser ? ( // Перевіряємо, чи користувач увійшов у систему
-          <Button className={classes["signin-button"]} onClick={handleLogout}>Вийти</Button> // Якщо так, то відображаємо кнопку LogOut
+        {loggedInUser ? (
+          <>
+            <Link className={classes.link} to="">
+              Контакти
+            </Link>
+            <Link className={classes.link} to="/payment-delivery">
+              Оплата та доставка
+            </Link>
+            <Link className={classes.link} to="/blog">
+              Блог
+            </Link>
+            <Button className={classes["signin-button"]} onClick={handleLogout}>Вийти</Button>
+          </>
+
         ) : (
           <>
-            {" "}
-            {/* Якщо користувач не увійшов у систему, відображаємо кнопки для входу, реєстрації та кнопку admin */}
-            {/* <NavLink to="/signin">
-                <Button>Sign in</Button>
-              </NavLink> */}
             <Link className={classes.link} to="">
               Контакти
             </Link>
