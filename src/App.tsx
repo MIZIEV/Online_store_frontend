@@ -12,7 +12,7 @@ import { queryClient } from "./utils/http";
 import CartModal from "./components/Navbar/Cart/CartModal";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import CheckOutPage from "./pages/CheckOut";
+import CheckOutPage from "./pages/CheckoutPage";
 import PaymentDeliveryPage from "./pages/PaymentDeliveryPage";
 import GuaranteePage from "./pages/GuaranteePage";
 import BlogPage from "./pages/BlogPage";
