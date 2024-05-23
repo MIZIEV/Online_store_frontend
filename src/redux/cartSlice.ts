@@ -18,6 +18,11 @@ const initialState: CartState = {
   items: [],
 };
 
+export const selectCartItems = createSelector(
+  (state: { cart: CartState }) => state.cart.items,
+  (items) => items
+)
+
 export const totalPrice = createSelector(
   (state) => state.cart.items,
   (items) => {

@@ -1,9 +1,18 @@
 import React from "react";
 import classes from "./CheckoutPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
-import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup } from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from "@mui/material";
+import { useSelector } from "react-redux";
+import { selectCartItems, totalPrice } from "../redux/cartSlice";
+import { isUserLoggedIn } from "../utils/AuthService";
 
 const CheckoutPage: React.FC = () => {
+
+  const isAuthenticated = isUserLoggedIn();
+
+  const cartItems = useSelector(selectCartItems);
+  const totalPriceValue = useSelector(totalPrice);
+
   return (
     <div className={classes.container}>
       <BreadCrumb items={[{ path: "/", title: "Головна" },
@@ -42,7 +51,7 @@ const CheckoutPage: React.FC = () => {
               <h3 className={classes.inputTitle}>Ваші данні</h3>
               <input type="text" placeholder="Ваше місто" />
 
-              <FormGroup sx={{ margin: "10px 0px 30px 0px" }}>
+              {isAuthenticated && <FormGroup sx={{ margin: "10px 0px 30px 0px" }}>
                 <FormControlLabel
                   control={<Checkbox sx={{
                     margin: "2px 0px",
@@ -54,7 +63,20 @@ const CheckoutPage: React.FC = () => {
                   />}
                   label={<span className={classes.checkBoxLabel}>Я одержувач</span>}
                 />
-              </FormGroup>
+              </FormGroup>}
+
+              <FormControl>
+                <label>Спосіб доставки</label>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel value="Доставка кур'єром" control={<Radio />} label="Доставка кур'єром" />
+                  <FormControlLabel value="У відділення Нової пошти" control={<Radio />} label="У відділення Нової пошти" />
+                  <FormControlLabel value="Доставка кур'єром Нової пошти" control={<Radio />} label="Доставка кур'єром Нової пошти" />
+                </RadioGroup>
+              </FormControl>
             </div>
           </div>
 
@@ -69,15 +91,14 @@ const CheckoutPage: React.FC = () => {
 
               <FormControl>
                 <h3 className={classes.inputTitle}>Оплата</h3>
-                <FormLabel id="demo-radio-buttons-group-label">Спосіб оплати</FormLabel>
+                <label>Спосіб оплати</label>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue="female"
                   name="radio-buttons-group"
                 >
                   <FormControlLabel value="Готівкою при отриманні" control={<Radio />} label="Готівкою при отриманні" />
-                  <FormControlLabel value="Google pay" control={<Radio />} label="Google pay" />
-                  <FormControlLabel value="Apple pay" control={<Radio />} label="Apple pay" />
+                  <FormControlLabel value="Google pay" control={<Radio />} label="Онлайн" />
                 </RadioGroup>
               </FormControl>
             </div>
@@ -88,9 +109,27 @@ const CheckoutPage: React.FC = () => {
 
         <div className={classes.rightBlock}>
           <div className={classes.paymentForm}>
-            <h3 className={classes.inputTitle}>Склад замовлення</h3>
 
+            <div className={classes.phoneList}>
+              <h3 className={classes.inputTitle}>Склад замовлення</h3>
+              {cartItems.map((item) => (
+                <div
+                  className={classes.phoneCard}
+                  key={item.id}>
 
+                  <div className={classes.image}>
+                    <img src={item.image} />
+                  </div>
+
+                  <div className={classes.textBlock}>
+                    <h3>{item.brand} {item.model}</h3>
+                    <p>Ціна: {`${item.price} грн`}</p>
+                    <p>Кількість: {`${item.quantity} шт`}</p>
+                  </div>
+
+                </div>
+              ))}
+            </div>
           </div>
 
           <hr />
@@ -106,8 +145,20 @@ const CheckoutPage: React.FC = () => {
 
           <div className={classes.paymentForm}>
             <div className={classes.inputForm}>
-
               <h3 className={classes.inputTitle}>Разом до сплати</h3>
+
+              <div className={classes.finalDataBlock}>
+                <div className={classes.leftData}>
+                  <p>Доставка</p>
+                  <p>Разом до сплати</p>
+                </div>
+
+                <div className={classes.rightData}>
+                  <p>100 грн</p>
+                  <p>{`${totalPriceValue} грн`}</p>
+                </div>
+              </div>
+
               <button>Замовлення підтверджую</button>
             </div>
           </div>
