@@ -33,13 +33,6 @@
                     justify-content: center;
                     width: 100%;
 
-                    label {
-                        font-family: "Arsenal", sans-serif;
-                        padding: 5px 0px;
-                        font-weight: 700;
-                        font-size: 20px;
-                    }
-
                     .finalDataBlock {
                         display: flex;
                         justify-content: space-between;
@@ -54,30 +47,6 @@
                             }
                         }
                     }
-                }
-
-                input::placeholder {
-                    color: #767676;
-                    font-weight: 400;
-                    font-size: 18px;
-                    padding-left: 1rem;
-                    font-family: "Work Sans", sans-serif
-                }
-
-                input {
-                    width: 75%;
-                    padding: 10px;
-                    outline: none;
-                    border: 1px solid #767676;
-                    background-color: #fffff4;
-                    border-radius: 4px;
-                    color: black;
-                    font-size: 18px;
-                    margin: 5px 0px;
-                }
-
-                input:focus {
-                    border: 2px solid black;
                 }
             }
         }
@@ -143,4 +112,35 @@
         font-size: 30px;
         margin-bottom: 25px;
     }
+}
+
+.dataInput::placeholder {
+    color: #767676;
+    font-weight: 400;
+    font-size: 18px;
+    padding-left: 1rem;
+    font-family: "Work Sans", sans-serif
+}
+
+.dataInput {
+    width: 75%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #767676;
+    background-color: #fffff4;
+    border-radius: 4px;
+    color: black;
+    font-size: 18px;
+    margin: 5px 0px;
+}
+
+.dataInput:focus {
+    border: 2px solid black;
+}
+
+.secondaryTitleLabel {
+    font-family: "Arsenal", sans-serif;
+    padding: 5px 0px;
+    font-weight: 700;
+    font-size: 20px;
 }

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./CheckoutPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCartItems, totalPrice } from "../redux/cartSlice";
 import { isUserLoggedIn } from "../utils/AuthService";
+import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockCOmponent";
 
 const CheckoutPage: React.FC = () => {
 
@@ -12,6 +13,11 @@ const CheckoutPage: React.FC = () => {
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
+  const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
+
+  const changePayStatusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPaymentMethod(event.target.value)
+  }
 
   return (
     <div className={classes.container}>
@@ -34,8 +40,8 @@ const CheckoutPage: React.FC = () => {
 
             <div className={classes.inputForm}>
               <h3 className={classes.inputTitle}>Ваші данні</h3>
-              <input type="text" placeholder="Прізвище, ім'я, по батькові " />
-              <input type="text" placeholder="Номер телефону" />
+              <input className={classes.dataInput} type="text" placeholder="Прізвище, ім'я, по батькові " />
+              <input className={classes.dataInput} type="text" placeholder="Номер телефону" />
             </div>
           </div>
 
@@ -49,7 +55,7 @@ const CheckoutPage: React.FC = () => {
 
             <div className={classes.inputForm}>
               <h3 className={classes.inputTitle}>Ваші данні</h3>
-              <input type="text" placeholder="Ваше місто" />
+              <input className={classes.dataInput} type="text" placeholder="Ваше місто" />
 
               {isAuthenticated && <FormGroup sx={{ margin: "10px 0px 30px 0px" }}>
                 <FormControlLabel
@@ -66,7 +72,7 @@ const CheckoutPage: React.FC = () => {
               </FormGroup>}
 
               <FormControl>
-                <label>Спосіб доставки</label>
+                <label className={classes.secondaryTitleLabel}>Спосіб доставки</label>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue="female"
@@ -91,20 +97,28 @@ const CheckoutPage: React.FC = () => {
 
               <FormControl>
                 <h3 className={classes.inputTitle}>Оплата</h3>
-                <label>Спосіб оплати</label>
+                <label className={classes.secondaryTitleLabel}>Спосіб оплати</label>
                 <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
+
+                  defaultValue="CASH"
                   name="radio-buttons-group"
+                  onChange={changePayStatusHandler}
+                  value={paymentMethod}
                 >
-                  <FormControlLabel value="Готівкою при отриманні" control={<Radio />} label="Готівкою при отриманні" />
-                  <FormControlLabel value="Google pay" control={<Radio />} label="Онлайн" />
+                  <FormControlLabel value="CASH" control={<Radio />} label="Готівкою при отриманні" />
+                  <FormControlLabel value="ONLINE" control={<Radio />} label="Онлайн" />
                 </RadioGroup>
               </FormControl>
+
+              {
+                paymentMethod === "ONLINE" && <PaymentBlockComponent />
+              }
+
             </div>
           </div>
 
         </div>
+
 
 
         <div className={classes.rightBlock}>
@@ -137,7 +151,7 @@ const CheckoutPage: React.FC = () => {
 
             <div className={classes.inputForm}>
               <h3 className={classes.inputTitle}>У мене є промокод</h3>
-              <input type="text" placeholder="Введіть промокод" />
+              <input className={classes.dataInput} type="text" placeholder="Введіть промокод" />
               <button>Застосувати</button>
             </div>
           </div>
