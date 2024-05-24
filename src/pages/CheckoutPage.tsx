@@ -5,7 +5,8 @@ import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup }
 import { useSelector } from "react-redux";
 import { selectCartItems, totalPrice } from "../redux/cartSlice";
 import { isUserLoggedIn } from "../utils/AuthService";
-import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockCOmponent";
+import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
+import { addNewOrder } from "../utils/OrderService";
 
 const CheckoutPage: React.FC = () => {
 
@@ -13,11 +14,45 @@ const CheckoutPage: React.FC = () => {
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
-  const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
+  // const [deliveryMethod, setDeliveryMehtod] = useState<string>("COURIER");
+  //const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phoneNumber: "",
+    city: "",
+    deliveryMethod: "COURIER",
+    paymentMethod: "CASH"
+  })
+
+  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const submitHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const orderData = {
+      totalAmount: totalPriceValue,
+      status: false,
+      deliveryMethod: formData.deliveryMethod,
+      paymentMethod: formData.paymentMethod,
+      fullName: formData.fullName,
+      phoneList: cartItems,
+      city: formData.city,
+      phoneNumber: formData.phoneNumber
+    }
+    try {
+      const response = await addNewOrder(orderData);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const changePayStatusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPaymentMethod(event.target.value)
-  }
+    const value = event.target.value;
+    setFormData((prevData) => ({ ...prevData, paymentMethod: value }));
+  };
 
   return (
     <div className={classes.container}>
@@ -27,7 +62,7 @@ const CheckoutPage: React.FC = () => {
 
       <h2 className={classes.pageTitle}>Оформлення замовлення</h2>
 
-      <form>
+      <form onSubmit={submitHandler}>
         <div className={classes.leftBlock}>
 
           <div className={classes.paymentForm}>
@@ -40,8 +75,20 @@ const CheckoutPage: React.FC = () => {
 
             <div className={classes.inputForm}>
               <h3 className={classes.inputTitle}>Ваші данні</h3>
-              <input className={classes.dataInput} type="text" placeholder="Прізвище, ім'я, по батькові " />
-              <input className={classes.dataInput} type="text" placeholder="Номер телефону" />
+              <input
+                className={classes.dataInput}
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={inputChangeHandler}
+                placeholder="Прізвище, ім'я, по батькові " />
+              <input
+                className={classes.dataInput}
+                type="text"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={inputChangeHandler}
+                placeholder="Номер телефону" />
             </div>
           </div>
 
@@ -55,7 +102,13 @@ const CheckoutPage: React.FC = () => {
 
             <div className={classes.inputForm}>
               <h3 className={classes.inputTitle}>Ваші данні</h3>
-              <input className={classes.dataInput} type="text" placeholder="Ваше місто" />
+              <input
+                className={classes.dataInput}
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={inputChangeHandler}
+                placeholder="Ваше місто" />
 
               {isAuthenticated && <FormGroup sx={{ margin: "10px 0px 30px 0px" }}>
                 <FormControlLabel
@@ -76,11 +129,13 @@ const CheckoutPage: React.FC = () => {
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue="female"
-                  name="radio-buttons-group"
+                  name="deliveryMethod"
+                  value={formData.deliveryMethod}
+                  onChange={inputChangeHandler}
                 >
-                  <FormControlLabel value="Доставка кур'єром" control={<Radio />} label="Доставка кур'єром" />
-                  <FormControlLabel value="У відділення Нової пошти" control={<Radio />} label="У відділення Нової пошти" />
-                  <FormControlLabel value="Доставка кур'єром Нової пошти" control={<Radio />} label="Доставка кур'єром Нової пошти" />
+                  <FormControlLabel defaultChecked value="COURIER" control={<Radio />} label="Доставка кур'єром" />
+                  <FormControlLabel value="NEW_POST_OFFICE" control={<Radio />} label="У відділення Нової пошти" />
+                  <FormControlLabel value="NEW_POST_COURIER" control={<Radio />} label="Доставка кур'єром Нової пошти" />
                 </RadioGroup>
               </FormControl>
             </div>
@@ -103,15 +158,15 @@ const CheckoutPage: React.FC = () => {
                   defaultValue="CASH"
                   name="radio-buttons-group"
                   onChange={changePayStatusHandler}
-                  value={paymentMethod}
+                  value={formData.paymentMethod}
                 >
-                  <FormControlLabel value="CASH" control={<Radio />} label="Готівкою при отриманні" />
+                  <FormControlLabel defaultChecked value="CASH" control={<Radio />} label="Готівкою при отриманні" />
                   <FormControlLabel value="ONLINE" control={<Radio />} label="Онлайн" />
                 </RadioGroup>
               </FormControl>
 
               {
-                paymentMethod === "ONLINE" && <PaymentBlockComponent />
+                formData.paymentMethod === "ONLINE" && <PaymentBlockComponent />
               }
 
             </div>

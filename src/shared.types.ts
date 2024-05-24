@@ -19,6 +19,8 @@ export type Phone = {
   rating: number;
   vote_count: number;
   used: boolean;
+  colors: Color[]
+  romList: PhoneRom[];
 };
 
 
@@ -51,3 +53,16 @@ export type PhoneDistinctCharacteristics = {
   batteryCapacity: number[];
   countOfSimCard: number[];
 };
+
+export type PhoneRom = {
+  romSize: number;
+}
+
+export type Order = {
+  totalAmount: number;
+  status: boolean;
+  deliveryMethod: string;
+  paymentMethod: string;
+  usrnme: string;
+  phoneList: Phone[];
+}
