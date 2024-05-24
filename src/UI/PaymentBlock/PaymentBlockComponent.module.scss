@@ -1,0 +1,77 @@
+.container {
+    transition: box-shadow 0.5s ease;
+    padding: 10px;
+    width: 50%;
+
+    .topBlock,
+    .middleBlock,
+    .bottomBlock {
+        margin: 5px 0px;
+    }
+
+    .topBlock {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .middleBlock {
+
+        display: flex;
+        justify-content: space-between;
+
+        .leftSide,
+        .rightSide {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .bottomBlock {
+        align-items: center;
+        text-align: center;
+        
+        p {
+            margin: 20px 0px;
+            font-family: "Work Sans", sans-serif;
+            color: #767676;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        button {
+            cursor: pointer;
+            border-radius: 4px;
+            width: 80%;
+            height: 45px;
+            background-color: #436850;
+
+            font-family: "Work Sans", sans-serif;
+            color: #fffff4;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+}
+
+.container:hover {
+    box-shadow: 0 4px 50px 0 rgba(0, 0, 0, 0.45);
+
+}
+
+label {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    margin: 5px 0px;
+}
+
+.paymentInput {
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid #767676;
+    outline: none;
+}
+
+.paymentInput:focus {
+    border-bottom: 2px solid #000;
+}
