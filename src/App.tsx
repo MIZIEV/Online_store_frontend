@@ -22,6 +22,7 @@ import TransferComponent from "./components/AdminMenu/AdminTools/TransferCompone
 import ColorControleComponent from "./components/AdminMenu/AdminTools/ColorControlComponent";
 import PhoneDescriptionComponent from "./components/AdminMenu/AdminTools/PhoneDescriptionComponent";
 import PhoneCatalog from "./pages/PhoneCatalog";
+import UserPersonalPage from "./pages/UserPersonalPage";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +109,11 @@ const router = createBrowserRouter([
       {
         path: "phone/catalog",
         element: <PhoneCatalog />,
+        children: [{ path: "cart", element: <CartModal /> }]
+      },
+      {
+        path: ":savedUser/personal-page",
+        element: <UserPersonalPage />,
         children: [{ path: "cart", element: <CartModal /> }]
       }
     ],

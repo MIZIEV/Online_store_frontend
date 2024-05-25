@@ -1,0 +1,121 @@
+.container {
+    padding: 50px;
+
+    .topBlock {
+        display: flex;
+        .leftMenuBlock {
+            margin-left: 100px;
+            display: flex;
+            flex-direction: column;
+
+            border-radius: 8px;
+            padding: 30px;
+            width: 170px;
+            height: 150px;
+            background-color: #436850;
+
+            h5 {
+                margin: 10px 0px;
+                font-family: "Arsenal", sans-serif;
+                font-weight: 700;
+                font-size: 20px;
+                color: #fff;
+            }
+
+            label {
+                margin: 5px 0px;
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 14px;
+                color: #fff;
+                cursor: pointer;
+            }
+        }
+
+        .rightContentBlock {
+            margin: auto;
+        }
+    }
+
+    .bottomBlock {
+        margin-top: 50px;
+
+        .subscribeBlock {
+            display: flex;
+            border-radius: 24px;
+            padding: 0 80px;
+            height: 140px;
+            background-color: #adbc9f;
+            margin-bottom: 50px;
+
+            .iconBlock {
+                margin: auto;
+                flex: 1;
+            }
+
+            .textBlock {
+                flex: 2;
+                margin: auto;
+                display: block;
+
+                .topText {
+                    font-family: "Arsenal", sans-serif;
+                    font-weight: 700;
+                    font-size: 27px;
+                    color: #2b2d33;
+                }
+
+                .bottomText {
+                    font-family: "Work Sans", sans-serif;
+                    font-weight: 400;
+                    font-size: 12px;
+                    color: #555a65;
+                }
+
+            }
+        }
+
+        .inputBlock {
+            flex: 1;
+            margin: auto;
+            display: flex;
+
+            input {
+                border: 1px solid #767676;
+                border-radius: 4px 0 0 4px;
+                width: 400px;
+                height: 30px;
+            }
+
+            input::placeholder {
+                padding-left: 20px;
+                font-family: "Work Sans", sans-serif;
+                color: #767676;
+                font-weight: 400;
+                font-size: 13px;
+
+            }
+
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                background-color: #12372a;
+                border-radius: 0 4px 4px 0;
+                width: 178px;
+                height: 33px;
+
+                font-family: "Work Sans", sans-serif;
+                color: #fffff4;
+                font-weight: 400;
+                font-size: 18px;
+                text-align: center;
+
+                svg {
+                    padding-left: 10px;
+                }
+            }
+        }
+    }
+}
