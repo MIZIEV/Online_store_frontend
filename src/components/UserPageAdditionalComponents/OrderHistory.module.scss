@@ -1,0 +1,28 @@
+.container {
+    margin: 50px;
+    text-align: center;
+
+    h2 {
+        margin: 25px 0px;
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+    }
+
+    p {
+        font-family: "Work Sans", sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    button {
+        margin-top: 25px;
+        cursor: pointer;
+        border: 1px solid #adbc9f;
+        border-radius: 4px;
+        background-color: transparent;
+
+        width: 270px;
+        height: 49px;
+    }
+}
