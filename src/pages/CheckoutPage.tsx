@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import classes from "./CheckoutPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from "@mui/material";
-import { useSelector } from "react-redux";
-import { selectCartItems, totalPrice } from "../redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItems, totalPrice, clearCart } from "../redux/cartSlice";
 import { isUserLoggedIn } from "../utils/AuthService";
 import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
 import { addNewOrder } from "../utils/OrderService";
 
 const CheckoutPage: React.FC = () => {
+  const dispatch = useDispatch();
 
   const isAuthenticated = isUserLoggedIn();
 
@@ -48,6 +49,8 @@ const CheckoutPage: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
+
+    dispatch(clearCart())
   }
 
   const changePayStatusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

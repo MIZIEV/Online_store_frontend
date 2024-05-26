@@ -114,7 +114,7 @@ const Phone: React.FC = () => {
             {phone ? (
                 <div className={classes.container}>
                     <Outlet />
-                    <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
+                    <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/phone/catalog", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
                     <div className={classes.topInfoBlock}>
                         <div className={classes.leftImagesBlock}>

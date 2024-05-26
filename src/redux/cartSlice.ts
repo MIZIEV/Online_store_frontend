@@ -70,6 +70,9 @@ export const cartSlice = createSlice({
           : item
       );
     },
+    clearCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
@@ -79,7 +82,7 @@ export const selectCartCount = createSelector(
 );
 
 
-export const { addToCart, removeFromCart, increase, decrease } =
+export const { addToCart, removeFromCart, increase, decrease, clearCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
