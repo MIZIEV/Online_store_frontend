@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService";
+import { getLoggedInUser, isAdminUser } from "../../utils/AuthService";
 import Button from "../../UI/Button/Button";
 import classes from "./Navbar.module.scss";
 import CartButton from "./Cart/CartButton";
@@ -8,7 +8,7 @@ const Navbar = () => {
   const loggedInUser = getLoggedInUser();
   const isAdmin = isAdminUser();
   const navigate = useNavigate();
-  const savedUser = sessionStorage.getItem("authenticatedUser");
+  const savedUser = sessionStorage.getItem("authenticatedUserName");
 
   const handleLogout = () => {
     navigate(`${savedUser}/personal-page`);
@@ -44,7 +44,7 @@ const Navbar = () => {
                 <path d="M17.4215 13.457L12.5 18L7.5785 13.457C4.837 15.2105 3 18.3745 3 22H22C22 18.3745 20.163 15.2105 17.4215 13.457Z" fill="white" />
                 <path d="M12.5 14C14.275 14 15.8645 13.225 16.963 12C17.9155 10.938 18.5 9.539 18.5 8C18.5 4.6865 15.8135 2 12.5 2C9.1865 2 6.5 4.6865 6.5 8C6.5 9.539 7.0845 10.938 8.037 12C9.1355 13.225 10.725 14 12.5 14Z" fill="white" />
               </svg>
-              {savedUser?.substring(0, 6) + "..."}
+              {savedUser}
             </Button>
           </>
 

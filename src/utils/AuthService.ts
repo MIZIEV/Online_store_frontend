@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST_PORT = "localhost:8090";
+const HOST_PORT = "192.168.31.15:8090";
 const BASE_URL = "http://" + HOST_PORT + "/api/auth";
 
 interface RegistrationData {
@@ -38,9 +38,10 @@ export async function loginUser(userData: LoginData) {
 	}
 }
 
-export const saveLoggedInUser = (username: string, role: string) => {
-	console.log("saved username - " + username + "saved role - " + role);
-	sessionStorage.setItem("authenticatedUser", username);
+export const saveLoggedInUser = (email: string, role: string, username: string) => {
+	console.log("saved email - " + email + "saved role - " + role + " username - " + username);
+	sessionStorage.setItem("authenticatedUser", email);
+	sessionStorage.setItem("authenticatedUserName", username);
 	sessionStorage.setItem("role", role);
 };
 
@@ -55,7 +56,7 @@ export const isUserLoggedIn = () => {
 }
 
 export const getLoggedInUser = () => {
-	const username = sessionStorage.getItem("authenticatedUser");
+	const username = sessionStorage.getItem("authenticatedUserName");
 	console.log("username saved - " + username);
 	return username as string;
 }

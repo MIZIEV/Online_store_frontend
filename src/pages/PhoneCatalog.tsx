@@ -105,7 +105,7 @@ const PhoneCatalog: React.FC = () => {
     return (
         <div className={classes.container}>
             <div className={classes.breadCrumb}>
-                <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "/phone/catalog", title: "/товари" }]} />
+                <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "/phone/catalog", title: "/телефони" }]} />
             </div>
 
             <h1>Товари</h1>

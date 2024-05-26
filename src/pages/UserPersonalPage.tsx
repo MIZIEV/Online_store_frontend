@@ -3,6 +3,8 @@ import classes from "./UserPersonalPage.module.scss";
 import OrderHistory from "../components/UserPageAdditionalComponents/OrderHistory";
 import WishList from "../components/UserPageAdditionalComponents/WishList";
 import UserData from "../components/UserPageAdditionalComponents/UserData";
+import { logout } from "../utils/AuthService";
+import { useNavigate } from "react-router";
 
 interface PageState {
     selectedOption: string;
@@ -10,6 +12,7 @@ interface PageState {
 
 const UserPersonalPage: React.FC = () => {
 
+    const navigator = useNavigate();
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1'
@@ -18,6 +21,11 @@ const UserPersonalPage: React.FC = () => {
     const handleOptionChange = (option: string) => {
         setPageState({ selectedOption: option });
     };
+
+    const logoutHandler = () => {
+        logout();
+        navigator("/");
+    }
 
 
     return (
@@ -28,8 +36,8 @@ const UserPersonalPage: React.FC = () => {
 
                     <label onClick={() => handleOptionChange('option1')}>Історія замовлень</label>
                     <label onClick={() => handleOptionChange('option2')}>Список бажань</label>
-                    <label onClick={() => handleOptionChange('option1')}>Налаштування</label>
-                    <label>Вихід</label>
+                    <label onClick={() => handleOptionChange('option3')}>Налаштування</label>
+                    <label onClick={logoutHandler}>Вихід</label>
                 </div>
 
                 {pageState.selectedOption && (

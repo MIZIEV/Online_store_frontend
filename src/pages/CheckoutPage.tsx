@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import classes from "./CheckoutPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from "@mui/material";
-import { useSelector } from "react-redux";
-import { selectCartItems, totalPrice } from "../redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItems, totalPrice, clearCart } from "../redux/cartSlice";
 import { isUserLoggedIn } from "../utils/AuthService";
 import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
 import { addNewOrder } from "../utils/OrderService";
 
 const CheckoutPage: React.FC = () => {
+  const dispatch = useDispatch();
 
   const isAuthenticated = isUserLoggedIn();
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
-  // const [deliveryMethod, setDeliveryMehtod] = useState<string>("COURIER");
-  //const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
+  const username = sessionStorage.getItem("authenticatedUserName")
+
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -40,13 +41,16 @@ const CheckoutPage: React.FC = () => {
       fullName: formData.fullName,
       phoneList: cartItems,
       city: formData.city,
-      phoneNumber: formData.phoneNumber
+      phoneNumber: formData.phoneNumber,
+      username: username
     }
     try {
       const response = await addNewOrder(orderData);
     } catch (error) {
       console.error(error);
     }
+
+    dispatch(clearCart())
   }
 
   const changePayStatusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
       const response = await loginUser(userData);
 
       if (response) {
-        saveLoggedInUser(usernameOrEmail, response.role);
+        saveLoggedInUser(usernameOrEmail, response.role, response.username);
         navigate("/"); // Використовуємо функцію navigate для перенаправлення
       } else {
         setError("Login failed");
