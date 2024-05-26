@@ -14,8 +14,8 @@ const CheckoutPage: React.FC = () => {
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
-  // const [deliveryMethod, setDeliveryMehtod] = useState<string>("COURIER");
-  //const [paymentMethod, setPaymentMethod] = useState<string>("CASH");
+  const username = sessionStorage.getItem("authenticatedUserName")
+
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -40,7 +40,8 @@ const CheckoutPage: React.FC = () => {
       fullName: formData.fullName,
       phoneList: cartItems,
       city: formData.city,
-      phoneNumber: formData.phoneNumber
+      phoneNumber: formData.phoneNumber,
+      username: username
     }
     try {
       const response = await addNewOrder(orderData);

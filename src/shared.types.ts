@@ -59,10 +59,13 @@ export type PhoneRom = {
 }
 
 export type Order = {
+  id: number;
   totalAmount: number;
   status: boolean;
+  fullName: string;
   deliveryMethod: string;
   paymentMethod: string;
-  usrnme: string;
+  createdAt: string;
   phoneList: Phone[];
+  username: string;
 }

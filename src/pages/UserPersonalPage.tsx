@@ -14,7 +14,6 @@ const UserPersonalPage: React.FC = () => {
 
     const navigator = useNavigate();
 
-
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1'
     });
