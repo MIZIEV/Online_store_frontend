@@ -3,12 +3,16 @@ import classes from "./UserPersonalPage.module.scss";
 import OrderHistory from "../components/UserPageAdditionalComponents/OrderHistory";
 import WishList from "../components/UserPageAdditionalComponents/WishList";
 import UserData from "../components/UserPageAdditionalComponents/UserData";
+import { logout } from "../utils/AuthService";
+import { useNavigate } from "react-router";
 
 interface PageState {
     selectedOption: string;
 }
 
 const UserPersonalPage: React.FC = () => {
+
+    const navigator = useNavigate();
 
 
     const [pageState, setPageState] = useState<PageState>({
@@ -19,6 +23,11 @@ const UserPersonalPage: React.FC = () => {
         setPageState({ selectedOption: option });
     };
 
+    const logoutHandler = () => {
+        logout();
+        navigator("/");
+    }
+
 
     return (
         <div className={classes.container}>
@@ -28,8 +37,8 @@ const UserPersonalPage: React.FC = () => {
 
                     <label onClick={() => handleOptionChange('option1')}>Історія замовлень</label>
                     <label onClick={() => handleOptionChange('option2')}>Список бажань</label>
-                    <label onClick={() => handleOptionChange('option1')}>Налаштування</label>
-                    <label>Вихід</label>
+                    <label onClick={() => handleOptionChange('option3')}>Налаштування</label>
+                    <label onClick={logoutHandler}>Вихід</label>
                 </div>
 
                 {pageState.selectedOption && (
