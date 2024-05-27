@@ -6,6 +6,7 @@ const ADD_NEW_PHONE_URL: string = "http://" + HOST + "/api/phone/add";
 const GET_ALL_PHONES_URL = "http://" + HOST + "/api/phone/list";
 const UPDATE_PHONE_URL = "http://" + HOST + "/api/phone/";
 const GET_ALL_PHONE_DISTINCT_CHARACTERISTICS_URL = "http://" + HOST + "/api/phone/distinct-characteristics";
+const WISH_LIST_URL = "http://" + HOST + "/api/phone/"
 
 export async function postProduct(data: unknown) {
   console.log(data);
@@ -82,3 +83,27 @@ export async function getAllPhoneDistinctCharacteristics() {
     throw error;
   }
 };
+
+export async function addPhoneToWishList(phoneId: number, username: string) {
+  try {
+    const response = await axios.patch(`${WISH_LIST_URL}${phoneId}/wishList/${username}/add`);
+    console.log("ADD TO WISH LIST FUNCTION")
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deletePhoneFromWishList(phoneId: number, username: string) {
+  try {
+    const response = await axios.delete(`${WISH_LIST_URL}${phoneId}/wishList/${username}/remove`);
+    console.log("DELETE FROM WISH LIST FUNCTION")
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

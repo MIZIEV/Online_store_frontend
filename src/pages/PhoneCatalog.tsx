@@ -4,13 +4,14 @@ import CheckBoxBlock from "../UI/CheckBox/CheckBoxBlock";
 import CatalogCard from "../components/Card/CatalogCard";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../utils/http";
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { getAllPhoneDistinctCharacteristics } from "../utils/phoneService";
 import ReactPaginate from 'react-paginate';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { PhoneDistinctCharacteristics } from "../shared.types";
+import { Phone, PhoneDistinctCharacteristics } from "../shared.types";
 import PriceSliderComponent from "../UI/PriceSlider/PriceSliderComponent";
+import { getWishListForUser } from "../utils/UserService";
 
 const PhoneCatalog: React.FC = () => {
 
@@ -18,6 +19,10 @@ const PhoneCatalog: React.FC = () => {
     const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState<PhoneDistinctCharacteristics>({});
     const [currentPage, setCurrentPage] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
+    const [wishList, setWishList] = useState<Phone[]>([]);
+    const [isWishListLoading, setIsWishListLoading] = useState(true);
+    const username = sessionStorage.getItem("authenticatedUserName");
+
     const itemsPerPage = 15;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
 
@@ -27,6 +32,22 @@ const PhoneCatalog: React.FC = () => {
         })
     }, [])
 
+    useEffect(() => {
+        if (username) {
+            console.log("Fetching wishlist for user:", username); // Debugging
+            setIsWishListLoading(true);
+            getWishListForUser(username).then((response) => {
+                console.log("Fetched wishlist:", response); // Debugging
+                setWishList(response);
+                setIsWishListLoading(false);
+            }).catch(error => {
+                console.error("Error fetching wishlist:", error); // Debugging
+                setIsWishListLoading(false);
+            });
+        } else {
+            setIsWishListLoading(false);
+        }
+    }, [username]);
 
     const { data, isPending, isError } = useQuery({
         queryKey: ["products", { filter: filter }],
@@ -102,6 +123,10 @@ const PhoneCatalog: React.FC = () => {
     const sortedCountOfCoresData = distinctPhoneCharacteristic?.countOfCores?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
     const sortedCountOfSimCardData = distinctPhoneCharacteristic?.countOfSimCard?.sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
 
+    const isInWishlist = (phoneId) => {
+        return wishList.some(phone => phone.id === phoneId);
+    };
+
     return (
         <div className={classes.container}>
             <div className={classes.breadCrumb}>
@@ -127,13 +152,11 @@ const PhoneCatalog: React.FC = () => {
                         onFilterChange={handleFilterChange}
                         characteristicData={["Новий", "Б/у"]}
                         title="Стан" />
-
                     <CheckBoxBlock
                         filterKey="screenSize"
                         onFilterChange={handleFilterChange}
                         characteristicData={screenSizes}
                         title="Діагональ екрану" />
-
                     <CheckBoxBlock
                         filterKey="resolution"
                         onFilterChange={handleFilterChange}
@@ -162,26 +185,27 @@ const PhoneCatalog: React.FC = () => {
                 </div>
 
                 <div className={classes.rightBlock}>
-                    <TransitionGroup component={null}>{
-                        currentPageData.map((phone) => (
-                            <CSSTransition
-                                key={phone.id}
-                                timeout={300}
-                                classNames={{
-                                    enter: classes.itemEnter,
-                                    enterActive: classes.itemEnterActive,
-                                    exit: classes.itemExit,
-                                    exitActive: classes.itemExitActive,
-                                }}
-                            >
-                                <NavLink to={`/phone/${phone.id}`} className={classes.link}>
-                                    <CatalogCard phoneData={phone} />
-                                </NavLink>
-                            </CSSTransition>
-                        ))
-                    }
-                    </TransitionGroup>
-
+                    {isWishListLoading ? (
+                        <div>Loading...</div>
+                    ) : (
+                        <TransitionGroup component={null}>{
+                            currentPageData.map((phone) => (
+                                <CSSTransition
+                                    key={phone.id}
+                                    timeout={300}
+                                    classNames={{
+                                        enter: classes.itemEnter,
+                                        enterActive: classes.itemEnterActive,
+                                        exit: classes.itemExit,
+                                        exitActive: classes.itemExitActive,
+                                    }}
+                                >
+                                    <CatalogCard inWishList={isInWishlist(phone.id)} phoneData={phone} />
+                                </CSSTransition>
+                            ))
+                        }
+                        </TransitionGroup>
+                    )}
                 </div>
             </div>
 
