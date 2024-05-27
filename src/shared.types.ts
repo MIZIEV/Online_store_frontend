@@ -50,6 +50,7 @@ export type PhoneDistinctCharacteristics = {
   processor: string[];
   countOfCores: number[];
   ram: number[];
+  rom:number[];
   batteryCapacity: number[];
   countOfSimCard: number[];
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST_PORT = "192.168.31.15:8090";
+const HOST_PORT = "localhost:8090";
 const BASE_URL = "http://" + HOST_PORT + "/api/auth";
 
 interface RegistrationData {
