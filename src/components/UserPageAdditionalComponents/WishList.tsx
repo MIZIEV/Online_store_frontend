@@ -7,11 +7,11 @@ import classes from "./WishList.module.scss"
 const WishList: React.FC = () => {
 
     const [wishList, setWishList] = useState<Phone[]>([])
-    const username = sessionStorage.getItem("authenticatedUserName");
+    const email = sessionStorage.getItem("authenticatedEmail");
 
     useEffect(() => {
 
-        getWishListForUser(username).then((response) => {
+        getWishListForUser(email).then((response) => {
             setWishList(response);
         })
     }, [])

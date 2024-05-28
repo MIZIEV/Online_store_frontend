@@ -8,7 +8,7 @@ import mainImage from "../../images/main_image.png";
 const RegistrationForm: React.FC = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,7 +42,7 @@ const RegistrationForm: React.FC = () => {
       const userData = {
         firstName,
         lastName,
-        username,
+        phoneNumber,
         email,
         password,
       };
@@ -95,9 +95,9 @@ const RegistrationForm: React.FC = () => {
             <input
               className={classes["input-field"]}
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Номер телефону"
               required
             />
           </div>

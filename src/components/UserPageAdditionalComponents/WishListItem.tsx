@@ -11,11 +11,11 @@ interface WishListItemProps {
 const WishListItem: React.FC<WishListItemProps> = (props) => {
 
     const { phone, onDelete } = props;
-    const username = sessionStorage.getItem("authenticatedUserName");
+    const email = sessionStorage.getItem("authenticatedEmail");
 
 
     const onClickDeleteHandler = () => {
-        deletePhoneFromWishList(phone.id, username);
+        deletePhoneFromWishList(phone.id, email);
         onDelete(phone.id);
     }
 
