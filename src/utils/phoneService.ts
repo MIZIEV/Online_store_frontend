@@ -84,9 +84,9 @@ export async function getAllPhoneDistinctCharacteristics() {
   }
 };
 
-export async function addPhoneToWishList(phoneId: number, username: string) {
+export async function addPhoneToWishList(phoneId: number, email: string) {
   try {
-    const response = await axios.patch(`${WISH_LIST_URL}${phoneId}/wishList/${username}/add`);
+    const response = await axios.patch(`${WISH_LIST_URL}${phoneId}/wishList/${email}/add`);
     console.log("ADD TO WISH LIST FUNCTION")
     console.log(response.data);
 
@@ -96,9 +96,9 @@ export async function addPhoneToWishList(phoneId: number, username: string) {
   }
 }
 
-export async function deletePhoneFromWishList(phoneId: number, username: string) {
+export async function deletePhoneFromWishList(phoneId: number, email: string) {
   try {
-    const response = await axios.delete(`${WISH_LIST_URL}${phoneId}/wishList/${username}/remove`);
+    const response = await axios.delete(`${WISH_LIST_URL}${phoneId}/wishList/${email}/remove`);
     console.log("DELETE FROM WISH LIST FUNCTION")
     console.log(response.data);
 
