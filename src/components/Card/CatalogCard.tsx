@@ -10,7 +10,7 @@ const CatalogCard: React.FC = (props) => {
     const colors = props.phoneData.colors;
     const id = props.phoneData.id;
     const inWishList = props.inWishList;
-    const username = sessionStorage.getItem("authenticatedUserName");
+    const email = sessionStorage.getItem("authenticatedEmail");
 
 
     const [isInWishList, setIsInWIshList] = useState(inWishList);
@@ -19,10 +19,10 @@ const CatalogCard: React.FC = (props) => {
 
     const handleWishListClick = () => {
         if (isInWishList) {
-            deletePhoneFromWishList(id, username);
+            deletePhoneFromWishList(id, email);
             setIsInWIshList(false);
         } else {
-            addPhoneToWishList(id, username);
+            addPhoneToWishList(id, email);
             setIsInWIshList(true);
         }
 
@@ -33,7 +33,7 @@ const CatalogCard: React.FC = (props) => {
     }
 
     const renderLikeIcon = () => {
-        if (!username) {
+        if (!email) {
             return (
                 <div className={classes.likeIcon} title="Please log in to add to wishlist">
                     <svg

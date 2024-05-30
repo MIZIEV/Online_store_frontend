@@ -8,7 +8,7 @@ const Navbar = () => {
   const loggedInUser = getLoggedInUser();
   const isAdmin = isAdminUser();
   const navigate = useNavigate();
-  const savedUser = sessionStorage.getItem("authenticatedUserName");
+  const savedUser = sessionStorage.getItem("authenticatedFirstName");
 
   const handleLogout = () => {
     navigate(`${savedUser}/personal-page`);

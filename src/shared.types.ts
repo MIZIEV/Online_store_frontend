@@ -50,7 +50,7 @@ export type PhoneDistinctCharacteristics = {
   processor: string[];
   countOfCores: number[];
   ram: number[];
-  rom:number[];
+  rom: number[];
   batteryCapacity: number[];
   countOfSimCard: number[];
 };
@@ -69,4 +69,11 @@ export type Order = {
   createdAt: string;
   phoneList: Phone[];
   username: string;
+}
+
+export type User = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
 }

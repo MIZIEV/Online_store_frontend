@@ -21,7 +21,7 @@ const PhoneCatalog: React.FC = () => {
     const [maxPrice, setMaxPrice] = useState(0);
     const [wishList, setWishList] = useState<Phone[]>([]);
     const [isWishListLoading, setIsWishListLoading] = useState(true);
-    const username = sessionStorage.getItem("authenticatedUserName");
+    const email = sessionStorage.getItem("authenticatedEmail");
 
     const itemsPerPage = 15;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
@@ -33,21 +33,20 @@ const PhoneCatalog: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        if (username) {
-            console.log("Fetching wishlist for user:", username); // Debugging
+        if (email) {
             setIsWishListLoading(true);
-            getWishListForUser(username).then((response) => {
-                console.log("Fetched wishlist:", response); // Debugging
+            getWishListForUser(email).then((response) => {
+                console.log("Fetched wishlist:", response); 
                 setWishList(response);
                 setIsWishListLoading(false);
             }).catch(error => {
-                console.error("Error fetching wishlist:", error); // Debugging
+                console.error("Error fetching wishlist:", error); 
                 setIsWishListLoading(false);
             });
         } else {
             setIsWishListLoading(false);
         }
-    }, [username]);
+    }, [email]);
 
     const { data, isPending, isError } = useQuery({
         queryKey: ["products", { filter: filter }],

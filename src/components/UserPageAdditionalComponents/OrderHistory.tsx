@@ -10,7 +10,7 @@ import { Order } from "../../shared.types";
 const OrderHistory: React.FC = () => {
     const navigator = useNavigate();
     const [orderedList, setOrderedList] = useState<Order[]>([]);
-    const username = sessionStorage.getItem("authenticatedUserName");
+    const email = sessionStorage.getItem("authenticatedEmail");
 
     const formatCreatedAt = (createdAt: string): string => {
         const date = new Date(createdAt);
@@ -21,7 +21,7 @@ const OrderHistory: React.FC = () => {
     }
 
     useEffect(() => {
-        getAllOrdersForUser(username).then((response) => {
+        getAllOrdersForUser(email).then((response) => {
             setOrderedList(response)
             console.log(response)
         })
