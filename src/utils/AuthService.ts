@@ -22,7 +22,7 @@ export async function registerUser(userData: RegistrationData) {
 }
 
 interface LoginData {
-	usernameOrEmail: string;
+	email: string;
 	password: string;
 }
 
@@ -38,27 +38,24 @@ export async function loginUser(userData: LoginData) {
 	}
 }
 
-export const saveLoggedInUser = (email: string, role: string, username: string) => {
-	console.log("saved email - " + email + "saved role - " + role + " username - " + username);
-	sessionStorage.setItem("authenticatedUser", email);
-	sessionStorage.setItem("authenticatedUserName", username);
+export const saveLoggedInUser = (email: string, role: string, firstName: string, lastName: string, phoneNumber: string) => {
+	console.log("saved email - " + email + "saved role - " + role + " firstName - " + firstName);
+	sessionStorage.setItem("authenticatedEmail", email);
+	sessionStorage.setItem("authenticatedFirstName", firstName);
+	sessionStorage.setItem("authenticatedLastName", lastName);
+	sessionStorage.setItem("authenticatedPhonenumbar", phoneNumber);
 	sessionStorage.setItem("role", role);
 };
 
-export const isUserLoggedIn = () => {
-	const username = sessionStorage.getItem("authenticatedUser");
-
-	if (username == null) {
-		return false;
-	} else {
-		return true;
-	}
+export const isUserLoggedIn = (): boolean => {
+	const email = sessionStorage.getItem("authenticatedEmail");
+	return email !== null;
 }
 
 export const getLoggedInUser = () => {
-	const username = sessionStorage.getItem("authenticatedUserName");
-	console.log("username saved - " + username);
-	return username as string;
+	const firstName = sessionStorage.getItem("authenticatedFirstName");
+	console.log("username saved - " + firstName);
+	return firstName as string;
 }
 
 export function saveToken(token: string) {
