@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import classes from "./UserData.module.scss";
-import { updateUserData } from "../../utils/UserService";
+import { changeUserPassword, updateUserData } from "../../utils/UserService";
 
 const UserData: React.FC = () => {
-  
+
   const email = sessionStorage.getItem("authenticatedEmail") || "";
   const firstName = sessionStorage.getItem("authenticatedFirstName") || "";
   const lastName = sessionStorage.getItem("authenticatedLastName") || "";
@@ -53,7 +53,9 @@ const UserData: React.FC = () => {
         setPasswordError("Passwords do not match");
         return;
       }
-      // Call an API function to update the password here
+      
+      changeUserPassword(email, passwords.newPassword);
+
       console.log("Password updated to:", passwords.newPassword);
       setPasswords({ newPassword: "", confirmPassword: "" });
       setPasswordError("");
@@ -105,6 +107,7 @@ const UserData: React.FC = () => {
           <div className={classes.editContainer}>
             <input
               type="password"
+              name="passwords"
               value={passwords.newPassword}
               onChange={(e) => handleChange(e, "newPassword")}
               placeholder="Новий пароль"
@@ -112,6 +115,7 @@ const UserData: React.FC = () => {
             />
             <input
               type="password"
+              name="passwords"
               value={passwords.confirmPassword}
               onChange={(e) => handleChange(e, "confirmPassword")}
               placeholder="Повторити пароль"
