@@ -72,6 +72,16 @@ export async function putTheMark(phoneId: number, rating: number) {
   }
 };
 
+export async function hasUserRatedPhone(phoneId: string, email: string): Promise<boolean> {
+  try {
+    const response = await axios.get(`${GET_ONE_PHONE_URL}${phoneId}/${email}/hasRated`)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export async function getAllPhoneDistinctCharacteristics() {
   try {
     const response = await axios.get(GET_ALL_PHONE_DISTINCT_CHARACTERISTICS_URL);
