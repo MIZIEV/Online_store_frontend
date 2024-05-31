@@ -1,6 +1,6 @@
 import Rating from '@mui/material/Rating';
 import React, { useEffect, useState } from "react";
-import { putTheMark } from '../../utils/phoneService';
+import { hasUserRatedPhone, putTheMark } from '../../utils/phoneService';
 import { isUserLoggedIn } from '../../utils/AuthService';
 
 
@@ -13,41 +13,53 @@ const customRatingStyle = {
   },
 };
 
-const RatingComponent: React.FC = ({ phoneId, rating, handleChangeRating }) => {
+interface RatingComponentProps {
+  phoneId: string;
+  rating: number;
+  handleChangeRating: () => void;
+}
+
+const RatingComponent: React.FC<RatingComponentProps> = ({ phoneId, rating, handleChangeRating }) => {
   const [value, setValue] = useState<number | null>(rating);
   const [hasRated, setHasRated] = useState<boolean>(false);
+  const email = sessionStorage.getItem("authenticatedEmail");
   const isAuthenticated = isUserLoggedIn();
 
-
   useEffect(() => {
-    const userHasRated = sessionStorage.getItem(`rated_${phoneId}`);
+    const checkUserHasRated = async () => {
+      if (isAuthenticated) {
+        try {
+          const userHasRated = await hasUserRatedPhone(phoneId, email);
+          setHasRated(userHasRated);
+        } catch (error) {
+          console.error("Failed to check if user has rated:", error);
+        }
+      }
+    };
 
-    if (userHasRated) {
-      setHasRated(true);
-    }
-  }, [phoneId]);
+    checkUserHasRated();
+  }, [phoneId, isAuthenticated]);
 
-  const handleRating = async (newValue) => {
-
-    if (isAuthenticated) {
+  const handleRating = async (newValue: number | null) => {
+    if (isAuthenticated && newValue !== null) {
       if (!hasRated) {
-        await putTheMark(phoneId, newValue);
-        setHasRated(true);
-
-        console.log("second calling after put the mark")
-        handleChangeRating();
-
-        sessionStorage.setItem(`rated_${phoneId}`, `true`);
+        try {
+          await putTheMark(phoneId, newValue);
+          setHasRated(true);
+          handleChangeRating();
+        } catch (error) {
+          console.error("Failed to submit rating:", error);
+        }
       } else {
         console.log("User has already rated this phone");
       }
     } else {
-      console.log("user is not authenticated")
+      console.log("User is not authenticated");
     }
-  }
+  };
 
   return (
-    <div >
+    <div>
       <Rating
         sx={customRatingStyle}
         name="simple-controlled"

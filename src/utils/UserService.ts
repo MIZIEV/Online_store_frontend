@@ -26,3 +26,14 @@ export async function updateUserData(email: string, userData: User) {
         throw error;
     }
 };
+
+export async function changeUserPassword(email: string, password: string) {
+    try {
+        const response = await axios.patch(`${UPDATE_USER_DATA}/${email}/password`, { password: password })
+        console.log("CHANGE PASSWORD FUNC")
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
