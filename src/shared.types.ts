@@ -42,6 +42,7 @@ export type Comment = {
   commentText: string,
   createdAt: string,
   authorName: string
+  authorEmail:string;
 }
 
 export type PhoneDistinctCharacteristics = {
