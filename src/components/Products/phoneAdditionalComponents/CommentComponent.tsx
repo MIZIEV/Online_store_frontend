@@ -1,9 +1,11 @@
 import React from "react";
 import classes from "./CommentComponent.module.scss"
+import { isUserLoggedIn } from "../../../utils/AuthService";
 
 const CommentComponent: React.FC = (props) => {
 
     const authenticatedEmail = sessionStorage.getItem("authenticatedEmail")
+    const isUthenticated = isUserLoggedIn();
 
     const { id, comment, updateComments, onDelete, authorEmail } = props;
 
@@ -20,6 +22,8 @@ const CommentComponent: React.FC = (props) => {
 
         console.log(" auth " + authorEmail)
         console.log("login " + authenticatedEmail)
+
+        console.log(isUthenticated)
 
         if (authenticatedEmail === authorEmail) {
             return (
