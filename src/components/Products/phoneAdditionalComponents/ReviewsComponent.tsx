@@ -39,7 +39,7 @@ const ReviewsComponent: React.FC = () => {
     const handleDeleteComment = async (commentId: number) => {
         try {
             await deleteComment(id, commentId);
-            setComments(comments.filter(comment => comment.id !== commentId)); 
+            setComments(comments.filter(comment => comment.id !== commentId));
         } catch (error) {
             console.error(error)
         }
@@ -71,7 +71,8 @@ const ReviewsComponent: React.FC = () => {
                             updateComments={() => getAllComments(id)}
                             onDelete={handleDeleteComment}
                             key={comment.id}
-                            comment={comment} />
+                            comment={comment}
+                            authorEmail={comment.authorEmail}/>
                     ))
                 }
             </div>
