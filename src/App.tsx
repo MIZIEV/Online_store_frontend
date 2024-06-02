@@ -23,6 +23,7 @@ import ColorControleComponent from "./components/AdminMenu/AdminTools/ColorContr
 import PhoneDescriptionComponent from "./components/AdminMenu/AdminTools/PhoneDescriptionComponent";
 import PhoneCatalog from "./pages/PhoneCatalog";
 import UserPersonalPage from "./pages/UserPersonalPage";
+import BlogSettingComponent from "./components/AdminMenu/BlogDashboard/BlogSettingComponent";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +115,11 @@ const router = createBrowserRouter([
       {
         path: ":savedUser/personal-page",
         element: <UserPersonalPage />,
+        children: [{ path: "cart", element: <CartModal /> }]
+      },
+      {
+        path: "admin/blog-managment",
+        element: <BlogSettingComponent />,
         children: [{ path: "cart", element: <CartModal /> }]
       }
     ],
