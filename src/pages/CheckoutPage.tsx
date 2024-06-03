@@ -15,6 +15,8 @@ const CheckoutPage: React.FC = () => {
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
+  const [deliveryPrice, setDeliveryPrice] = useState<number>(60);
+
   const username = sessionStorage.getItem("authenticatedUserName")
 
   const [formData, setFormData] = useState({
@@ -27,6 +29,13 @@ const CheckoutPage: React.FC = () => {
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    if (value === "COURIER") {
+      setDeliveryPrice(60)
+    } else if (value === "NEW_POST_OFFICE") {
+      setDeliveryPrice(50)
+    } else if (value === "NEW_POST_COURIER") {
+      setDeliveryPrice(120)
+    }
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -175,7 +184,6 @@ const CheckoutPage: React.FC = () => {
 
             </div>
           </div>
-
         </div>
 
 
@@ -227,8 +235,8 @@ const CheckoutPage: React.FC = () => {
                 </div>
 
                 <div className={classes.rightData}>
-                  <p>100 грн</p>
-                  <p>{`${totalPriceValue} грн`}</p>
+                  <p>{deliveryPrice} грн</p>
+                  <p>{`${totalPriceValue + deliveryPrice} грн`}</p>
                 </div>
               </div>
 
