@@ -3,19 +3,29 @@ import classes from "./CheckoutPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { selectCartItems, totalPrice, clearCart } from "../redux/cartSlice";
 import { isUserLoggedIn } from "../utils/AuthService";
 import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
 import { addNewOrder } from "../utils/OrderService";
+import ConfirmModal from "../UI/Modal/ConfirmModel";
 
 const CheckoutPage: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const isAuthenticated = isUserLoggedIn();
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
-  const username = sessionStorage.getItem("authenticatedUserName")
+  const [recepient, setRecepient] = useState<boolean>(false);
+  const firstName = sessionStorage.getItem("authenticatedFirstName");
+  const lastName = sessionStorage.getItem("authenticatedLastName");
+  const phoneNumber = sessionStorage.getItem("authenticatedPhonenumbar");
+
+  const [deliveryPrice, setDeliveryPrice] = useState<number>(60);
+
+  const email = sessionStorage.getItem("authenticatedEmail")
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -25,14 +35,45 @@ const CheckoutPage: React.FC = () => {
     paymentMethod: "CASH"
   })
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const iAmRecepientHandler = () => {
+    setRecepient(!recepient);
+
+    if (!recepient) {
+      setFormData({
+        ...formData,
+        fullName: `${firstName} ${lastName}`,
+        phoneNumber: `${phoneNumber}`
+      });
+    } else {
+      setFormData({
+        ...formData,
+        fullName: "",
+        phoneNumber: "",
+        city: ""
+      });
+    }
+  }
+
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    if (value === "COURIER") {
+      setDeliveryPrice(60)
+    } else if (value === "NEW_POST_OFFICE") {
+      setDeliveryPrice(50)
+    } else if (value === "NEW_POST_COURIER") {
+      setDeliveryPrice(120)
+    }
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const submitHandler = async (event: React.FormEvent) => {
+  const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    setModalOpen(true);
+  };
 
+  const handleConfirm = () => {
     const orderData = {
       totalAmount: totalPriceValue,
       status: false,
@@ -42,20 +83,27 @@ const CheckoutPage: React.FC = () => {
       phoneList: cartItems,
       city: formData.city,
       phoneNumber: formData.phoneNumber,
-      username: username
-    }
-    try {
-      const response = await addNewOrder(orderData);
-    } catch (error) {
-      console.error(error);
+      email: email
+    };
+    const response = addNewOrder(orderData);
+    dispatch(clearCart());
+
+    if (isAuthenticated) {
+      navigate(`/${firstName}/personal-page`);
+    } else {
+      navigate("/");
     }
 
-    dispatch(clearCart())
-  }
+    setModalOpen(false);
+  };
 
   const changePayStatusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFormData((prevData) => ({ ...prevData, paymentMethod: value }));
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -68,7 +116,6 @@ const CheckoutPage: React.FC = () => {
 
       <form onSubmit={submitHandler}>
         <div className={classes.leftBlock}>
-
           <div className={classes.paymentForm}>
             <div className={classes.numberOfForm}>
               <svg width="50" height="50" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,8 +168,10 @@ const CheckoutPage: React.FC = () => {
                     '&.Mui-checked': {
                       color: "#436850"
                     }
-                  }} className={classes.checkboxStyle}
-                    value=""
+                  }}
+                    className={classes.checkboxStyle}
+                    checked={recepient}
+                    onChange={iAmRecepientHandler}
                   />}
                   label={<span className={classes.checkBoxLabel}>Я одержувач</span>}
                 />
@@ -137,9 +186,21 @@ const CheckoutPage: React.FC = () => {
                   value={formData.deliveryMethod}
                   onChange={inputChangeHandler}
                 >
-                  <FormControlLabel defaultChecked value="COURIER" control={<Radio />} label="Доставка кур'єром" />
-                  <FormControlLabel value="NEW_POST_OFFICE" control={<Radio />} label="У відділення Нової пошти" />
-                  <FormControlLabel value="NEW_POST_COURIER" control={<Radio />} label="Доставка кур'єром Нової пошти" />
+                  <FormControlLabel defaultChecked value="COURIER" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Доставка кур'єром" />
+                  <FormControlLabel value="NEW_POST_OFFICE" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="У відділення Нової пошти" />
+                  <FormControlLabel value="NEW_POST_COURIER" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Доставка кур'єром Нової пошти" />
                 </RadioGroup>
               </FormControl>
             </div>
@@ -163,9 +224,18 @@ const CheckoutPage: React.FC = () => {
                   name="radio-buttons-group"
                   onChange={changePayStatusHandler}
                   value={formData.paymentMethod}
+
                 >
-                  <FormControlLabel defaultChecked value="CASH" control={<Radio />} label="Готівкою при отриманні" />
-                  <FormControlLabel value="ONLINE" control={<Radio />} label="Онлайн" />
+                  <FormControlLabel defaultChecked value="CASH" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Готівкою при отриманні" />
+                  <FormControlLabel value="ONLINE" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Онлайн" />
                 </RadioGroup>
               </FormControl>
 
@@ -175,10 +245,7 @@ const CheckoutPage: React.FC = () => {
 
             </div>
           </div>
-
         </div>
-
-
 
         <div className={classes.rightBlock}>
           <div className={classes.paymentForm}>
@@ -227,17 +294,30 @@ const CheckoutPage: React.FC = () => {
                 </div>
 
                 <div className={classes.rightData}>
-                  <p>100 грн</p>
-                  <p>{`${totalPriceValue} грн`}</p>
+                  <p>{deliveryPrice} грн</p>
+                  <p>{`${totalPriceValue + deliveryPrice} грн`}</p>
                 </div>
               </div>
 
-              <button>Замовлення підтверджую</button>
+              <button type="submit">Замовлення підтверджую</button>
             </div>
           </div>
         </div>
 
       </form>
+      <ConfirmModal
+        open={modalOpen}
+        handleClose={handleClose}
+        handleConfirm={handleConfirm}
+        orderData={{
+          totalAmount: totalPriceValue + deliveryPrice,
+          fullName: formData.fullName,
+          phoneNumber: formData.phoneNumber,
+          city: formData.city,
+          deliveryMethod: formData.deliveryMethod,
+          paymentMethod: formData.paymentMethod,
+        }}
+      />
     </div>
   )
 }
