@@ -15,6 +15,11 @@ const CheckoutPage: React.FC = () => {
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
+  const [recepient, setRecepient] = useState<boolean>(false);
+  const firstName = sessionStorage.getItem("authenticatedFirstName");
+  const lastName = sessionStorage.getItem("authenticatedLastName");
+  const phoneNumber = sessionStorage.getItem("authenticatedPhonenumbar");
+
   const [deliveryPrice, setDeliveryPrice] = useState<number>(60);
 
   const username = sessionStorage.getItem("authenticatedUserName")
@@ -26,6 +31,25 @@ const CheckoutPage: React.FC = () => {
     deliveryMethod: "COURIER",
     paymentMethod: "CASH"
   })
+
+  const iAmRecepientHandler = () => {
+    setRecepient(!recepient);
+
+    if (!recepient) {
+      setFormData({
+        ...formData,
+        fullName: `${firstName} ${lastName}`,
+        phoneNumber: `${phoneNumber}`
+      });
+    } else {
+      setFormData({
+        ...formData,
+        fullName: "",
+        phoneNumber: "",
+        city: ""
+      });
+    }
+  }
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -130,8 +154,10 @@ const CheckoutPage: React.FC = () => {
                     '&.Mui-checked': {
                       color: "#436850"
                     }
-                  }} className={classes.checkboxStyle}
-                    value=""
+                  }}
+                    className={classes.checkboxStyle}
+                    value={recepient}
+                    onChange={iAmRecepientHandler}
                   />}
                   label={<span className={classes.checkBoxLabel}>Я одержувач</span>}
                 />
@@ -146,9 +172,21 @@ const CheckoutPage: React.FC = () => {
                   value={formData.deliveryMethod}
                   onChange={inputChangeHandler}
                 >
-                  <FormControlLabel defaultChecked value="COURIER" control={<Radio />} label="Доставка кур'єром" />
-                  <FormControlLabel value="NEW_POST_OFFICE" control={<Radio />} label="У відділення Нової пошти" />
-                  <FormControlLabel value="NEW_POST_COURIER" control={<Radio />} label="Доставка кур'єром Нової пошти" />
+                  <FormControlLabel defaultChecked value="COURIER" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Доставка кур'єром" />
+                  <FormControlLabel value="NEW_POST_OFFICE" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="У відділення Нової пошти" />
+                  <FormControlLabel value="NEW_POST_COURIER" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Доставка кур'єром Нової пошти" />
                 </RadioGroup>
               </FormControl>
             </div>
@@ -172,9 +210,18 @@ const CheckoutPage: React.FC = () => {
                   name="radio-buttons-group"
                   onChange={changePayStatusHandler}
                   value={formData.paymentMethod}
+
                 >
-                  <FormControlLabel defaultChecked value="CASH" control={<Radio />} label="Готівкою при отриманні" />
-                  <FormControlLabel value="ONLINE" control={<Radio />} label="Онлайн" />
+                  <FormControlLabel defaultChecked value="CASH" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Готівкою при отриманні" />
+                  <FormControlLabel value="ONLINE" control={<Radio sx={{
+                    '&.Mui-checked': {
+                      color: '#436850'
+                    }
+                  }} />} label="Онлайн" />
                 </RadioGroup>
               </FormControl>
 
