@@ -3,13 +3,16 @@ import classes from "./CheckoutPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { selectCartItems, totalPrice, clearCart } from "../redux/cartSlice";
 import { isUserLoggedIn } from "../utils/AuthService";
 import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
 import { addNewOrder } from "../utils/OrderService";
+import ConfirmModal from "../UI/Modal/ConfirmModel";
 
 const CheckoutPage: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const isAuthenticated = isUserLoggedIn();
 
@@ -22,7 +25,7 @@ const CheckoutPage: React.FC = () => {
 
   const [deliveryPrice, setDeliveryPrice] = useState<number>(60);
 
-  const username = sessionStorage.getItem("authenticatedUserName")
+  const email = sessionStorage.getItem("authenticatedEmail")
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -31,6 +34,8 @@ const CheckoutPage: React.FC = () => {
     deliveryMethod: "COURIER",
     paymentMethod: "CASH"
   })
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const iAmRecepientHandler = () => {
     setRecepient(!recepient);
@@ -63,9 +68,12 @@ const CheckoutPage: React.FC = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const submitHandler = async (event: React.FormEvent) => {
+  const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    setModalOpen(true);
+  };
 
+  const handleConfirm = () => {
     const orderData = {
       totalAmount: totalPriceValue,
       status: false,
@@ -75,20 +83,27 @@ const CheckoutPage: React.FC = () => {
       phoneList: cartItems,
       city: formData.city,
       phoneNumber: formData.phoneNumber,
-      username: username
-    }
-    try {
-      const response = await addNewOrder(orderData);
-    } catch (error) {
-      console.error(error);
+      email: email
+    };
+    const response = addNewOrder(orderData);
+    dispatch(clearCart());
+
+    if (isAuthenticated) {
+      navigate(`/${firstName}/personal-page`);
+    } else {
+      navigate("/");
     }
 
-    dispatch(clearCart())
-  }
+    setModalOpen(false);
+  };
 
   const changePayStatusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFormData((prevData) => ({ ...prevData, paymentMethod: value }));
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -101,7 +116,6 @@ const CheckoutPage: React.FC = () => {
 
       <form onSubmit={submitHandler}>
         <div className={classes.leftBlock}>
-
           <div className={classes.paymentForm}>
             <div className={classes.numberOfForm}>
               <svg width="50" height="50" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -156,7 +170,7 @@ const CheckoutPage: React.FC = () => {
                     }
                   }}
                     className={classes.checkboxStyle}
-                    value={recepient}
+                    checked={recepient}
                     onChange={iAmRecepientHandler}
                   />}
                   label={<span className={classes.checkBoxLabel}>Я одержувач</span>}
@@ -233,8 +247,6 @@ const CheckoutPage: React.FC = () => {
           </div>
         </div>
 
-
-
         <div className={classes.rightBlock}>
           <div className={classes.paymentForm}>
 
@@ -287,12 +299,25 @@ const CheckoutPage: React.FC = () => {
                 </div>
               </div>
 
-              <button>Замовлення підтверджую</button>
+              <button type="submit">Замовлення підтверджую</button>
             </div>
           </div>
         </div>
 
       </form>
+      <ConfirmModal
+        open={modalOpen}
+        handleClose={handleClose}
+        handleConfirm={handleConfirm}
+        orderData={{
+          totalAmount: totalPriceValue + deliveryPrice,
+          fullName: formData.fullName,
+          phoneNumber: formData.phoneNumber,
+          city: formData.city,
+          deliveryMethod: formData.deliveryMethod,
+          paymentMethod: formData.paymentMethod,
+        }}
+      />
     </div>
   )
 }
