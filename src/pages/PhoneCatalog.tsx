@@ -4,7 +4,7 @@ import CheckBoxBlock from "../UI/CheckBox/CheckBoxBlock";
 import CatalogCard from "../components/Card/CatalogCard";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../utils/http";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { getAllPhoneDistinctCharacteristics } from "../utils/phoneService";
 import ReactPaginate from 'react-paginate';
@@ -14,6 +14,7 @@ import PriceSliderComponent from "../UI/PriceSlider/PriceSliderComponent";
 import { getWishListForUser } from "../utils/UserService";
 
 const PhoneCatalog: React.FC = () => {
+    const location = useLocation(); // New state for location
 
     const [filter, setFilter] = useState("?sort=maxRating");
     const [distinctPhoneCharacteristic, setDistinctPhoneCharacteristic] = useState<PhoneDistinctCharacteristics>({});
@@ -25,6 +26,15 @@ const PhoneCatalog: React.FC = () => {
 
     const itemsPerPage = 15;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const searchQuery = searchParams.get("searchTerm");
+        if (searchQuery) {
+            setFilter(`?searchTerm=${encodeURIComponent(searchQuery)}`);
+            console.log(filter)
+        }
+      }, [location.search]);
 
     useEffect(() => {
         getAllPhoneDistinctCharacteristics().then((response) => {
