@@ -3,16 +3,29 @@ import { getLoggedInUser, isAdminUser } from "../../utils/AuthService";
 import Button from "../../UI/Button/Button";
 import classes from "./Navbar.module.scss";
 import CartButton from "./Cart/CartButton";
+import { useState } from "react";
 
 const Navbar = () => {
   const loggedInUser = getLoggedInUser();
   const isAdmin = isAdminUser();
   const navigate = useNavigate();
   const savedUser = sessionStorage.getItem("authenticatedFirstName");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleLogout = () => {
     navigate(`${savedUser}/personal-page`);
   };
+
+  const searchChangeHandler = (event) => {
+    setSearchQuery(event.target.value);
+  }
+
+  const searchSubmitHandler = (event) => {
+    event.preventDefault();
+    const query = searchQuery.trim() === "" ? "all" : encodeURIComponent(searchQuery);
+
+    navigate(`/phone/catalog?searchTerm=${encodeURIComponent(query)}`);
+  }
 
   return (
     <header>
@@ -78,10 +91,17 @@ const Navbar = () => {
             Новинки
           </Link>
         </div>
-        <div className={classes['search-cart-group']}>
-          <input type="text" name="" id="" placeholder="Пошук" />
-          <CartButton />
-        </div>
+        <form onSubmit={searchSubmitHandler}>
+          <div className={classes['search-cart-group']}>
+
+            <input type="text"
+              value={searchQuery}
+              onChange={searchChangeHandler}
+
+              placeholder="Пошук" />
+            <CartButton />
+          </div>
+        </form>
       </nav>
     </header>
   );
