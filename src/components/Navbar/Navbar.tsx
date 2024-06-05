@@ -48,12 +48,6 @@ const Navbar = () => {
       selsLeadersSection.scrollIntoView({ behavior: "smooth" });
     }
   };
-  const scrollToContactsHandler = () => {
-    const contactsSection = document.getElementById("contacts");
-    if (contactsSection) {
-      contactsSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <header>
@@ -71,7 +65,7 @@ const Navbar = () => {
         )}
         {loggedInUser ? (
           <>
-            <Link className={classes.link} to="" onClick={scrollToContactsHandler}>
+            <Link className={classes.link} to="">
               Контакти
             </Link>
             <Link className={classes.link} to="/payment-delivery">

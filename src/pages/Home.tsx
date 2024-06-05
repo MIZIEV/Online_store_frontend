@@ -185,7 +185,7 @@ const HomePage = () => {
             data
               .filter((item: Phone) => item.used === true)
               .map((item) => (
-                <div className={classes.phone}>
+                <div key={item.id} className={classes.phone}>
 
                   <CardIsUsed
                     id={item.id}
@@ -253,7 +253,7 @@ const HomePage = () => {
         >
           {data && data.length > 0 ? (
             data.map((item) => (
-              <div className={classes.phone}>
+              <div key={item.id} className={classes.phone}>
 
                 <Card
                   id={item.id}

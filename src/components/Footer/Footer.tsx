@@ -34,7 +34,7 @@ const Footer = () => {
   return (
     <div className={classes["footer-wrapper"]}>
 
-      <footer id="contacts">
+      <footer>
 
         <h1>TalkieTech</h1>
 
