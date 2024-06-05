@@ -27,6 +27,28 @@ const Navbar = () => {
     navigate(`/phone/catalog?searchTerm=${encodeURIComponent(query)}`);
   }
 
+  const scrollToNewPhonesHandler = () => {
+    const newPhonesSection = document.getElementById("newPhones");
+
+    if (newPhonesSection) {
+      newPhonesSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToSpecialOffersHandler = () => {
+    const specialOffersSection = document.getElementById("specialOffers");
+    if (specialOffersSection) {
+      specialOffersSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToSelsLeadersHandler = () => {
+    const selsLeadersSection = document.getElementById("selsLeaders");
+    if (selsLeadersSection) {
+      selsLeadersSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <header>
       <nav className={classes["navbar-top"]}>
@@ -81,13 +103,13 @@ const Navbar = () => {
       <nav className={classes["navbar-bottom"]}>
 
         <div className={classes['links-group']}>
-          <Link className={classes.link} to="">
+          <Link className={classes.link} to="" onClick={scrollToSpecialOffersHandler}>
             Б/У пропозиції
           </Link>
-          <Link className={classes.link} to="">
+          <Link className={classes.link} to="" onClick={scrollToSelsLeadersHandler}>
             Бестселери
           </Link>
-          <Link className={classes.link} to="">
+          <Link className={classes.link} to="" onClick={scrollToNewPhonesHandler}>
             Новинки
           </Link>
         </div>

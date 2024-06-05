@@ -116,7 +116,7 @@ const ColorControleComponent: React.FC = () => {
 
     useEffect(() => {
 
-        if (selectedRows) {
+        if (selectedRows && selectedColors.length > 0) {
 
             putTheColorsInPhone(selectedRows, selectedColors).then((response) => {
                 console.log(response);
