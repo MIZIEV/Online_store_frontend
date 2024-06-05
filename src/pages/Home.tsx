@@ -113,7 +113,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className={classes.phoneBlockTitle}>
+      <div id="selsLeaders" className={classes.phoneBlockTitle}>
         <span>Лідер продажу</span>
         <span >
           <svg onClick={handlePrevSlide} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,8 +158,8 @@ const HomePage = () => {
         </Carousel>
       </div>
 
-      <div className={classes.phoneBlockTitle}>
-        <span>Спеціальні пропозиції</span>
+      <div id="specialOffers" className={classes.phoneBlockTitle}>
+        <span>Б/У пропозиції</span>
         <span>
           <svg onClick={handlePrevSlide2} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.4141 32.0861L5.82906 17.5001L20.4141 2.91406L17.5861 0.0860634L0.171064 17.5001L17.5861 34.9141L20.4141 32.0861Z" fill="black" />
@@ -228,7 +228,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className={classes.phoneBlockTitle}>
+      <div id="newPhones" className={classes.phoneBlockTitle}>
         <span>Новинки</span>
         <span>
           <svg onClick={handlePrevSlide3} width="21" height="35" viewBox="0 0 21 35" fill="none" xmlns="http://www.w3.org/2000/svg">
