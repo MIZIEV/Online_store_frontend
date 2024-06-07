@@ -38,7 +38,10 @@ const CartItem: React.FC<{
         <h1>
           {item.brand} {item.model}{" "}
           <button onClick={() => handleDeleteItem({ id: item.id })}>
-            <img src="public/icons/Trash.svg" />
+            <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M42 8H32C32 5.794 30.206 4 28 4H20C17.794 4 16 5.794 16 8H6V12H42V8Z" fill="black" />
+              <path d="M22 36H18V16H10V40.286C10 42.334 11.794 44 14 44H34C36.206 44 38 42.334 38 40.286V16H30V36H26V16H22V36Z" fill="black" />
+            </svg>
           </button>
         </h1>
         <p>{item.price}грн</p>

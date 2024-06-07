@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./Form.module.scss";
 import { registerUser } from "../../utils/AuthService";
-import classes from "./RegistrationForm.module.scss"
+import classes from "./RegistrationForm.module.scss";
 import { NavLink } from "react-router-dom";
 import mainImage from "../../images/main_image.png";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegistrationForm: React.FC = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,18 +24,21 @@ const RegistrationForm: React.FC = () => {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError("Invalid email address");
+      toast.error("Не правильна email адресса");
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
+      toast.error("Пароль повинен бути не меньше 6 символів");
       setLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      toast.error("Паролі не співпадають");
       setLoading(false);
       return;
     }
@@ -42,7 +47,7 @@ const RegistrationForm: React.FC = () => {
       const userData = {
         firstName,
         lastName,
-        username,
+        phoneNumber,
         email,
         password,
       };
@@ -51,11 +56,14 @@ const RegistrationForm: React.FC = () => {
 
       if (success) {
         setSuccess(true);
+        toast.success("Ви успішно зареєструвалися, тепер увійдіть в свій обліковий запис.");
       } else {
-        setError("Registration failed");
+        setError("Помилка реєстрації");
+        toast.error("Помилка реєстрації")
       }
     } catch (error) {
-      setError("Registration failed");
+      setError("Помилка реєстрації");
+      toast.error("Помилка реєстрації");
     } finally {
       setLoading(false);
     }
@@ -63,12 +71,9 @@ const RegistrationForm: React.FC = () => {
 
   return (
     <div className={classes["register-form"]}>
+      <ToastContainer />
       <form className={classes["form"]} onSubmit={handleSubmit}>
-
         <h2 className={classes["title"]}>Створити особистий кабінет</h2>
-        {loading && <div>Loading...</div>}
-        {error && <div className="error">{error}</div>}
-        {success && <div>Registration successful!</div>}
 
         <div className={classes["inputs-container"]}>
           <div className={classes["input-container"]}>
@@ -95,9 +100,9 @@ const RegistrationForm: React.FC = () => {
             <input
               className={classes["input-field"]}
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Номер телефону"
               required
             />
           </div>
@@ -133,7 +138,6 @@ const RegistrationForm: React.FC = () => {
           </div>
         </div>
 
-
         <div className={classes["or"]}>
           <h2>
             <span>або</span>
@@ -157,15 +161,10 @@ const RegistrationForm: React.FC = () => {
         </p>
       </form>
 
-
       <div className={classes["image"]}>
         <img src={mainImage} alt="main image" />
       </div>
-
     </div>
-
-
-
   );
 };
 

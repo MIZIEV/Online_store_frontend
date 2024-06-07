@@ -48,7 +48,7 @@ export const deleteColor = async (colorId: number) => {
         throw error;
     }
 };
-export const putTheColorsInPhone = async (phoneId: number, colorsId: number[]) => {
+export const putTheColorsInPhone = async (phoneId: string[], colorsId: number[]) => {
     try {
         const response = await axios.patch(PUT_THE_COLOR_IN_PHONE + `${phoneId}/color`, colorsId);
         console.log(response.data)

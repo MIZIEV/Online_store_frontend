@@ -1,18 +1,52 @@
-// Navbar.tsx
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { getLoggedInUser, logout, isAdminUser } from "../../utils/AuthService"; // Додана функція logout
+import { getLoggedInUser, isAdminUser } from "../../utils/AuthService";
 import Button from "../../UI/Button/Button";
 import classes from "./Navbar.module.scss";
 import CartButton from "./Cart/CartButton";
+import { useState } from "react";
 
 const Navbar = () => {
   const loggedInUser = getLoggedInUser();
   const isAdmin = isAdminUser();
   const navigate = useNavigate();
+  const savedUser = sessionStorage.getItem("authenticatedFirstName");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleLogout = () => {
-    logout(); // Викликаємо функцію logout при кліку на кнопку LogOut
-    navigate("/"); // Перенаправляємо користувача на сторінку входу після виходу
+    navigate(`${savedUser}/personal-page`);
+  };
+
+  const searchChangeHandler = (event) => {
+    setSearchQuery(event.target.value);
+  }
+
+  const searchSubmitHandler = (event) => {
+    event.preventDefault();
+    const query = searchQuery.trim() === "" ? "all" : encodeURIComponent(searchQuery);
+
+    navigate(`/phone/catalog?searchTerm=${encodeURIComponent(query)}`);
+  }
+
+  const scrollToNewPhonesHandler = () => {
+    const newPhonesSection = document.getElementById("newPhones");
+
+    if (newPhonesSection) {
+      newPhonesSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToSpecialOffersHandler = () => {
+    const specialOffersSection = document.getElementById("specialOffers");
+    if (specialOffersSection) {
+      specialOffersSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToSelsLeadersHandler = () => {
+    const selsLeadersSection = document.getElementById("selsLeaders");
+    if (selsLeadersSection) {
+      selsLeadersSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -22,21 +56,35 @@ const Navbar = () => {
           <h1>TalkieTech</h1>
         </NavLink>
 
-        {isAdmin && ( // Перевіряємо, чи користувач є адміністратором
-          <NavLink to="/admin">
-            <Button className={classes["signin-button"]}>ADMIN</Button>{" "}
-            {/* Відображаємо кнопку "ADMIN" тільки для адміністраторів */}
-          </NavLink>
+        {isAdmin && (
+          <>
+            <NavLink to="/admin">
+              <Button className={classes["signin-button"]}>ADMIN</Button>{" "}
+            </NavLink>
+          </>
         )}
-        {loggedInUser ? ( // Перевіряємо, чи користувач увійшов у систему
-          <Button className={classes["signin-button"]} onClick={handleLogout}>Вийти</Button> // Якщо так, то відображаємо кнопку LogOut
+        {loggedInUser ? (
+          <>
+            <Link className={classes.link} to="">
+              Контакти
+            </Link>
+            <Link className={classes.link} to="/payment-delivery">
+              Оплата та доставка
+            </Link>
+            <Link className={classes.link} to="/blog">
+              Блог
+            </Link>
+            <Button className={classes["signin-button"]} onClick={handleLogout}>
+              <svg width="17" height="16" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.4215 13.457L12.5 18L7.5785 13.457C4.837 15.2105 3 18.3745 3 22H22C22 18.3745 20.163 15.2105 17.4215 13.457Z" fill="white" />
+                <path d="M12.5 14C14.275 14 15.8645 13.225 16.963 12C17.9155 10.938 18.5 9.539 18.5 8C18.5 4.6865 15.8135 2 12.5 2C9.1865 2 6.5 4.6865 6.5 8C6.5 9.539 7.0845 10.938 8.037 12C9.1355 13.225 10.725 14 12.5 14Z" fill="white" />
+              </svg>
+              {savedUser}
+            </Button>
+          </>
+
         ) : (
           <>
-            {" "}
-            {/* Якщо користувач не увійшов у систему, відображаємо кнопки для входу, реєстрації та кнопку admin */}
-            {/* <NavLink to="/signin">
-                <Button>Sign in</Button>
-              </NavLink> */}
             <Link className={classes.link} to="">
               Контакти
             </Link>
@@ -53,25 +101,29 @@ const Navbar = () => {
         )}
       </nav>
       <nav className={classes["navbar-bottom"]}>
-        <Button className={classes["categories-button"]}>
-          Категорії
-          <img src="/public/icons/arrow.svg" alt="" />
-        </Button>
+
         <div className={classes['links-group']}>
-          <Link className={classes.link} to="">
+          <Link className={classes.link} to="" onClick={scrollToSpecialOffersHandler}>
             Б/У пропозиції
           </Link>
-          <Link className={classes.link} to="">
+          <Link className={classes.link} to="" onClick={scrollToSelsLeadersHandler}>
             Бестселери
           </Link>
-          <Link className={classes.link} to="">
+          <Link className={classes.link} to="" onClick={scrollToNewPhonesHandler}>
             Новинки
           </Link>
         </div>
-        <div className={classes['search-cart-group']}>
-          <input type="text" name="" id="" placeholder="Пошук" />
-          <CartButton />
-        </div>
+        <form onSubmit={searchSubmitHandler}>
+          <div className={classes['search-cart-group']}>
+
+            <input type="text"
+              value={searchQuery}
+              onChange={searchChangeHandler}
+
+              placeholder="Пошук" />
+            <CartButton />
+          </div>
+        </form>
       </nav>
     </header>
   );

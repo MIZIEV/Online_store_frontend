@@ -1,0 +1,88 @@
+.container {
+
+    padding: 50px;
+
+    .breadCrumb {
+        padding-bottom: 30px;
+    }
+
+    h1 {
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        padding-bottom: 30px;
+    }
+
+    .pageContent {
+        display: flex;
+
+        .leftBlock {
+            width: 20%;
+        }
+
+
+        .rightBlock {
+            margin: 0px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            grid-auto-rows: minmax(min-content, max-content); /* Добавлено здесь */
+
+            .link {
+                text-decoration: none;
+                color: black;
+            }
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+
+        li {
+            margin: 0 5px;
+
+            &.active {
+                a {
+                    text-decoration: underline black;
+                }
+            }
+
+            a {
+
+                font-family: "Mukta Vaani", sans-serif;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 100%;
+
+                display: block;
+                padding: 10px 15px;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .itemEnter {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    .itemEnterActive {
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 300ms, transform 300ms;
+    }
+    .itemExit {
+        opacity: 1;
+        transform: scale(1);
+    }
+    .itemExitActive {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 300ms, transform 300ms;
+    }
+
+}

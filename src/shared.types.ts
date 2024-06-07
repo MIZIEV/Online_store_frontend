@@ -19,6 +19,8 @@ export type Phone = {
   rating: number;
   vote_count: number;
   used: boolean;
+  colors: Color[]
+  romList: PhoneRom[];
 };
 
 
@@ -27,6 +29,7 @@ export type BlogProps = {
   blogPictureUrl: string;
   title: string;
   text: string;
+  createdAt: string
 };
 
 export type Color = {
@@ -39,4 +42,39 @@ export type Comment = {
   commentText: string,
   createdAt: string,
   authorName: string
+  authorEmail:string;
+}
+
+export type PhoneDistinctCharacteristics = {
+  screenSize: number[];
+  resolution: string[];
+  processor: string[];
+  countOfCores: number[];
+  ram: number[];
+  rom: number[];
+  batteryCapacity: number[];
+  countOfSimCard: number[];
+};
+
+export type PhoneRom = {
+  romSize: number;
+}
+
+export type Order = {
+  id: number;
+  totalAmount: number;
+  status: boolean;
+  fullName: string;
+  deliveryMethod: string;
+  paymentMethod: string;
+  createdAt: string;
+  phoneList: Phone[];
+  username: string;
+}
+
+export type User = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
 }

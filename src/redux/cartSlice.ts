@@ -18,6 +18,11 @@ const initialState: CartState = {
   items: [],
 };
 
+export const selectCartItems = createSelector(
+  (state: { cart: CartState }) => state.cart.items,
+  (items) => items
+)
+
 export const totalPrice = createSelector(
   (state) => state.cart.items,
   (items) => {
@@ -65,10 +70,19 @@ export const cartSlice = createSlice({
           : item
       );
     },
+    clearCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addToCart, removeFromCart, increase, decrease } =
+export const selectCartCount = createSelector(
+  (state: { cart: CartState }) => state.cart.items,
+  (items) => items.reduce((count, item) => count + item.quantity, 0)
+);
+
+
+export const { addToCart, removeFromCart, increase, decrease, clearCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { addNewColor, deleteColor, getAllColors, putTheColorsInPhone } from "../../../utils/ColorService";
 import classes from "./ColorControlComponent.module.scss"
 import { GetColorName } from "hex-color-to-color-name";
-import { Color } from "../../../shared.types";
+import { Color, Phone } from "../../../shared.types";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { CardProps } from "@mui/material";
 import { getPhoneList } from "../../../utils/phoneService";
@@ -17,14 +17,14 @@ const columns: GridColDef[] = [
 const ColorControleComponent: React.FC = () => {
 
     const [data, setData] = useState<Color[]>([]);
-    const [phoneList, setPhoneList] = useState([]);
+    const [phoneList, setPhoneList] = useState<Phone[]>([]);
     const [colorName, setColorName] = useState("");
 
     const [selectedColors, setSelectedColors] = useState<number[]>([]);
     const [selectedColorsDisplay, setSelectedColorsDisplay] = useState<number[]>([]);
 
     const [rows, setRows] = useState<CardProps[]>([]);
-    const [selectedRows, setSelectedRows] = useState<number>();
+    const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,7 +48,7 @@ const ColorControleComponent: React.FC = () => {
         console.log(selection);
 
         const selectedPhones = selection.map(selectedId => {
-            return phoneList.find(phone => phone.id === selectedId);
+            return phoneList.find(phone => phone.id === parseInt(selectedId));
         });
 
         const selectedColors = selectedPhones.flatMap(phone => {
@@ -75,9 +75,10 @@ const ColorControleComponent: React.FC = () => {
     const handleNewColor = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
+        const formDataString = JSON.stringify(Object.fromEntries(formData.entries()));
 
         try {
-            await addNewColor(formData as string);
+            await addNewColor(formDataString);
             const updatedColors = await getAllColors();
             setData(updatedColors);
             setColorName("");
@@ -116,7 +117,7 @@ const ColorControleComponent: React.FC = () => {
 
     useEffect(() => {
 
-        if (selectedRows) {
+        if (selectedRows && selectedColors.length > 0) {
 
             putTheColorsInPhone(selectedRows, selectedColors).then((response) => {
                 console.log(response);

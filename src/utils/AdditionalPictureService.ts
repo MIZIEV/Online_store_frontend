@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST = "localhost:8090"
+const HOST = "13.60.76.209:8080"
 const ADD_NEW_PICTURE = "http://" + HOST + "/api/phone/";
 const GET_ALL_PICTURES = "http://" + HOST + "/api/phone/";
 const DELETE_PICTURE = "http://" + HOST + "/api/phone/";

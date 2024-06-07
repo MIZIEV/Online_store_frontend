@@ -1,0 +1,105 @@
+.container {
+    padding: 50px;
+
+    h1 {
+        text-align: center;
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        padding-bottom: 40px;
+    }
+
+    form {
+        display: flex;
+
+        .textAreaBlock {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+
+            textarea {
+                border: 3px solid #767676;
+                border-radius: 4px;
+                height: 250px;
+                width: 550px;
+                margin-bottom: 50px;
+                padding: 10px;
+                background-color: transparent;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+            }
+
+            input {
+                margin: 10px 0px;
+                outline: none;
+                border: 2px solid #767676;
+                padding: 16px 0;
+                background-color: #fffff4;
+                border-radius: 0px 4px 4px 0px;
+                color: black;
+                font-size: 18px;
+                padding-left: 1rem;
+            }
+
+            .inputField::placeholder {
+                color: #767676;
+                font-weight: 400;
+                font-size: 18px;
+                padding-left: 1rem;
+                font-family: "Work Sans", sans-serif
+            }
+
+            button {
+                cursor: pointer;
+                display: block;
+                margin: 0px auto;
+                border-radius: 4px;
+                width: 370px;
+                height: 49px;
+                background-color: #436850;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+                color: #fffff4;
+            }
+        }
+
+    }
+
+    .blogList {
+        padding-top: 50px;
+
+        .descriptionItem {
+            display: flex;
+            background-color: #adbc9f;
+            border-radius: 4px;
+            padding: 30px;
+            margin: 10px 0px;
+
+            .descriptionText {
+                width: 98%;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+                color: #fff;
+            }
+
+            svg {
+                margin: auto;
+                transition: fill 0.5s ease;
+                fill: #fff;
+                height: 25px;
+                width: auto;
+                cursor: pointer;
+            }
+
+            svg:hover {
+                fill: #ed3f3f;
+            }
+        }
+    }
+}

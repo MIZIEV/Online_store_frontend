@@ -29,7 +29,7 @@ const TransferComponent: React.FC = () => {
 
                 <div className={classes.linkBlock}>
                     <h3>Керування блогами</h3>
-                    <NavLink to="">
+                    <NavLink to="/admin/blog-managment">
                         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M41.999 22.002H16.002V26.002H41.999V22.002Z" />
                             <path d="M41.999 11.9951H16.002V15.9951H41.999V11.9951Z" />

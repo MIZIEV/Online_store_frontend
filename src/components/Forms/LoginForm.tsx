@@ -4,7 +4,7 @@ import { loginUser, saveLoggedInUser } from "../../utils/AuthService";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
-  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameOrEmail)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError("Invalid email address");
       return;
     }
@@ -27,7 +27,7 @@ const LoginForm: React.FC = () => {
 
     try {
       const userData = {
-        usernameOrEmail,
+        email,
         password,
       };
 
@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
       const response = await loginUser(userData);
 
       if (response) {
-        saveLoggedInUser(usernameOrEmail, response.role);
+        saveLoggedInUser(email, response.role, response.firstName, response.lastName, response.phoneNumber);
         navigate("/"); // Використовуємо функцію navigate для перенаправлення
       } else {
         setError("Login failed");
@@ -62,8 +62,8 @@ const LoginForm: React.FC = () => {
           <input
             className={classes["input-field"]}
             type="email"
-            value={usernameOrEmail}
-            onChange={(e) => setUsernameOrEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Пошта"
             required
           />
