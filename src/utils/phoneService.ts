@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST = "localhost:8090"
+const HOST = "13.60.76.209:8080"
 const GET_ONE_PHONE_URL = "http://" + HOST + "/api/phone/";
 const ADD_NEW_PHONE_URL: string = "http://" + HOST + "/api/phone/add";
 const GET_ALL_PHONES_URL = "http://" + HOST + "/api/phone/list";

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST = "localhost:8090";
+const HOST = "13.60.76.209:8080";
 const GET_DESCRIPTIONS = "http://" + HOST + "/api/phone/";
 const ADD_DESCRIPTION = "http://" + HOST + "/api/phone/";
 const DELETE_DESCRIPTION = "http://" + HOST + "/api/phone/";

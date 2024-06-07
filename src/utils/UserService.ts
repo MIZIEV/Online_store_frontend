@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User } from "../shared.types";
 
-const HOST = "localhost:8090"
+const HOST = "13.60.76.209:8080"
 const GET_WISH_LIST_FOR_USER = "http://" + HOST + "/api";
 const UPDATE_USER_DATA = "http://" + HOST + "/api";
 
