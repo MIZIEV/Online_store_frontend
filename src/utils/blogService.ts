@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BlogProps } from "../shared.types";
 
-const HOST = "localhost:8090"
+const HOST = "13.60.76.209:8080"
 const GET_ALL_BLOGS = "http://" + HOST + "/api/blog/list"
 const GET_ONE_BLOG = "http://" + HOST + "/api/blog/"
 

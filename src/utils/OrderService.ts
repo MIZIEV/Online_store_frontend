@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Order } from "../shared.types";
 
-const HOST = "192.168.31.15:8090"
+const HOST = "13.60.76.209:8080"
 const ADD_NEW_ORDER = "http://" + HOST + "/api/order/add"
 const GET_ALL_ORDERS_FOR_USER = "http://" + HOST + "/api/order/list"
 

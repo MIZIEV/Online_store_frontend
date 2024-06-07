@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Comment } from "../shared.types";
 
-const HOST = "localhost:8090"
+const HOST = "13.60.76.209:8080"
 const GET_ALL_COMMENTS_URL = "http://" + HOST + "/api/phone/";
 const ADD_NEW_COMMENT_URL = "http://" + HOST + "/api/phone/";
 const DELETE_COMMENT_URL = "http://" + HOST + "/api/phone/";

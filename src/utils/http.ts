@@ -4,7 +4,7 @@ import { getToken } from "./AuthService";
 
 export const queryClient = new QueryClient();
 
-const HOST_PORT = "localhost:8090";
+const HOST_PORT = "13.60.76.209:8080";
 
 const PRODUCTS_URL = "http://" + HOST_PORT + "/api/phone/list";
 const ADD_NEW_PHONE_URL: string = "http://" + HOST_PORT + "/api/phone/add";
