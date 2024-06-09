@@ -6,6 +6,7 @@ import { getMethod } from "../../../utils/http";
 import { Phone } from "../../../shared.types";
 import { useNavigate } from "react-router-dom";
 import { HOST } from "../../../utils/host";
+import { useMemo, useState } from "react";
 
 const AdminProductsDashboard: React.FC = () => {
   const HOST_PORT = HOST;
@@ -13,6 +14,8 @@ const AdminProductsDashboard: React.FC = () => {
     queryKey: ["products"],
     queryFn: () => getMethod("http://" + HOST_PORT + "/api/phone/list"),
   });
+
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const navigator = useNavigate();
 
@@ -24,10 +27,21 @@ const AdminProductsDashboard: React.FC = () => {
     navigator("/admin/phone-managment/colors")
   }
 
+  const filteredData = useMemo(() => {
+    return data?.filter((item: Phone) =>
+      item.model.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [data, searchTerm]);
+
   return (
     <div className={classes.dashboard}>
       <div className={classes["dashboard-header"]}>
-        <input type="text" placeholder="Знайти..." />
+        <input
+          type="text"
+          placeholder="Пошук по моделі"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
 
         <Button onClick={navigateToColorControl} className={classes["add-new-button"]}>Керування кольорами</Button>
 
@@ -44,7 +58,7 @@ const AdminProductsDashboard: React.FC = () => {
             <th>Ціна</th>
             <th>Керування</th>
           </tr>
-          {data?.map((item: Phone) => (
+          {filteredData?.map((item: Phone) => (
             <AdminProductsDashboardItem
               key={item.id}
               id={item.id}
