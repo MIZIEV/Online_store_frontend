@@ -3,12 +3,12 @@ import { useParams } from "react-router";
 import { getOneBlog } from "../../utils/blogService";
 import classes from "./Blog.module.scss"
 import BreadCrumb from "../BreadCrumb/BreadCrumb";
+import { BlogProps } from "../../shared.types";
 
 const Blog: React.FC = () => {
 
-    const [blog, setBlog] = useState(null);
-    const { id } = useParams();
-
+    const [blog, setBlog] = useState<BlogProps>();
+    const { id } = useParams<string>();
 
     useEffect(() => {
         getBlog();
@@ -16,18 +16,15 @@ const Blog: React.FC = () => {
 
     function getBlog() {
 
-        getOneBlog(parseInt(id)).then((response) => {
+        getOneBlog(Number(id)).then((response) => {
             console.log(response);
             setBlog(response);
 
         }).catch((error) => console.error(error));
     }
 
-
-
     return (
         <>
-
             {
                 blog ? (
                     <div className={classes.container}>
@@ -44,7 +41,6 @@ const Blog: React.FC = () => {
                     </div >
                 ) : (<div>Error</div>)
             }
-
         </>
     )
 }

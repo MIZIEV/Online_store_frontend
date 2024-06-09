@@ -1,9 +1,10 @@
 import axios from "axios";
 import { User } from "../shared.types";
+import { HOST } from "./host";
 
-const HOST = "13.60.76.209:8080"
-const GET_WISH_LIST_FOR_USER = "http://" + HOST + "/api";
-const UPDATE_USER_DATA = "http://" + HOST + "/api";
+const HOST_PORT = HOST;
+const GET_WISH_LIST_FOR_USER = "http://" + HOST_PORT + "/api";
+const UPDATE_USER_DATA = "http://" + HOST_PORT + "/api";
 
 export async function getWishListForUser(email: string) {
     try {

@@ -1,9 +1,10 @@
 import axios from "axios";
+import { HOST } from "./host";
 
-const HOST = "13.60.76.209:8080"
-const ADD_NEW_PICTURE = "http://" + HOST + "/api/phone/";
-const GET_ALL_PICTURES = "http://" + HOST + "/api/phone/";
-const DELETE_PICTURE = "http://" + HOST + "/api/phone/";
+const HOST_PORT = HOST;
+const ADD_NEW_PICTURE = "http://" + HOST_PORT + "/api/phone/";
+const GET_ALL_PICTURES = "http://" + HOST_PORT + "/api/phone/";
+const DELETE_PICTURE = "http://" + HOST_PORT + "/api/phone/";
 
 export async function addNewAdditionalPicture(phoneId: number, pictureUrl: string) {
     try {

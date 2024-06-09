@@ -1,10 +1,11 @@
 import axios from "axios";
 import { Comment } from "../shared.types";
+import { HOST } from "./host";
 
-const HOST = "13.60.76.209:8080"
-const GET_ALL_COMMENTS_URL = "http://" + HOST + "/api/phone/";
-const ADD_NEW_COMMENT_URL = "http://" + HOST + "/api/phone/";
-const DELETE_COMMENT_URL = "http://" + HOST + "/api/phone/";
+const HOST_PORT = HOST;
+const GET_ALL_COMMENTS_URL = "http://" + HOST_PORT + "/api/phone/";
+const ADD_NEW_COMMENT_URL = "http://" + HOST_PORT + "/api/phone/";
+const DELETE_COMMENT_URL = "http://" + HOST_PORT + "/api/phone/";
 
 export const addNewComment = async (comment: Comment, phoneId: number) => {
     try {

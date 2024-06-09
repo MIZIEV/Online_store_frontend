@@ -1,12 +1,13 @@
 import axios from "axios";
+import { HOST } from "./host";
 
-const HOST = "13.60.76.209:8080"
-const GET_ONE_PHONE_URL = "http://" + HOST + "/api/phone/";
-const ADD_NEW_PHONE_URL: string = "http://" + HOST + "/api/phone/add";
-const GET_ALL_PHONES_URL = "http://" + HOST + "/api/phone/list";
-const UPDATE_PHONE_URL = "http://" + HOST + "/api/phone/";
-const GET_ALL_PHONE_DISTINCT_CHARACTERISTICS_URL = "http://" + HOST + "/api/phone/distinct-characteristics";
-const WISH_LIST_URL = "http://" + HOST + "/api/phone/"
+const HOST_PORT = HOST;
+const GET_ONE_PHONE_URL = "http://" + HOST_PORT + "/api/phone/";
+const ADD_NEW_PHONE_URL: string = "http://" + HOST_PORT + "/api/phone/add";
+const GET_ALL_PHONES_URL = "http://" + HOST_PORT + "/api/phone/list";
+const UPDATE_PHONE_URL = "http://" + HOST_PORT + "/api/phone/";
+const GET_ALL_PHONE_DISTINCT_CHARACTERISTICS_URL = "http://" + HOST_PORT + "/api/phone/distinct-characteristics";
+const WISH_LIST_URL = "http://" + HOST_PORT + "/api/phone/"
 
 export async function postProduct(data: unknown) {
   console.log(data);

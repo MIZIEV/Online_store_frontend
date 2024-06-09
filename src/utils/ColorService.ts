@@ -1,10 +1,11 @@
 import axios from "axios";
+import { HOST } from "./host";
 
-const HOST = "localhost:8090";
-const GET_ALL_COLORS = "http://" + HOST + "/api/color/list";
-const ADD_NEW_COLOR = "http://" + HOST + "/api/color/add";
-const DELETE_COLOR = "http://" + HOST + "/api/color/remove";
-const PUT_THE_COLOR_IN_PHONE = "http://" + HOST + "/api/phone/";
+const HOST_PORT = HOST;
+const GET_ALL_COLORS = "http://" + HOST_PORT + "/api/color/list";
+const ADD_NEW_COLOR = "http://" + HOST_PORT + "/api/color/add";
+const DELETE_COLOR = "http://" + HOST_PORT + "/api/color/remove";
+const PUT_THE_COLOR_IN_PHONE = "http://" + HOST_PORT + "/api/phone/";
 
 export const getAllColors = async () => {
     let url = GET_ALL_COLORS;
