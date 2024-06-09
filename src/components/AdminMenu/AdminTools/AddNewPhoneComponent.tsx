@@ -182,6 +182,18 @@ const AddNewPhoneComponent = () => {
               className={classes.inputField}
             />
           </div>
+          <div className={classes.inputContainer}>
+            <label htmlFor="producingCountry">Країна виробник</label>
+            <input
+              id="producingCountry"
+              type="text"
+              name="producingCountry"
+              value={os}
+              onChange={(e) => setOs(e.target.value)}
+              placeholder="Країна виробник"
+              className={classes.inputField}
+            />
+          </div>
 
           <div className={classes.inputContainer}>
             <label htmlFor="osVersion">Версія ос</label>

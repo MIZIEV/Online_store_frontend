@@ -32,6 +32,9 @@ const AdminProductsDashboardItem: React.FC<Phone> = (props) => {
           <Link to={`/admin/phone-managment/${props.id}/description`}>
             <Button className={classes["edit-button"]}>Опис</Button>
           </Link>
+          <Link to={`/admin/phone-managment/${props.id}/features`}>
+            <Button className={classes["edit-button"]}>Особливості</Button>
+          </Link>
           <Button onClick={handleDelete} className={classes["delete-button"]}>
             Видалити
           </Button>

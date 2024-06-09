@@ -29,16 +29,12 @@ const CharacteristicComponent: React.FC = (props) => {
                     <span>{phoneCharacteristic.screenSize}</span>
                 </div>
                 <div className={classes.textRow}>
-                    <span>Виробник процесора</span>
+                    <span>Країна виробник</span>
                     <span>value</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Модель центрального процесора</span>
                     <span>{phoneCharacteristic.processor}</span>
-                </div>
-                <div className={classes.textRow}>
-                    <span>Внутрішня пам'ять</span>
-                    <span>{phoneCharacteristic.rom} Гб</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Оперативна пам'ять</span>
@@ -47,10 +43,6 @@ const CharacteristicComponent: React.FC = (props) => {
                 <div className={classes.textRow}>
                     <span>Основна камера</span>
                     <span>{phoneCharacteristic.mainCamera}</span>
-                </div>
-                <div className={classes.textRow}>
-                    <span>Світосила основної камери</span>
-                    <span>value</span>
                 </div>
                 <div className={classes.textRow}>
                     <span>Фронтальна камера</span>
@@ -63,10 +55,6 @@ const CharacteristicComponent: React.FC = (props) => {
                 <div className={classes.textRow}>
                     <span>Операційна система</span>
                     <span>{phoneCharacteristic.os}</span>
-                </div>
-                <div className={classes.textRow}>
-                    <span>Основний ітерфейс</span>
-                    <span>value</span>
                 </div>
             </div>
         </>
