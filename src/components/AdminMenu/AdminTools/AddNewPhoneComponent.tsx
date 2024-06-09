@@ -39,6 +39,7 @@ const AddNewPhoneComponent = () => {
   const [weight, setWeight] = useState();
   const [batteryCapacity, setBatteryCapacity] = useState();
   const [price, setPrice] = useState();
+  const [producingCountry, setProducingCountry] = useState("");
 
 
   const { phoneId } = useParams();
@@ -68,6 +69,7 @@ const AddNewPhoneComponent = () => {
         setRam(response.ram)
         setWeight(response.weight)
         setBatteryCapacity(response.batteryCapacity)
+        setProducingCountry(response.producingCountry)
         setPrice(response.price)
         setCountOfCores(response.countOfCores)
 
@@ -188,8 +190,8 @@ const AddNewPhoneComponent = () => {
               id="producingCountry"
               type="text"
               name="producingCountry"
-              value={os}
-              onChange={(e) => setOs(e.target.value)}
+              value={producingCountry}
+              onChange={(e) => setProducingCountry(e.target.value)}
               placeholder="Країна виробник"
               className={classes.inputField}
             />
