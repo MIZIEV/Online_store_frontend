@@ -63,10 +63,11 @@ const Phone: React.FC = () => {
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
     const dispatch = useDispatch();
+    const [selectedPicture, setSelectedPicture] = useState<string>("");
 
     const addProduct = (payload: CartProduct) => {
         dispatch(addToCart(payload));
-      };
+    };
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1'
@@ -85,10 +86,11 @@ const Phone: React.FC = () => {
     }
 
     function getPhone() {
-        getOnePhone(parseInt(id)).then((response) => {
+        getOnePhone(Number(id)).then((response) => {
 
             console.log("function GET PHONE in component")
             console.log(response);
+            setSelectedPicture(response.mainPictureURL)
             setPhone(response);
         }).catch((error) => {
             console.error(error);
@@ -109,6 +111,11 @@ const Phone: React.FC = () => {
         setSelectedRom(romId);
     };
 
+    const changeMainPictureHandler = (pictureUrl: string) => {
+        console.log(pictureUrl)
+        setSelectedPicture(pictureUrl);
+    }
+
     return (
         <>
             {phone ? (
@@ -120,7 +127,7 @@ const Phone: React.FC = () => {
                         <div className={classes.leftImagesBlock}>
 
                             <div className={classes.mainImage}>
-                                <img src={phone.mainPictureURL} alt="Main picture" />
+                                <img src={selectedPicture} alt="Main picture" />
                             </div>
 
                             <div className={classes.additionImagePanel}>
@@ -128,7 +135,8 @@ const Phone: React.FC = () => {
 
                                     {phone.phonePictureUrls.map((pictureUrl) => (
 
-                                        <div className={classes.additionImages} key={pictureUrl.id}>
+                                        <div onClick={e => changeMainPictureHandler(pictureUrl.url)}
+                                            className={classes.additionImages} key={pictureUrl.id}>
                                             <img src={pictureUrl.url} alt="additional picture" />
                                         </div>
 
@@ -218,13 +226,13 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.buttonsBlock}>
-                                <button onClick={()=>addProduct({
-                                                    id: phone.id,
-                                                    brand: phone.brand,
-                                                    model: phone.model,
-                                                    price: phone.price,
-                                                    quantity: 1,
-                                                    image: phone.mainPictureURL,
+                                <button onClick={() => addProduct({
+                                    id: phone.id,
+                                    brand: phone.brand,
+                                    model: phone.model,
+                                    price: phone.price,
+                                    quantity: 1,
+                                    image: phone.mainPictureURL,
                                 })} className={classes.buyButton}>Додати в кошик</button>
                                 <button className={classes.addToFavorite}>Додати в обране</button>
                             </div>

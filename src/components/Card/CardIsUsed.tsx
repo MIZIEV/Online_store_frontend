@@ -9,7 +9,7 @@ const CardIsUsed: React.FC<Phone> = (props) => {
 
     const handleNavigateOnClick = () => {
         navigator(`/phone/${props.id}`)
-      }
+    }
     return (
         <div className={classes.card} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 

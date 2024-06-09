@@ -1,10 +1,11 @@
 import axios from "axios";
 import { QueryClient } from "@tanstack/react-query";
 import { getToken } from "./AuthService";
+import { HOST } from "./host";
 
 export const queryClient = new QueryClient();
 
-const HOST_PORT = "13.60.76.209:8080";
+const HOST_PORT = HOST;
 
 const PRODUCTS_URL = "http://" + HOST_PORT + "/api/phone/list";
 const ADD_NEW_PHONE_URL: string = "http://" + HOST_PORT + "/api/phone/add";

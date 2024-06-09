@@ -1,9 +1,10 @@
 import axios from "axios";
+import { HOST } from "./host";
 
-const HOST = "13.60.76.209:8080";
-const GET_DESCRIPTIONS = "http://" + HOST + "/api/phone/";
-const ADD_DESCRIPTION = "http://" + HOST + "/api/phone/";
-const DELETE_DESCRIPTION = "http://" + HOST + "/api/phone/";
+const HOST_PORT = HOST;
+const GET_DESCRIPTIONS = "http://" + HOST_PORT + "/api/phone/";
+const ADD_DESCRIPTION = "http://" + HOST_PORT + "/api/phone/";
+const DELETE_DESCRIPTION = "http://" + HOST_PORT + "/api/phone/";
 
 interface PhoneDescription {
     id: number,

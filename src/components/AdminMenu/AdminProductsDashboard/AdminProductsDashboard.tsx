@@ -5,11 +5,13 @@ import classes from "./AdminProductsDashboard.module.scss";
 import { getMethod } from "../../../utils/http";
 import { Phone } from "../../../shared.types";
 import { useNavigate } from "react-router-dom";
+import { HOST } from "../../../utils/host";
 
 const AdminProductsDashboard: React.FC = () => {
+  const HOST_PORT = HOST;
   const { data, isPending, isError } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getMethod("http://13.60.76.209:8080/api/phone/list"),
+    queryFn: () => getMethod("http://" + HOST_PORT + "/api/phone/list"),
   });
 
   const navigator = useNavigate();
