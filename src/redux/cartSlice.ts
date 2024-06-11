@@ -1,17 +1,11 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { SelectedPhone } from "../shared.types";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface CartProduct {
-  id: number;
-  brand: string;
-  model: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+
 
 export interface CartState {
-  items: CartProduct[];
+  items: SelectedPhone[];
 }
 
 const initialState: CartState = {

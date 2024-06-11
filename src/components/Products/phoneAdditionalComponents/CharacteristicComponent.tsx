@@ -12,7 +12,7 @@ const CharacteristicComponent: React.FC = (props) => {
         getAllPhoneFeatures(Number(props.phone.id)).then((response) => {
             setPhoneFeatures(response);
         })
-    })
+    }, [])
 
     return (
         <div className={classes.container}>

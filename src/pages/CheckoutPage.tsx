@@ -32,7 +32,7 @@ const CheckoutPage: React.FC = () => {
     phoneNumber: "",
     city: "",
     deliveryMethod: "COURIER",
-    paymentMethod: "CASH"
+    paymentMethod: "CASH",
   })
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -85,6 +85,8 @@ const CheckoutPage: React.FC = () => {
       phoneNumber: formData.phoneNumber,
       email: email
     };
+
+    console.log(orderData)
     const response = addNewOrder(orderData);
     dispatch(clearCart());
 
@@ -262,7 +264,8 @@ const CheckoutPage: React.FC = () => {
                   </div>
 
                   <div className={classes.textBlock}>
-                    <h3>{item.brand} {item.model}</h3>
+                    <h3>{item.brand} {item.model} {`${item.rom} Гб`}</h3>
+                    <p>Колір: {`${item.colorNameConverted}`}</p>
                     <p>Ціна: {`${item.price} грн`}</p>
                     <p>Кількість: {`${item.quantity} шт`}</p>
                   </div>
