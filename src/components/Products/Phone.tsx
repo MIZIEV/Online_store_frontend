@@ -9,8 +9,9 @@ import RatingComponent from "../../UI/Rating/RatingComponent";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
 import ReviewsComponent from "./phoneAdditionalComponents/ReviewsComponent";
-import { CartProduct, addToCart } from "../../redux/cartSlice";
+import { addToCart } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
+import { SelectedPhone } from "../../shared.types";
 
 interface phoneCharacteristic {
     id: number,
@@ -65,7 +66,7 @@ const Phone: React.FC = () => {
     const dispatch = useDispatch();
     const [selectedPicture, setSelectedPicture] = useState<string>("");
 
-    const addProduct = (payload: CartProduct) => {
+    const addProduct = (payload: SelectedPhone) => {
         dispatch(addToCart(payload));
     };
 
@@ -231,6 +232,15 @@ const Phone: React.FC = () => {
                                     brand: phone.brand,
                                     model: phone.model,
                                     price: phone.price,
+                                    colorNameConverted: converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName),
+                                    color: {
+                                        id: selectedColor,
+                                        colorName: phone.colors.find(color => color.id === selectedColor)?.colorName
+                                    },
+                                    rom: {
+                                        id: selectedRom,
+                                        romSize: phone.romList.find(rom => rom.id === selectedRom)?.romSize
+                                    },
                                     quantity: 1,
                                     image: phone.mainPictureURL,
                                 })} className={classes.buyButton}>Додати в кошик</button>
