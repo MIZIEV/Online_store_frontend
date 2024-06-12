@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import classes from "./OrdersManagment.module.scss"
 import { Order } from "../../../shared.types";
-import { changeCompleteStatus, getAllOrders } from "../../../utils/OrderService";
+import { changeCompleteStatus, deleteOrder, getAllOrders } from "../../../utils/OrderService";
 import { Accordion, AccordionDetails, AccordionSummary, FormControlLabel, FormGroup, List, ListItem, ListItemText, Pagination, Switch, Typography } from "@mui/material";
 import { GridExpandMoreIcon } from "@mui/x-data-grid";
+import { GetColorName } from "hex-color-to-color-name";
 
 const OrdersManagment: React.FC = () => {
 
@@ -14,8 +15,6 @@ const OrdersManagment: React.FC = () => {
             setOrderList(response);
         })
     }, [])
-
-
 
     const converteDeliveryMethod = (deliveryMethod: string) => {
         if (deliveryMethod === "NEW_POST_OFFICE") {
@@ -63,6 +62,17 @@ const OrdersManagment: React.FC = () => {
         } catch (error) {
             console.error("Failed to change order status", error);
         }
+    };
+
+    const converteColorCodeToColorName = (colorCode: string) => {
+        colorCode = colorCode.replace(/^#/, '');
+        const colorName = GetColorName(colorCode);
+        return colorName ? colorName : "Unknown color code"
+    }
+
+    const deleteOrderHandler = (orderId: number) => {
+
+        deleteOrder(orderId);
     }
 
     return (
@@ -77,21 +87,23 @@ const OrdersManagment: React.FC = () => {
                                 aria-controls={`panel${order.id}-content`}
                                 id={`panel${order.id}-header`}
                             >
-                                <Typography className={classes.orderTitle}>
+                                <label className={classes.orderTitle}>
                                     Замовлення №{order.id},
                                     загальна ціна - {order.totalAmount},
                                     створено - {formatCreatedAt(order.createdAt)},
-                                    статус замовлення -  {converteOrderStatus(order.status)}
-
-                                </Typography>
+                                    статус замовлення -
+                                </label>
+                                <label className={classes.orderStatus}>
+                                    {converteOrderStatus(order.status)}
+                                </label>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List>
-                                    <ListItem>
+                                    <ListItem >
                                         {`Метод оплати - ${convertePaymentMethod(order.paymentMethod)}, 
                                         Спосіб доставки - ${converteDeliveryMethod(order.deliveryMethod)}`}
 
-                                        <FormGroup>
+                                        <FormGroup sx={{ marginLeft: "10px" }}>
                                             <FormControlLabel control={<Switch
                                                 checked={order.status}
                                                 onChange={() => changeOrderStatusHandler(order.id, order.status)}
@@ -108,11 +120,19 @@ const OrdersManagment: React.FC = () => {
                                                 }}
                                             />} label="Змінити статус замовлення" />
                                         </FormGroup>
+                                        <button
+                                            onClick={() => deleteOrderHandler(order.id)}
+                                            className={classes.deleteButton}>Видалити замовлення</button>
+                                    </ListItem>
+                                    <ListItem>
+                                        {`ПІБ - ${order.fullName}, номер телефону: ${order.phoneNumber}`}
                                     </ListItem>
                                     {order.phoneList.map((phone) => (
                                         <ListItem key={phone.id}>
                                             <ListItemText
-                                                primary={phone.model}
+                                                primary={`${phone.model}, 
+                                                ${phone.rom.romSize} Гб,
+                                                колір: ${converteColorCodeToColorName(phone.color.colorName)}`}
                                                 secondary={`Ціна: ${phone.price} грн.`}
                                             />
                                         </ListItem>

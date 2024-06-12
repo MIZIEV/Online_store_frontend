@@ -1,5 +1,35 @@
 .container {
     padding: 50px;
 
-   
+    .orderTitle,
+    .orderStatus {
+        font-family: "Work Sans", sans-serif;
+        font-size: 18px;
+    }
+
+    .orderTitle {
+        font-weight: 400;
+    }
+
+    .orderStatus {
+        margin-left: 5px;
+        font-weight: 600;
+    }
+
+    .deleteButton {
+        cursor: pointer;
+        padding: 5px;
+        height: 100%;
+        width: auto;
+        margin-left: 10px;
+        border-radius: 4px;
+        background-color: transparent;
+        border: 1px solid black;
+        transition: background-color 0.5s ease;
+    }
+
+    .deleteButton:hover {
+        color: #fffff4;
+        background-color: #ED3F3F;
+    }
 }
