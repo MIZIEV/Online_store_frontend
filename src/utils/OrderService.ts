@@ -56,3 +56,14 @@ export const changeCompleteStatus = async (orderId: number) => {
         throw error;
     }
 };
+
+export const deleteOrder = async (orderId: number) => {
+    try {
+        const response = await axios.delete(`${CHANGE_COMPLETE_STATUS}${orderId}/remove`);
+        console.log("DELETE ORDER  FUNC");
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
