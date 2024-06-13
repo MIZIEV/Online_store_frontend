@@ -66,8 +66,9 @@ const Phone: React.FC = () => {
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
-    const dispatch = useDispatch();
+    const [count, setCount] = useState<number>(1);
     const [selectedPicture, setSelectedPicture] = useState<string>("");
+    const dispatch = useDispatch();
 
     const addProduct = (payload: SelectedPhone) => {
         if (selectedColor === null) {
@@ -132,6 +133,16 @@ const Phone: React.FC = () => {
 
     const closeErroModalHandler = () => {
         setIsError(false);
+    }
+
+    const increaseCount = () => {
+        setCount(count + 1);
+    }
+
+    const decreaseCount = () => {
+        if (count > 1) {
+            setCount(count - 1);
+        }
     }
 
     return (
@@ -228,15 +239,15 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.countBlock}>
-                                <div className={classes.countImage}>
+                                <div onClick={decreaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 12H16" stroke="black" stroke-linecap="round" />
                                     </svg>
                                 </div>
 
-                                <div className={classes.count}>1</div>
+                                <div className={classes.count}>{count}</div>
 
-                                <div className={classes.countImage}>
+                                <div onClick={increaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 8V16" stroke="black" stroke-linecap="round" />
                                         <path d="M8 12H16" stroke="black" stroke-linecap="round" />
@@ -270,7 +281,7 @@ const Phone: React.FC = () => {
                                             id: selectedRom,
                                             romSize: phone.romList.find(rom => rom.id === selectedRom)?.romSize
                                         },
-                                        quantity: 1,
+                                        quantity: count,
                                         image: phone.mainPictureURL,
                                     })
                                 }} className={classes.buyButton}>Додати в кошик</button>

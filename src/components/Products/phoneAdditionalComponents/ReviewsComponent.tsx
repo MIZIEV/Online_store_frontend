@@ -4,12 +4,16 @@ import CommentComponent from "./CommentComponent";
 import { Comment } from "../../../shared.types";
 import { addNewComment, deleteComment, getAllComments } from "../../../utils/CommentsServvice";
 import { useParams } from "react-router";
+import { isUserLoggedIn } from "../../../utils/AuthService";
+import ErrorModal from "../../../UI/Modal/ErrorModal";
 
 const ReviewsComponent: React.FC = () => {
 
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentText, setCommentText] = useState<string>("");
-
+    const isUthenticated = isUserLoggedIn();
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const { id } = useParams();
 
     useEffect(() => {
@@ -20,9 +24,22 @@ const ReviewsComponent: React.FC = () => {
 
     const handleNewComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (isUthenticated === false) {
+            setIsError(true);
+            setErrorMessage("Щоб залишити коментар, спочатку авторизуйтесь.")
+            return;
+        };
+
         const formData = new FormData(e.target as HTMLFormElement);
         const commentText = formData.get("commentText") as string;
         const comment: Comment = { commentText };
+
+        if (commentText.length <= 3) {
+            setIsError(true);
+            setErrorMessage("Коментар повинен містити більше 3 символів.");
+            return;
+        };
 
         try {
             await addNewComment(comment, id);
@@ -34,6 +51,7 @@ const ReviewsComponent: React.FC = () => {
         } catch (error) {
             console.error(error)
         }
+
     }
 
     const handleDeleteComment = async (commentId: number) => {
@@ -45,9 +63,13 @@ const ReviewsComponent: React.FC = () => {
         }
     }
 
+    const closeErroModalHandler = () => {
+        setIsError(false);
+    }
+
     return (
         <div className={classes.container}>
-
+            {isError && <ErrorModal message={errorMessage} onClose={closeErroModalHandler} />}
             <div className={classes.topBlock}>
                 <form onSubmit={handleNewComment}>
                     <input
@@ -72,7 +94,7 @@ const ReviewsComponent: React.FC = () => {
                             onDelete={handleDeleteComment}
                             key={comment.id}
                             comment={comment}
-                            authorEmail={comment.authorEmail}/>
+                            authorEmail={comment.authorEmail} />
                     ))
                 }
             </div>
