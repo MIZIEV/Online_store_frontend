@@ -12,6 +12,7 @@ import ReviewsComponent from "./phoneAdditionalComponents/ReviewsComponent";
 import { addToCart } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import { SelectedPhone } from "../../shared.types";
+import ErrorModal from "../../UI/Modal/ErrorModal";
 
 interface phoneCharacteristic {
     id: number,
@@ -60,6 +61,8 @@ interface PageState {
 const Phone: React.FC = () => {
 
     const { id } = useParams();
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("")
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
@@ -67,6 +70,16 @@ const Phone: React.FC = () => {
     const [selectedPicture, setSelectedPicture] = useState<string>("");
 
     const addProduct = (payload: SelectedPhone) => {
+        if (selectedColor === null) {
+            setErrorMessage("Please select a color.");
+            setIsError(true);
+            return;
+        }
+        if (selectedRom === null) {
+            setErrorMessage("Please select a ROM size.");
+            setIsError(true);
+            return;
+        }
         dispatch(addToCart(payload));
     };
 
@@ -117,10 +130,15 @@ const Phone: React.FC = () => {
         setSelectedPicture(pictureUrl);
     }
 
+    const closeErroModalHandler = () => {
+        setIsError(false);
+    }
+
     return (
         <>
             {phone ? (
                 <div className={classes.container}>
+                    {isError && <ErrorModal message={errorMessage} onClose={closeErroModalHandler} />}
                     <Outlet />
                     <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/phone/catalog", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
@@ -227,23 +245,35 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.buttonsBlock}>
-                                <button onClick={() => addProduct({
-                                    id: phone.id,
-                                    brand: phone.brand,
-                                    model: phone.model,
-                                    price: phone.price,
-                                    colorNameConverted: converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName),
-                                    color: {
-                                        id: selectedColor,
-                                        colorName: phone.colors.find(color => color.id === selectedColor)?.colorName
-                                    },
-                                    rom: {
-                                        id: selectedRom,
-                                        romSize: phone.romList.find(rom => rom.id === selectedRom)?.romSize
-                                    },
-                                    quantity: 1,
-                                    image: phone.mainPictureURL,
-                                })} className={classes.buyButton}>Додати в кошик</button>
+                                <button onClick={() => {
+                                    if (selectedColor === null) {
+                                        setErrorMessage("Оберіть будь ласка колір");
+                                        setIsError(true);
+                                        return;
+                                    }
+                                    if (selectedRom === null) {
+                                        setErrorMessage("Оберіть будь ласка розмір пам'яті");
+                                        setIsError(true);
+                                        return;
+                                    }
+                                    addProduct({
+                                        id: phone.id,
+                                        brand: phone.brand,
+                                        model: phone.model,
+                                        price: phone.price,
+                                        colorNameConverted: converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName),
+                                        color: {
+                                            id: selectedColor,
+                                            colorName: phone.colors.find(color => color.id === selectedColor)?.colorName
+                                        },
+                                        rom: {
+                                            id: selectedRom,
+                                            romSize: phone.romList.find(rom => rom.id === selectedRom)?.romSize
+                                        },
+                                        quantity: 1,
+                                        image: phone.mainPictureURL,
+                                    })
+                                }} className={classes.buyButton}>Додати в кошик</button>
                                 <button className={classes.addToFavorite}>Додати в обране</button>
                             </div>
                         </div>

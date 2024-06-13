@@ -38,18 +38,7 @@ const Card: React.FC<Phone> = (props) => {
         <div className={classes.bottomCardBlock}>
           <span className={classes.price}>₴ {props.price}</span>
           <Button
-            onClick={() =>
-              isAdded
-                ? removeProduct(props.id)
-                : addProduct({
-                    id: props.id,
-                    brand: props.brand,
-                    model: props.model,
-                    price: props.price,
-                    quantity: 1,
-                    image: props.mainPictureURL,
-                  })
-            }
+            onClick={handleNavigateOnClick}
           >
             {isAdded ? (
               <svg

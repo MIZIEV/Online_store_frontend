@@ -18,7 +18,7 @@ const CardIsUsed: React.FC<Phone> = (props) => {
             <img onClick={handleNavigateOnClick} src={props.mainPictureURL} alt={props.model} />
             {
                 isHovered && (
-                    <button>{props.price}</button>
+                    <button>{`${props.price} ₴`}</button>
                 )
             }
         </div>
