@@ -6,6 +6,8 @@ import { Color, Phone } from "../../../shared.types";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { CardProps } from "@mui/material";
 import { getPhoneList } from "../../../utils/phoneService";
+import ErrorModal from "../../../UI/Modal/ErrorModal";
+import { isValidColor } from "../../../utils/Validator";
 
 const columns: GridColDef[] = [
 
@@ -25,6 +27,9 @@ const ColorControleComponent: React.FC = () => {
 
     const [rows, setRows] = useState<CardProps[]>([]);
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
+
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,6 +82,13 @@ const ColorControleComponent: React.FC = () => {
         const formData = new FormData(e.target as HTMLFormElement);
         const formDataString = JSON.stringify(Object.fromEntries(formData.entries()));
 
+        if (!isValidColor(colorName)) {
+            setIsError(true);
+            errorMessages.push("Некоректний формат кольору!")
+            setErrorMessages(errorMessages);
+            return;
+        }
+
         try {
             await addNewColor(formDataString);
             const updatedColors = await getAllColors();
@@ -126,9 +138,16 @@ const ColorControleComponent: React.FC = () => {
         }
     }, [selectedColors]);
 
+    const closeErroModalHandler = () => {
+        setIsError(false);
+        setErrorMessages([]);
+    };
 
     return (
         <div className={classes.container}>
+
+            {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
+
             <h1>Курування кольорами</h1>
 
             <div className={classes.subscribeBlock}>
