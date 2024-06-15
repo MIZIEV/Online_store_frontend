@@ -3,16 +3,24 @@ import classes from "./ErrorModal.module.scss";
 
 
 interface ErrorModalProps {
-    message: string;
+    message: string[];
     onClose: () => void;
 }
- 
+
 const ErrorModal: React.FC<ErrorModalProps> = ({ message, onClose }) => {
     return (
-        <div className={classes.container}>
-            <div className={classes.modalContent}>
-                <h3 className={classes.errorMessage}>{message}</h3>
-                <button className={classes["confirm-button"]} onClick={onClose}>Зрозуміло</button>
+        <div className={classes.overlay} >
+
+            <div className={classes.container}>
+                <div className={classes.modalContent}>
+                    {
+                        message.map((message, index) => (
+
+                            <h3 key={index} className={classes.errorMessage}>{message}</h3>
+                        ))
+                    }
+                    <button className={classes["confirm-button"]} onClick={onClose}>Зрозуміло</button>
+                </div>
             </div>
         </div>
     );

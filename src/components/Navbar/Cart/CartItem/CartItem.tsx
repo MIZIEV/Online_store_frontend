@@ -6,7 +6,6 @@ import {
 } from "../../../../redux/cartSlice";
 
 import classes from "./CartItem.module.scss";
-import { useEffect } from "react";
 
 const CartItem: React.FC<{
   item: {
@@ -23,8 +22,6 @@ const CartItem: React.FC<{
 }> = ({ item }) => {
   const dispatch = useDispatch();
 
-
-
   const handleDeleteItem = (payload: { id: number }) => {
     dispatch(removeFromCart(payload));
   };
@@ -36,10 +33,6 @@ const CartItem: React.FC<{
   const handleDecreaseItem = (payload: { id: number }) => {
     dispatch(decrease(payload));
   };
-
-  useEffect(() => {
-    console.log(item.quantity)
-  }, [])
 
   return (
     <div className={classes.item}>

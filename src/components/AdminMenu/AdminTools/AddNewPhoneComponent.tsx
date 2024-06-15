@@ -5,6 +5,8 @@ import classes from "./AddNewPhoneComponent.module.scss"
 import { FormControlLabel, FormGroup, MenuItem, Select, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getOnePhone, updatePhone } from "../../../utils/phoneService";
+import ErrorModal from "../../../UI/Modal/ErrorModal";
+import { isValidUrl } from "../../../utils/Validator";
 
 interface PhoneRom {
   romSize: number
@@ -25,22 +27,24 @@ const AddNewPhoneComponent = () => {
   const [romList, setRomList] = useState<PhoneRom[]>([]);
   const [communicationStandardList, setCommunicationStandardList] = useState<CommunicationStandardList[]>([]);
 
-  const [model, setModel] = useState("");
-  const [mainPictureURL, setMainPictureURL] = useState("");
-  const [os, setOs] = useState("");
+  const [model, setModel] = useState<string>("");
+  const [mainPictureURL, setMainPictureURL] = useState<string>("");
+  const [os, setOs] = useState<string>("");
   const [osVersion, setOsVersion] = useState("");
-  const [screenSize, setScreenSize] = useState();
-  const [resolution, setResolution] = useState("");
-  const [mainCamera, setMainCamera] = useState();
-  const [frontCamera, setFrontCamera] = useState();
-  const [processor, setProcessor] = useState();
-  const [ram, setRam] = useState();
-  const [countOfCores, setCountOfCores] = useState();
-  const [weight, setWeight] = useState();
-  const [batteryCapacity, setBatteryCapacity] = useState();
-  const [price, setPrice] = useState();
-  const [producingCountry, setProducingCountry] = useState("");
+  const [screenSize, setScreenSize] = useState<number>();
+  const [resolution, setResolution] = useState<string>("");
+  const [mainCamera, setMainCamera] = useState<string>();
+  const [frontCamera, setFrontCamera] = useState<number>();
+  const [processor, setProcessor] = useState<string>("");
+  const [ram, setRam] = useState<number>();
+  const [countOfCores, setCountOfCores] = useState<number>();
+  const [weight, setWeight] = useState<number>();
+  const [batteryCapacity, setBatteryCapacity] = useState<number>();
+  const [price, setPrice] = useState<number>();
+  const [producingCountry, setProducingCountry] = useState<string>("");
 
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const { phoneId } = useParams();
 
@@ -51,12 +55,9 @@ const AddNewPhoneComponent = () => {
     if (phoneId) {
       getOnePhone(Number(phoneId)).then((response) => {
 
-
         setBrand(response.brand);
         setcountOfSimCard(response.countOfSimCard);
         setUsed(response.used);
-
-
         setMainPictureURL(response.mainPictureURL)
         setModel(response.model)
         setOs(response.os)
@@ -72,7 +73,6 @@ const AddNewPhoneComponent = () => {
         setProducingCountry(response.producingCountry)
         setPrice(response.price)
         setCountOfCores(response.countOfCores)
-
         setRomList(response.romList)
         setCommunicationStandardList(response.communicationStandardList);
       })
@@ -104,6 +104,7 @@ const AddNewPhoneComponent = () => {
         navigate("/admin/phone-managment");
       },
     });
+
     handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.target as HTMLFormElement);
@@ -114,19 +115,65 @@ const AddNewPhoneComponent = () => {
         used: used,
         countOfSimCard: countOfSimCard,
         brand: brand,
+        os: os,
         ...Object.fromEntries(formData),
       };
+
+      if (data.model.length < 5) {
+        errorMessages.push("Поле 'модель' повинно бути довштим за 5 символів!")
+      } if (data.producingCountry.length < 3) {
+        errorMessages.push("Поле 'країна виробник' повинно бути довштим за 5 символів!")
+      } if (data.screenSize <= 0) {
+        errorMessages.push("Поле 'розмір екрана' не повинно бути від'ємним або нуль!")
+      } if (data.mainCamera.length < 1) {
+        errorMessages.push("Поле 'Головна камера' повинно бути довштим за 1 символ!")
+      } if (data.frontCamera <= 0) {
+        errorMessages.push("Поле 'Фронтальна камера' не повинно бути від'ємним або нуль!")
+      } if (data.processor.length < 5) {
+        errorMessages.push("Поле 'Процесор' повинно бути довштим за 5 символів!")
+      } if (data.weight <= 0) {
+        errorMessages.push("Поле 'Вага' не повинно бути від'ємним або нуль!")
+      } if (data.batteryCapacity <= 0) {
+        errorMessages.push("Поле 'Ємність акумулятора' не повинно бути від'ємним або нуль!")
+      } if (data.price <= 0) {
+        errorMessages.push("Поле 'Ціна' не повинно бути від'ємним або нуль!")
+      } if (data.countOfCores <= 0) {
+        errorMessages.push("Поле 'Кількість ядер' не повинно бути від'ємним або нуль!")
+      } if (data.osVersion <= 0) {
+        errorMessages.push("Поле 'Версія ОС' не повинно бути від'ємним або нуль!")
+      } if (data.ram <= 0) {
+        errorMessages.push("Поле 'ОЗУ' не повинно бути від'ємним або нуль!")
+      } if (!isValidUrl(data.mainPictureURL)) {
+        errorMessages.push("Не коректна URL головної картинки!")
+      } if (data.resolution.length < 7) {
+        errorMessages.push("Поле 'Роздільна здатність' повинно бути довштим за 7 символів!")
+      } if (data.brand.length == 0) {
+        errorMessages.push("Поле 'Бренд' не обране!")
+      } if (data.os == undefined) {
+        errorMessages.push("Поле 'ОС' не обране!")
+      } if (data.communicationStandardList.length === 0) {
+        errorMessages.push("Поле 'Стандарт зв'язку' не обране!")
+      } if (data.romList.length == 0) {
+        errorMessages.push("Поле 'Ппз' не обране!")
+      }
+
+      if (errorMessages.length > 0) {
+        setIsError(true);
+        setErrorMessages(errorMessages);
+        return;
+      }
+
+
       mutate(data);
     };
   }
-
-
 
   const handleRomSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedSizes = e.target.value as number[];
     const roms: PhoneRom[] = selectedSizes.map(size => ({ romSize: size }));
     setRomList(roms);
   };
+
   const handleCommunicationStandardSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedSizes = e.target.value as string[];
     const standarts: CommunicationStandardList[] = selectedSizes.map(standardName => ({ standardName: standardName }));
@@ -138,8 +185,15 @@ const AddNewPhoneComponent = () => {
     console.log(used);
   }
 
+  const closeErroModalHandler = () => {
+    setErrorMessages([]);
+    setIsError(false);
+  }
+
   return (
     <div className={classes.container}>
+
+      {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
       <form onSubmit={handleSubmit}>
 
         <h1>Додати новий смартфон</h1>
@@ -173,18 +227,6 @@ const AddNewPhoneComponent = () => {
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="os">Операційна система</label>
-            <input
-              id="os"
-              type="text"
-              name="os"
-              value={os}
-              onChange={(e) => setOs(e.target.value)}
-              placeholder="Операційна система"
-              className={classes.inputField}
-            />
-          </div>
-          <div className={classes.inputContainer}>
             <label htmlFor="producingCountry">Країна виробник</label>
             <input
               id="producingCountry"
@@ -202,7 +244,7 @@ const AddNewPhoneComponent = () => {
             <input
               id="osVersion"
               name="osVersion"
-              type="text"
+              type="number"
               value={osVersion}
               onChange={(e) => setOsVersion(e.target.value)}
               placeholder="Версія ос "
@@ -214,7 +256,7 @@ const AddNewPhoneComponent = () => {
             <label htmlFor="">Розмір екрану</label>
             <input
               id="screenSize"
-              type="text"
+              type="number"
               name="screenSize"
               value={screenSize}
               onChange={(e) => setScreenSize(e.target.value)}
@@ -254,7 +296,7 @@ const AddNewPhoneComponent = () => {
             <input
               id="frontCamera"
               name="frontCamera"
-              type="text"
+              type="number"
               value={frontCamera}
               onChange={(e) => setFrontCamera(e.target.value)}
               placeholder="Фронтальна камера"
@@ -280,7 +322,7 @@ const AddNewPhoneComponent = () => {
             <input
               id="countOfCores"
               name="countOfCores"
-              type="text"
+              type="number"
               value={countOfCores}
               onChange={(e) => setCountOfCores(e.target.value)}
               placeholder="Кількість ядер"
@@ -293,7 +335,7 @@ const AddNewPhoneComponent = () => {
             <input
               id="ram"
               name="ram"
-              type="text"
+              type="number"
               value={ram}
               onChange={(e) => setRam(e.target.value)}
               placeholder="Озу"
@@ -306,7 +348,7 @@ const AddNewPhoneComponent = () => {
             <input
               id="weight"
               name="weight"
-              type="text"
+              type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="Вага "
@@ -319,7 +361,7 @@ const AddNewPhoneComponent = () => {
             <input
               id="batteryCapacity"
               name="batteryCapacity"
-              type="text"
+              type="number"
               value={batteryCapacity}
               onChange={(e) => setBatteryCapacity(e.target.value)}
               placeholder="Ємність акумулятора"
@@ -332,7 +374,7 @@ const AddNewPhoneComponent = () => {
             <input
               id="price"
               name="price"
-              type="text"
+              type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="Ціна"
@@ -348,6 +390,16 @@ const AddNewPhoneComponent = () => {
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
               <MenuItem value={3}>3</MenuItem>
+            </Select>
+          </div>
+
+          <div className={classes.inputContainer}>
+            <label htmlFor="os">Ос</label>
+            <Select id="os"
+              value={os}
+              onChange={(e) => setOs(e.target.value as string)}>
+              <MenuItem value="Ios">Ios</MenuItem>
+              <MenuItem value="Android">Android</MenuItem>
             </Select>
           </div>
 
