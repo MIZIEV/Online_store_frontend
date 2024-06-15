@@ -1,9 +1,15 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Footer.module.scss";
+import { useState } from "react";
+import { isUserLoggedIn } from "../../utils/AuthService";
+import ErrorModal from "../../UI/Modal/ErrorModal";
 
 const Footer = () => {
 
   const navigator = useNavigate();
+  const isAuthenticated = isUserLoggedIn();
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const scrollToNewPhonesHandler = () => {
     const newPhonesSection = document.getElementById("newPhones");
@@ -31,9 +37,25 @@ const Footer = () => {
     navigator("phone/catalog")
   }
 
+  const navigateToPersonalPage = () => {
+    if (!isAuthenticated) {
+      setIsError(true);
+      errorMessages.push("Для переходу на особисту сторінку авторизуйтесь!");
+      setErrorMessages(errorMessages);
+      return;
+    }
+    navigator(":savedUser/personal-page");
+  }
+
+  const closeErroModalHandler = () => {
+    setErrorMessages([]);
+    setIsError(false);
+  }
+
   return (
     <div className={classes["footer-wrapper"]}>
 
+      {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
       <footer>
 
         <h1>TalkieTech</h1>
@@ -56,7 +78,7 @@ const Footer = () => {
               <p>Оплата і доставка</p>
             </NavLink>
 
-            <p>Особистий кабінет</p>
+            <p onClick={navigateToPersonalPage}>Особистий кабінет</p>
 
             <NavLink className={classes.link} to="/guarantee">
               <p>Гарантія</p>
