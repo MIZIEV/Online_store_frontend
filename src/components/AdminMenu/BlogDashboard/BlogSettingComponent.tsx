@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import classes from "./BlogSettingComponent.module.scss";
 import { BlogProps } from "../../../shared.types";
 import { addNewBlog, deleteBlog, getAllBlogs } from "../../../utils/blogService";
+import ErrorModal from "../../../UI/Modal/ErrorModal";
+import { isValidUrl } from "../../../utils/Validator";
 
 const BlogSettingComponent: React.FC = () => {
 
@@ -9,9 +11,10 @@ const BlogSettingComponent: React.FC = () => {
     const [title, setTitle] = useState<string>("");
     const [blogPictureUrl, setBlogPictureUrl] = useState<string>("");
     const [text, setText] = useState<string>("")
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     useEffect(() => {
-
         getAllBlogs().then((response) => {
             setBlogList(response);
         })
@@ -24,6 +27,20 @@ const BlogSettingComponent: React.FC = () => {
             title,
             blogPictureUrl,
             text
+        };
+
+        if (title.length < 5) {
+            errorMessages.push("Довжина заголовку повинна бути довша за 5 символів!")
+        } if (!isValidUrl(blogPictureUrl)) {
+            errorMessages.push("Не коректна URL обкладинки!")
+        } if (text.length < 50 || text.length > 5000) {
+            errorMessages.push("Довжина тексту повинна бути в діапазоні між 50 та 5000 символів!")
+        };
+
+        if (errorMessages.length > 0) {
+            setIsError(true);
+            setErrorMessages(errorMessages);
+            return;
         };
 
         try {
@@ -49,9 +66,17 @@ const BlogSettingComponent: React.FC = () => {
         }
     };
 
+    const closeErroModalHandler = () => {
+        setIsError(false);
+        setErrorMessages([]);
+    };
+
     return (
 
         <div className={classes.container}>
+
+            {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
+
             <h1>Додати новий блог</h1>
             <form onSubmit={handleSubmit}>
                 <div className={classes.textAreaBlock}>
