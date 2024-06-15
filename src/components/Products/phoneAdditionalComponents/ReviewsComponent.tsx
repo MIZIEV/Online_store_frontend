@@ -13,7 +13,7 @@ const ReviewsComponent: React.FC = () => {
     const [commentText, setCommentText] = useState<string>("");
     const isUthenticated = isUserLoggedIn();
     const [isError, setIsError] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -27,7 +27,8 @@ const ReviewsComponent: React.FC = () => {
 
         if (isUthenticated === false) {
             setIsError(true);
-            setErrorMessage("Щоб залишити коментар, спочатку авторизуйтесь.")
+            errorMessages.push("Щоб залишити коментар, спочатку авторизуйтесь.")
+            setErrorMessages(errorMessages);
             return;
         };
 
@@ -37,7 +38,8 @@ const ReviewsComponent: React.FC = () => {
 
         if (commentText.length <= 3) {
             setIsError(true);
-            setErrorMessage("Коментар повинен містити більше 3 символів.");
+            errorMessages.push("Коментар повинен містити більше 3 символів.");
+            setErrorMessages(errorMessages);
             return;
         };
 
@@ -65,11 +67,12 @@ const ReviewsComponent: React.FC = () => {
 
     const closeErroModalHandler = () => {
         setIsError(false);
+        setErrorMessages([]);
     }
 
     return (
         <div className={classes.container}>
-            {isError && <ErrorModal message={errorMessage} onClose={closeErroModalHandler} />}
+            {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
             <div className={classes.topBlock}>
                 <form onSubmit={handleNewComment}>
                     <input

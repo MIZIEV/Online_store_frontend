@@ -62,7 +62,7 @@ const Phone: React.FC = () => {
 
     const { id } = useParams();
     const [isError, setIsError] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string>("")
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
@@ -71,16 +71,6 @@ const Phone: React.FC = () => {
     const dispatch = useDispatch();
 
     const addProduct = (payload: SelectedPhone) => {
-        if (selectedColor === null) {
-            setErrorMessage("Please select a color.");
-            setIsError(true);
-            return;
-        }
-        if (selectedRom === null) {
-            setErrorMessage("Please select a ROM size.");
-            setIsError(true);
-            return;
-        }
         dispatch(addToCart(payload));
     };
 
@@ -132,6 +122,7 @@ const Phone: React.FC = () => {
     }
 
     const closeErroModalHandler = () => {
+        setErrorMessages([]);
         setIsError(false);
     }
 
@@ -149,7 +140,7 @@ const Phone: React.FC = () => {
         <>
             {phone ? (
                 <div className={classes.container}>
-                    {isError && <ErrorModal message={errorMessage} onClose={closeErroModalHandler} />}
+                    {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
                     <Outlet />
                     <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/phone/catalog", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
@@ -258,12 +249,13 @@ const Phone: React.FC = () => {
                             <div className={classes.buttonsBlock}>
                                 <button onClick={() => {
                                     if (selectedColor === null) {
-                                        setErrorMessage("Оберіть будь ласка колір");
-                                        setIsError(true);
-                                        return;
+                                        errorMessages.push("Колір смартфона не обрано!");
                                     }
                                     if (selectedRom === null) {
-                                        setErrorMessage("Оберіть будь ласка розмір пам'яті");
+                                        errorMessages.push("Розмір пам'яті не обрано!");
+                                    }
+                                    if (errorMessages.length > 0) {
+                                        setErrorMessages(errorMessages);
                                         setIsError(true);
                                         return;
                                     }
