@@ -62,24 +62,15 @@ const Phone: React.FC = () => {
 
     const { id } = useParams();
     const [isError, setIsError] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string>("")
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
-    const dispatch = useDispatch();
+    const [count, setCount] = useState<number>(1);
     const [selectedPicture, setSelectedPicture] = useState<string>("");
+    const dispatch = useDispatch();
 
     const addProduct = (payload: SelectedPhone) => {
-        if (selectedColor === null) {
-            setErrorMessage("Please select a color.");
-            setIsError(true);
-            return;
-        }
-        if (selectedRom === null) {
-            setErrorMessage("Please select a ROM size.");
-            setIsError(true);
-            return;
-        }
         dispatch(addToCart(payload));
     };
 
@@ -131,14 +122,25 @@ const Phone: React.FC = () => {
     }
 
     const closeErroModalHandler = () => {
+        setErrorMessages([]);
         setIsError(false);
+    }
+
+    const increaseCount = () => {
+        setCount(count + 1);
+    }
+
+    const decreaseCount = () => {
+        if (count > 1) {
+            setCount(count - 1);
+        }
     }
 
     return (
         <>
             {phone ? (
                 <div className={classes.container}>
-                    {isError && <ErrorModal message={errorMessage} onClose={closeErroModalHandler} />}
+                    {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
                     <Outlet />
                     <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/phone/catalog", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
@@ -228,15 +230,15 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.countBlock}>
-                                <div className={classes.countImage}>
+                                <div onClick={decreaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 12H16" stroke="black" stroke-linecap="round" />
                                     </svg>
                                 </div>
 
-                                <div className={classes.count}>1</div>
+                                <div className={classes.count}>{count}</div>
 
-                                <div className={classes.countImage}>
+                                <div onClick={increaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 8V16" stroke="black" stroke-linecap="round" />
                                         <path d="M8 12H16" stroke="black" stroke-linecap="round" />
@@ -247,12 +249,13 @@ const Phone: React.FC = () => {
                             <div className={classes.buttonsBlock}>
                                 <button onClick={() => {
                                     if (selectedColor === null) {
-                                        setErrorMessage("Оберіть будь ласка колір");
-                                        setIsError(true);
-                                        return;
+                                        errorMessages.push("Колір смартфона не обрано!");
                                     }
                                     if (selectedRom === null) {
-                                        setErrorMessage("Оберіть будь ласка розмір пам'яті");
+                                        errorMessages.push("Розмір пам'яті не обрано!");
+                                    }
+                                    if (errorMessages.length > 0) {
+                                        setErrorMessages(errorMessages);
                                         setIsError(true);
                                         return;
                                     }
@@ -270,7 +273,7 @@ const Phone: React.FC = () => {
                                             id: selectedRom,
                                             romSize: phone.romList.find(rom => rom.id === selectedRom)?.romSize
                                         },
-                                        quantity: 1,
+                                        quantity: count,
                                         image: phone.mainPictureURL,
                                     })
                                 }} className={classes.buyButton}>Додати в кошик</button>
