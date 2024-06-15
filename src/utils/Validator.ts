@@ -10,3 +10,9 @@ const urlPattern = new RegExp(
 export const isValidUrl = (url: string): boolean => {
   return urlPattern.test(url);
 };
+
+const colorPattern = /^#([0-9A-F]{6}|[0-9A-F]{3})$/i;
+
+export const isValidColor = (color: string): boolean => {
+  return colorPattern.test(color);
+};
