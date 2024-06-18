@@ -12,7 +12,7 @@ import ConfirmModal from "../UI/Modal/ConfirmModel";
 
 const CheckoutPage: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const isAuthenticated = isUserLoggedIn();
 
