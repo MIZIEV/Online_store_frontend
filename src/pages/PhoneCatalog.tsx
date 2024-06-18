@@ -33,11 +33,13 @@ const PhoneCatalog: React.FC = () => {
     });
 
     useEffect(() => {
-        if (data && maxPrice === 0) {
-            const highestPrice = Math.max(...data.map((product: any) => product.price));
-            setMaxPrice(highestPrice);
+        const searchParams = new URLSearchParams(location.search);
+        const searchQuery = searchParams.get("searchTerm");
+        if (searchQuery) {
+            setFilter(`?searchTerm=${encodeURIComponent(searchQuery)}`);
+            console.log(filter)
         }
-    }, [data]);
+    }, [location.search]);
 
     useEffect(() => {
         getAllPhoneDistinctCharacteristics().then((response) => {

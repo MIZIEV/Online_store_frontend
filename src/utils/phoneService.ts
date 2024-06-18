@@ -14,7 +14,7 @@ const WISH_LIST_URL = "http://" + HOST_PORT + "/api/phone/"
 export async function addNewPhone(data: Phone) {
   console.log(data);
   try {
-    const response = await axios.post(ADD_NEW_PHONE_URL, data);
+    const response = await api.post(ADD_NEW_PHONE_URL, data);
     console.log(response);
     return response.data;
   } catch (error) {

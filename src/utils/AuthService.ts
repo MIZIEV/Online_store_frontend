@@ -57,7 +57,7 @@ export const saveLoggedInUser = (email: string, role: string, firstName: string,
 };
 
 export function saveRefreshToken(token: string) {
-	localStorage.setItem("refreshToken", token);
+	localStorage.setItem("refreshToken", "Bearer " + token);
 }
 
 export function getRefreshToken(): string | null {
