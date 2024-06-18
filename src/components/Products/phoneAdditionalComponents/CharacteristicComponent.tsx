@@ -30,8 +30,8 @@ const CharacteristicComponent: React.FC = (props) => {
                 <span>Стандарт мобільного зв'язку</span>
                 <div style={{ display: "block", textAlign: "right" }}>
                     {
-                        phoneCharacteristic.communicationStandardList.map((communicationStandard) => (
-                            <span style={{ display: "block", padding: "5px 0px" }} >{communicationStandard.standardName}</span>
+                        phoneCharacteristic.communicationStandardList.map((communicationStandard, index) => (
+                            <span key={index} style={{ display: "block", padding: "5px 0px" }} >{communicationStandard.standardName}</span>
                         ))
                     }
                 </div>

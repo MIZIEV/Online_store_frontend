@@ -1,10 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { postProduct, queryClient } from "../../../utils/http";
 import classes from "./AddNewPhoneComponent.module.scss"
 import { FormControlLabel, FormGroup, MenuItem, Select, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getOnePhone, updatePhone } from "../../../utils/phoneService";
+import { addNewPhone, getOnePhone, updatePhone } from "../../../utils/phoneService";
 import ErrorModal from "../../../UI/Modal/ErrorModal";
 import { isValidUrl } from "../../../utils/Validator";
 
@@ -97,14 +95,6 @@ const AddNewPhoneComponent = () => {
     };
   } else {
 
-    const { mutate, isPending, isError } = useMutation({
-      mutationFn: postProduct,
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-        navigate("/admin/phone-managment");
-      },
-    });
-
     handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.target as HTMLFormElement);
@@ -164,7 +154,8 @@ const AddNewPhoneComponent = () => {
       }
 
 
-      mutate(data);
+      addNewPhone(data);
+      navigate("/admin/phone-managment");
     };
   }
 
