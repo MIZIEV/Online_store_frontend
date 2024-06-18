@@ -1,5 +1,6 @@
 import axios from "axios";
 import { HOST } from "./host";
+import api from "./api";
 
 const HOST_PORT = HOST;
 const GET_DESCRIPTIONS = "http://" + HOST_PORT + "/api/phone/";
@@ -14,7 +15,7 @@ interface PhoneDescription {
 
 export async function getDescriptions(phoneId: number): Promise<PhoneDescription[]> {
     try {
-        const response = await axios.get(GET_DESCRIPTIONS + `${phoneId}` + "/description/list");
+        const response = await api.get(GET_DESCRIPTIONS + `${phoneId}` + "/description/list");
 
         console.log("service function GET ALL DESCRIPTION - ")
         console.log(response.data)
@@ -27,7 +28,7 @@ export async function getDescriptions(phoneId: number): Promise<PhoneDescription
 
 export async function addNewDescription(phoneId: number, data: FormData): Promise<any> {
     try {
-        const response = await axios.post(ADD_DESCRIPTION + `${phoneId}` + "/description/add", data, {
+        const response = await api.post(ADD_DESCRIPTION + `${phoneId}` + "/description/add", data, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -43,7 +44,7 @@ export async function addNewDescription(phoneId: number, data: FormData): Promis
 
 export async function deleteDescription(phoneId: number, descriptionId: number): Promise<any> {
     try {
-        const response = await axios.delete(DELETE_DESCRIPTION + `${phoneId}` + "/description/remove/" + `${descriptionId}`);
+        const response = await api.delete(DELETE_DESCRIPTION + `${phoneId}` + "/description/remove/" + `${descriptionId}`);
         console.log("service function DELETE DESCRIPTION - ")
         console.log(response.data)
         return response.data;
@@ -51,4 +52,4 @@ export async function deleteDescription(phoneId: number, descriptionId: number):
         console.error(error);
         throw error;
     }
-}
+};
