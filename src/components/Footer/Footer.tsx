@@ -56,7 +56,7 @@ const Footer = () => {
     <div className={classes["footer-wrapper"]}>
 
       {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
-      <footer>
+      <footer id="footer">
 
         <h1>TalkieTech</h1>
 
