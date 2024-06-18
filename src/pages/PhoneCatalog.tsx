@@ -27,20 +27,32 @@ const PhoneCatalog: React.FC = () => {
     const itemsPerPage = 15;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
 
+    const { data, isPending, isError } = useQuery({
+        queryKey: ["products", { filter: filter }],
+        queryFn: ({ signal }) => getProducts({ signal, filter }),
+    });
+
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const searchQuery = searchParams.get("searchTerm");
-        if (searchQuery) {
-            setFilter(`?searchTerm=${encodeURIComponent(searchQuery)}`);
-            console.log(filter)
+        if (data && maxPrice === 0) {
+            const highestPrice = Math.max(...data.map((product: any) => product.price));
+            setMaxPrice(highestPrice);
         }
-    }, [location.search]);
+    }, [data]);
 
     useEffect(() => {
         getAllPhoneDistinctCharacteristics().then((response) => {
             setDistinctPhoneCharacteristic(response);
         })
     }, [])
+
+    useEffect(() => {
+        if (data) {
+            if (maxPrice === 0) {
+                const maxPrice = Math.max(...data.map((product: any) => product.price));
+                setMaxPrice(maxPrice);
+            }
+        }
+    }, [data]);
 
     useEffect(() => {
         if (email) {
@@ -57,20 +69,6 @@ const PhoneCatalog: React.FC = () => {
             setIsWishListLoading(false);
         }
     }, [email]);
-
-    const { data, isPending, isError } = useQuery({
-        queryKey: ["products", { filter: filter }],
-        queryFn: ({ signal }) => getProducts({ signal, filter }),
-    });
-
-    useEffect(() => {
-        if (data) {
-            if (maxPrice === 0) {
-                const maxPrice = Math.max(...data.map((product: any) => product.price));
-                setMaxPrice(maxPrice);
-            }
-        }
-    }, [data]);
 
     const handleFilterChange = (filterParams: { [key: string]: string[] }) => {
         const currentFilterParams = new URLSearchParams(filter);
