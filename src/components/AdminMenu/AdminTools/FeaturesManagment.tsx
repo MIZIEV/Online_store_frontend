@@ -3,12 +3,16 @@ import classes from "./FeaturesManagment.module.scss";
 import { addNewPhoneFeature, deleteFeature, getAllPhoneFeatures } from "../../../utils/FeaturesService";
 import { useParams } from "react-router";
 import { PhoneFeature } from "../../../shared.types";
+import ErrorModal from "../../../UI/Modal/ErrorModal";
 
 const FeaturesManagment: React.FC = () => {
 
     const [feature, setFeature] = useState<string>("");
     const [featureList, setFeatureList] = useState<PhoneFeature[]>([]);
     const { phoneId } = useParams();
+
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     useEffect(() => {
         getAllPhoneFeatures(Number(phoneId)).then((response) => {
@@ -18,6 +22,13 @@ const FeaturesManagment: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        if (feature.length < 4 || feature.length > 30) {
+            errorMessages.push("Розмір тексту повинен бути в діапазон від 4 до 30 символів!")
+            setIsError(true);
+            setErrorMessages(errorMessages);
+            return;
+        }
         const newFeature: PhoneFeature = {
             id: 0,
             feature: feature
@@ -38,14 +49,27 @@ const FeaturesManagment: React.FC = () => {
         } catch (error) {
             console.error(error);
         }
-    }
+    };
+
+    const closeErroModalHandler = () => {
+        setIsError(false);
+        setErrorMessages([]);
+    };
 
     return (
         <div className={classes.container}>
+
+            {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
+
             <h1>Додаткові особливосіт смартфона</h1>
+
             <form onSubmit={handleSubmit}>
                 <div className={classes.textAreaBlock}>
-                    <textarea name="feaature" value={feature} onChange={e => setFeature(e.target.value)} />
+                    <textarea
+                        placeholder="Введіть текст"
+                        name="feaature"
+                        value={feature}
+                        onChange={e => setFeature(e.target.value)} />
                     <button type="submit">Зберегти</button>
                 </div>
             </form>
