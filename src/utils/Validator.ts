@@ -32,3 +32,9 @@ export const validateCVV = (cvv: string) => {
   const cvvRegex = /^[0-9]{3,4}$/;
   return cvvRegex.test(cvv);
 }
+
+const phonePattern = /^\+380\d{9}$/;
+
+export const validatePhoneNumber = (phoneNumber: string) => {
+  return phonePattern.test(phoneNumber);
+};

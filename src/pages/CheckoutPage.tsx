@@ -9,7 +9,7 @@ import { isUserLoggedIn } from "../utils/AuthService";
 import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
 import { addNewOrder } from "../utils/OrderService";
 import ConfirmModal from "../UI/Modal/ConfirmModel";
-import { validateCVV, validateCardNumber, validateExpirationDate } from "../utils/Validator";
+import { validateCVV, validateCardNumber, validateExpirationDate, validatePhoneNumber } from "../utils/Validator";
 import ErrorModal from "../UI/Modal/ErrorModal";
 
 const CheckoutPage: React.FC = () => {
@@ -79,6 +79,23 @@ const CheckoutPage: React.FC = () => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+
+
+    if (formData.fullName.length < 5) {
+      errorMessages.push("В полі 'ПІП' повинно бути більше 5 символів!")
+    }
+    if (!validatePhoneNumber(formData.phoneNumber)) {
+      errorMessages.push("Не коректний номер телефону!")
+    }
+    if (formData.city.length < 3) {
+      errorMessages.push("В полі 'Місто' повинно бути більше 3 символів!")
+    }
+
+    if (errorMessages.length > 0) {
+      setIsError(true);
+      setErrorMessages(errorMessages);
+      return;
+    }
 
     if (formData.paymentMethod === "ONLINE") {
       if (!validateCardNumber(creditCard)) {
