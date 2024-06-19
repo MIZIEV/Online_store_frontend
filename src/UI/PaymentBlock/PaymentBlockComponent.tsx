@@ -1,50 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./PaymentBlockComponent.module.scss";
-import ErrorModal from "../Modal/ErrorModal";
-import { validateCVV, validateCardNumber, validateExpirationDate } from "../../utils/Validator";
 
-const PaymentBlockComponent: React.FC = () => {
+interface PaymentBlockProps {
+    creditCard: string;
+    setCreditCard: React.Dispatch<React.SetStateAction<string>>;
+    cardExpiration: string;
+    setCardExpiration: React.Dispatch<React.SetStateAction<string>>;
+    cvv: string;
+    setCvv: React.Dispatch<React.SetStateAction<string>>;
+}
 
-    const [isError, setIsError] = useState<boolean>(false);
-    const [errorMessages, setErrorMessages] = useState<string[]>([]);
+const formatCardNumber = (value: string) => {
+    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
+};
 
-    const [creditCard, setCreditCard] = useState<string>("");
-    const [cardExpiration, setCardExpiration] = useState<string>("");
-    const [cvv, setCvv] = useState<string>("");
+const PaymentBlockComponent: React.FC<PaymentBlockProps> = ({
+    creditCard,
+    setCreditCard,
+    cardExpiration,
+    setCardExpiration,
+    cvv,
+    setCvv
+}) => {
 
-    const closeModalHandler = () => {
-        setErrorMessages([])
-        setIsError(false);
-    }
-
-    const paymentHandler = () => {
-
-        if (!validateCardNumber(creditCard)) {
-            errorMessages.push("Не коррекний номер картки!")
-        }
-        if (!validateExpirationDate(cardExpiration)) {
-            errorMessages.push("Не коррекний термін придатності картки!")
-        }
-        if (!validateCVV(cvv)) {
-            errorMessages.push("Не коррекний CVV код картки!")
-        }
-
-        if (errorMessages.length > 0) {
-            setErrorMessages(errorMessages);
-            setIsError(true);
-        }
-
-    }
+    const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const formattedValue = formatCardNumber(e.target.value);
+        setCreditCard(formattedValue);
+    };
 
     return (
         <div className={classes.container}>
 
-            {isError && <ErrorModal message={errorMessages} onClose={closeModalHandler} />}
-
             <div className={classes.topBlock}>
                 <label>Номер картки</label>
                 <input
-                    onChange={e => setCreditCard(e.target.value)}
+                    value={creditCard}
+                    onChange={handleCardNumberChange}
                     className={classes.paymentInput}
                     placeholder="**** **** **** ****"
                     type="text" />
@@ -54,6 +45,7 @@ const PaymentBlockComponent: React.FC = () => {
                 <div className={classes.leftSide}>
                     <label>Термін дії</label>
                     <input
+                        value={cardExpiration}
                         onChange={e => setCardExpiration(e.target.value)}
                         className={classes.paymentInput}
                         placeholder="MM/YY"
@@ -63,6 +55,7 @@ const PaymentBlockComponent: React.FC = () => {
                 <div className={classes.rightSide}>
                     <label>CVV2</label>
                     <input
+                        value={cvv}
                         onChange={e => setCvv(e.target.value)}
                         className={classes.paymentInput}
                         placeholder="***"
@@ -72,7 +65,7 @@ const PaymentBlockComponent: React.FC = () => {
 
             <div className={classes.bottomBlock}>
                 <p>Натискаючи кнопку "Сплатити", ВИ прийймаєте Угоду користувача</p>
-                <button onClick={paymentHandler}>Сплатити</button>
+                <button >Сплатити</button>
             </div>
         </div>
     )

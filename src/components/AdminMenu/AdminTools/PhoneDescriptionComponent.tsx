@@ -3,6 +3,8 @@ import classes from "./PhoneDescriptionComponent.module.scss";
 import { addNewDescription, deleteDescription, getDescriptions } from "../../../utils/descriptionService";
 import { useParams } from "react-router";
 import { addNewAdditionalPicture, deleteAdditionalPicture, getAllAdditionPictures } from "../../../utils/AdditionalPictureService";
+import ErrorModal from "../../../UI/Modal/ErrorModal";
+import { isValidUrl } from "../../../utils/Validator";
 
 interface PhoneDescription {
     ind: number,
@@ -16,6 +18,9 @@ const PhoneDescriptionComponent: React.FC = () => {
     const { phoneId } = useParams();
     const [pictureUrl, setPictureUrl] = useState<string>("");
     const [picturesList, setPicturesList] = useState([]);
+
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     useEffect(() => {
         getDescriptions(Number(phoneId))
@@ -34,6 +39,12 @@ const PhoneDescriptionComponent: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (descriptionText.length < 10 || descriptionText.length > 2000) {
+            setIsError(true);
+            errorMessages.push("Розмір тексту повинен бути в діапазоні від 10 до 2000 символів!");
+            setErrorMessages(errorMessages);
+            return;
+        }
         const formData = new FormData(e.target as HTMLFormElement);
 
         try {
@@ -60,6 +71,14 @@ const PhoneDescriptionComponent: React.FC = () => {
 
     const handleNewAdditionalPcture = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!isValidUrl(pictureUrl)) {
+            setIsError(true);
+            errorMessages.push("Не коректна URL картинки!");
+            setErrorMessages(errorMessages);
+            return;
+        }
+
         const formData = new FormData(e.target as HTMLFormElement);
 
         await addNewAdditionalPicture(Number(phoneId), formData as string)
@@ -77,11 +96,20 @@ const PhoneDescriptionComponent: React.FC = () => {
         } catch (error) {
             console.error(error);
         }
-    }
+    };
+
+    const closeErroModalHandler = () => {
+        setIsError(false);
+        setErrorMessages([]);
+    };
 
     return (
         <div className={classes.container}>
+
+            {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
+
             <h1>Додаткова інформація для смартфона</h1>
+
             <form onSubmit={handleSubmit}>
                 <div className={classes.textAreaBlock}>
                     <textarea name="descriptionText" value={descriptionText} onChange={e => setDescriptionText(e.target.value)} />

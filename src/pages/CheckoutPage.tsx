@@ -9,6 +9,8 @@ import { isUserLoggedIn } from "../utils/AuthService";
 import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
 import { addNewOrder } from "../utils/OrderService";
 import ConfirmModal from "../UI/Modal/ConfirmModel";
+import { validateCVV, validateCardNumber, validateExpirationDate } from "../utils/Validator";
+import ErrorModal from "../UI/Modal/ErrorModal";
 
 const CheckoutPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,6 +27,14 @@ const CheckoutPage: React.FC = () => {
 
   const [deliveryPrice, setDeliveryPrice] = useState<number>(60);
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
+
+  const [creditCard, setCreditCard] = useState("");
+  const [cardExpiration, setCardExpiration] = useState("");
+  const [cvv, setCvv] = useState("");
+
   const email = sessionStorage.getItem("authenticatedEmail")
 
   const [formData, setFormData] = useState({
@@ -35,7 +45,6 @@ const CheckoutPage: React.FC = () => {
     paymentMethod: "CASH",
   })
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const iAmRecepientHandler = () => {
     setRecepient(!recepient);
@@ -70,6 +79,25 @@ const CheckoutPage: React.FC = () => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (formData.paymentMethod === "ONLINE") {
+      if (!validateCardNumber(creditCard)) {
+        errorMessages.push("Не коррекний номер картки!");
+      }
+      if (!validateExpirationDate(cardExpiration)) {
+        errorMessages.push("Не коррекний термін придатності картки!");
+      }
+      if (!validateCVV(cvv)) {
+        errorMessages.push("Не коррекний CVV код картки!");
+      }
+    }
+
+    if (errorMessages.length > 0) {
+      setErrorMessages(errorMessages);
+      setIsError(true);
+      return;
+    }
+
     setModalOpen(true);
   };
 
@@ -108,8 +136,16 @@ const CheckoutPage: React.FC = () => {
     setModalOpen(false);
   };
 
+  const closeModalHandler = () => {
+    setErrorMessages([])
+    setIsError(false);
+  }
+
   return (
     <div className={classes.container}>
+
+      {isError && <ErrorModal message={errorMessages} onClose={closeModalHandler} />}
+
       <BreadCrumb items={[{ path: "/", title: "Головна" },
       { path: "/phone/catalog", title: "/товари" },
       { path: "/checkout", title: "/Оформлення замовлення" }]} />
@@ -242,7 +278,14 @@ const CheckoutPage: React.FC = () => {
               </FormControl>
 
               {
-                formData.paymentMethod === "ONLINE" && <PaymentBlockComponent />
+                formData.paymentMethod === "ONLINE" && <PaymentBlockComponent
+                  creditCard={creditCard}
+                  setCreditCard={setCreditCard}
+                  cardExpiration={cardExpiration}
+                  setCardExpiration={setCardExpiration}
+                  cvv={cvv}
+                  setCvv={setCvv}
+                />
               }
 
             </div>
@@ -264,7 +307,7 @@ const CheckoutPage: React.FC = () => {
                   </div>
 
                   <div className={classes.textBlock}>
-                    <h3>{item.brand} {item.model} {`${item.rom} Гб`}</h3>
+                    <h3>{item.brand} {item.model} {`${item.rom.romSize} Гб`}</h3>
                     <p>Колір: {`${item.colorNameConverted}`}</p>
                     <p>Ціна: {`${item.price} грн`}</p>
                     <p>Кількість: {`${item.quantity} шт`}</p>
