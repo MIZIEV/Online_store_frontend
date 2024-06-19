@@ -24,6 +24,8 @@ import PhoneDescriptionComponent from "./components/AdminMenu/AdminTools/PhoneDe
 import PhoneCatalog from "./pages/PhoneCatalog";
 import UserPersonalPage from "./pages/UserPersonalPage";
 import BlogSettingComponent from "./components/AdminMenu/BlogDashboard/BlogSettingComponent";
+import FeaturesManagment from "./components/AdminMenu/AdminTools/FeaturesManagment";
+import OrdersManagment from "./components/AdminMenu/AdminTools/OrdersManagment";
 
 const router = createBrowserRouter([
   {
@@ -120,6 +122,16 @@ const router = createBrowserRouter([
       {
         path: "admin/blog-managment",
         element: <BlogSettingComponent />,
+        children: [{ path: "cart", element: <CartModal /> }]
+      },
+      {
+        path: "admin/phone-managment/:phoneId/features",
+        element: <FeaturesManagment />,
+        children: [{ path: "cart", element: <CartModal /> }]
+      },
+      {
+        path: "admin/orders-managment",
+        element: <OrdersManagment />,
         children: [{ path: "cart", element: <CartModal /> }]
       }
     ],

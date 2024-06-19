@@ -1,17 +1,11 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { SelectedPhone } from "../shared.types";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface CartProduct {
-  id: number;
-  brand: string;
-  model: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+
 
 export interface CartState {
-  items: CartProduct[];
+  items: SelectedPhone[];
 }
 
 const initialState: CartState = {
@@ -39,7 +33,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { id } = action.payload;
+      const { id, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
@@ -47,7 +41,7 @@ export const cartSlice = createSlice({
           item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
-        state.items = [...state.items, { ...action.payload, quantity: 1 }];
+        state.items = [...state.items, { ...action.payload, quantity: quantity }];
       }
     },
     removeFromCart: (state, action) => {

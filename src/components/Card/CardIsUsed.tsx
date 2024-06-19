@@ -9,7 +9,7 @@ const CardIsUsed: React.FC<Phone> = (props) => {
 
     const handleNavigateOnClick = () => {
         navigator(`/phone/${props.id}`)
-      }
+    }
     return (
         <div className={classes.card} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 
@@ -18,7 +18,7 @@ const CardIsUsed: React.FC<Phone> = (props) => {
             <img onClick={handleNavigateOnClick} src={props.mainPictureURL} alt={props.model} />
             {
                 isHovered && (
-                    <button>{props.price}</button>
+                    <button>{`${props.price} ₴`}</button>
                 )
             }
         </div>

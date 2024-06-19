@@ -49,6 +49,13 @@ const Navbar = () => {
     }
   };
 
+  const scrollToFooterHandler = () => {
+    const footer = document.getElementById("footer");
+    if (footer) {
+      footer.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <header>
       <nav className={classes["navbar-top"]}>
@@ -65,7 +72,7 @@ const Navbar = () => {
         )}
         {loggedInUser ? (
           <>
-            <Link className={classes.link} to="">
+            <Link className={classes.link} to="" onClick={scrollToFooterHandler}>
               Контакти
             </Link>
             <Link className={classes.link} to="/payment-delivery">
@@ -85,7 +92,7 @@ const Navbar = () => {
 
         ) : (
           <>
-            <Link className={classes.link} to="">
+            <Link className={classes.link} to="" onClick={scrollToFooterHandler}>
               Контакти
             </Link>
             <Link className={classes.link} to="/payment-delivery">

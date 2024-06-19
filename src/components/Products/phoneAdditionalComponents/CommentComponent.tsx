@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./CommentComponent.module.scss"
 import { isUserLoggedIn } from "../../../utils/AuthService";
 
 const CommentComponent: React.FC = (props) => {
 
     const authenticatedEmail = sessionStorage.getItem("authenticatedEmail")
-    const isUthenticated = isUserLoggedIn();
 
     const { id, comment, updateComments, onDelete, authorEmail } = props;
 
@@ -20,11 +19,6 @@ const CommentComponent: React.FC = (props) => {
 
     const checkCommentByAutor = () => {
 
-        console.log(" auth " + authorEmail)
-        console.log("login " + authenticatedEmail)
-
-        console.log(isUthenticated)
-
         if (authenticatedEmail === authorEmail) {
             return (
                 <svg onClick={handleDeleteComment} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +27,6 @@ const CommentComponent: React.FC = (props) => {
                 </svg>
             )
         }
-
     }
 
     const formatCreatedAt = (createdAt: string): string => {

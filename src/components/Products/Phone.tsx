@@ -9,8 +9,10 @@ import RatingComponent from "../../UI/Rating/RatingComponent";
 import DescriptionComponent from "./phoneAdditionalComponents/DescriptionComponent";
 import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicComponent";
 import ReviewsComponent from "./phoneAdditionalComponents/ReviewsComponent";
-import { CartProduct, addToCart } from "../../redux/cartSlice";
+import { addToCart } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
+import { SelectedPhone } from "../../shared.types";
+import ErrorModal from "../../UI/Modal/ErrorModal";
 
 interface phoneCharacteristic {
     id: number,
@@ -59,14 +61,18 @@ interface PageState {
 const Phone: React.FC = () => {
 
     const { id } = useParams();
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
     const [phone, setPhone] = useState<phoneCharacteristic>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
+    const [count, setCount] = useState<number>(1);
+    const [selectedPicture, setSelectedPicture] = useState<string>("");
     const dispatch = useDispatch();
 
-    const addProduct = (payload: CartProduct) => {
+    const addProduct = (payload: SelectedPhone) => {
         dispatch(addToCart(payload));
-      };
+    };
 
     const [pageState, setPageState] = useState<PageState>({
         selectedOption: 'option1'
@@ -85,10 +91,11 @@ const Phone: React.FC = () => {
     }
 
     function getPhone() {
-        getOnePhone(parseInt(id)).then((response) => {
+        getOnePhone(Number(id)).then((response) => {
 
             console.log("function GET PHONE in component")
             console.log(response);
+            setSelectedPicture(response.mainPictureURL)
             setPhone(response);
         }).catch((error) => {
             console.error(error);
@@ -109,10 +116,31 @@ const Phone: React.FC = () => {
         setSelectedRom(romId);
     };
 
+    const changeMainPictureHandler = (pictureUrl: string) => {
+        console.log(pictureUrl)
+        setSelectedPicture(pictureUrl);
+    }
+
+    const closeErroModalHandler = () => {
+        setErrorMessages([]);
+        setIsError(false);
+    }
+
+    const increaseCount = () => {
+        setCount(count + 1);
+    }
+
+    const decreaseCount = () => {
+        if (count > 1) {
+            setCount(count - 1);
+        }
+    }
+
     return (
         <>
             {phone ? (
                 <div className={classes.container}>
+                    {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
                     <Outlet />
                     <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/phone/catalog", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
@@ -120,7 +148,7 @@ const Phone: React.FC = () => {
                         <div className={classes.leftImagesBlock}>
 
                             <div className={classes.mainImage}>
-                                <img src={phone.mainPictureURL} alt="Main picture" />
+                                <img src={selectedPicture} alt="Main picture" />
                             </div>
 
                             <div className={classes.additionImagePanel}>
@@ -128,7 +156,8 @@ const Phone: React.FC = () => {
 
                                     {phone.phonePictureUrls.map((pictureUrl) => (
 
-                                        <div className={classes.additionImages} key={pictureUrl.id}>
+                                        <div onClick={e => changeMainPictureHandler(pictureUrl.url)}
+                                            className={classes.additionImages} key={pictureUrl.id}>
                                             <img src={pictureUrl.url} alt="additional picture" />
                                         </div>
 
@@ -201,15 +230,15 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.countBlock}>
-                                <div className={classes.countImage}>
+                                <div onClick={decreaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 12H16" stroke="black" stroke-linecap="round" />
                                     </svg>
                                 </div>
 
-                                <div className={classes.count}>1</div>
+                                <div className={classes.count}>{count}</div>
 
-                                <div className={classes.countImage}>
+                                <div onClick={increaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 8V16" stroke="black" stroke-linecap="round" />
                                         <path d="M8 12H16" stroke="black" stroke-linecap="round" />
@@ -218,14 +247,36 @@ const Phone: React.FC = () => {
                             </div>
 
                             <div className={classes.buttonsBlock}>
-                                <button onClick={()=>addProduct({
-                                                    id: phone.id,
-                                                    brand: phone.brand,
-                                                    model: phone.model,
-                                                    price: phone.price,
-                                                    quantity: 1,
-                                                    image: phone.mainPictureURL,
-                                })} className={classes.buyButton}>Додати в кошик</button>
+                                <button onClick={() => {
+                                    if (selectedColor === null) {
+                                        errorMessages.push("Колір смартфона не обрано!");
+                                    }
+                                    if (selectedRom === null) {
+                                        errorMessages.push("Розмір пам'яті не обрано!");
+                                    }
+                                    if (errorMessages.length > 0) {
+                                        setErrorMessages(errorMessages);
+                                        setIsError(true);
+                                        return;
+                                    }
+                                    addProduct({
+                                        id: phone.id,
+                                        brand: phone.brand,
+                                        model: phone.model,
+                                        price: phone.price,
+                                        colorNameConverted: converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName),
+                                        color: {
+                                            id: selectedColor,
+                                            colorName: phone.colors.find(color => color.id === selectedColor)?.colorName
+                                        },
+                                        rom: {
+                                            id: selectedRom,
+                                            romSize: phone.romList.find(rom => rom.id === selectedRom)?.romSize
+                                        },
+                                        quantity: count,
+                                        image: phone.mainPictureURL,
+                                    })
+                                }} className={classes.buyButton}>Додати в кошик</button>
                                 <button className={classes.addToFavorite}>Додати в обране</button>
                             </div>
                         </div>

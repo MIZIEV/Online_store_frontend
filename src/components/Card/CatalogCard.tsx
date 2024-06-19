@@ -6,16 +6,16 @@ import { addPhoneToWishList, deletePhoneFromWishList } from "../../utils/phoneSe
 const CatalogCard: React.FC = (props) => {
 
     const navigator = useNavigate();
+
     const phoneData = props.phoneData;
     const colors = props.phoneData.colors;
     const id = props.phoneData.id;
     const inWishList = props.inWishList;
+
     const email = sessionStorage.getItem("authenticatedEmail");
 
 
     const [isInWishList, setIsInWIshList] = useState(inWishList);
-
-
 
     const handleWishListClick = () => {
         if (isInWishList) {
@@ -25,7 +25,6 @@ const CatalogCard: React.FC = (props) => {
             addPhoneToWishList(id, email);
             setIsInWIshList(true);
         }
-
     }
 
     const onClickNavigateHandler = () => {
@@ -73,7 +72,6 @@ const CatalogCard: React.FC = (props) => {
             </div>
         );
     };
-
 
     return (
         <div className={classes.container}>

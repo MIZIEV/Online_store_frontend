@@ -1,6 +1,8 @@
 import axios from "axios";
+import { HOST } from "./host";
+import api from "./api";
 
-const HOST_PORT = "13.60.76.209:8080";
+const HOST_PORT = HOST;
 const BASE_URL = "http://" + HOST_PORT + "/api/auth";
 
 interface RegistrationData {
@@ -13,13 +15,13 @@ interface RegistrationData {
 
 export async function registerUser(userData: RegistrationData) {
 	try {
-		const response = await axios.post(`${BASE_URL}/register`, userData);
+		const response = await api.post(`${BASE_URL}/register`, userData);
 		return response.data;
 	} catch (error) {
 		console.error(error);
 		throw error;
 	}
-}
+};
 
 interface LoginData {
 	email: string;
@@ -28,15 +30,22 @@ interface LoginData {
 
 export async function loginUser(userData: LoginData) {
 	try {
-		const response = await axios.post(`${BASE_URL}/login`, userData);
+		const response = await api.post(`${BASE_URL}/login`, userData);
+
 		saveToken(response.data.accessToken);
+		saveRefreshToken(response.data.refreshToken);
+
+		console.log("--------------tokens----------")
+		console.log(localStorage.getItem("token"))
+		console.log(localStorage.getItem("refreshToken"))
+		console.log("--------------tokens----------")
 		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.error(error);
 		throw error;
 	}
-}
+};
 
 export const saveLoggedInUser = (email: string, role: string, firstName: string, lastName: string, phoneNumber: string) => {
 	console.log("saved email - " + email + "saved role - " + role + " firstName - " + firstName);
@@ -46,6 +55,14 @@ export const saveLoggedInUser = (email: string, role: string, firstName: string,
 	sessionStorage.setItem("authenticatedPhonenumbar", phoneNumber);
 	sessionStorage.setItem("role", role);
 };
+
+export function saveRefreshToken(token: string) {
+	localStorage.setItem("refreshToken", "Bearer " + token);
+}
+
+export function getRefreshToken(): string | null {
+	return localStorage.getItem('refreshToken');
+}
 
 export const isUserLoggedIn = (): boolean => {
 	const email = sessionStorage.getItem("authenticatedEmail");
@@ -63,7 +80,8 @@ export function saveToken(token: string) {
 }
 
 export function getToken(): string | null {
-	console.log("get token - " + localStorage.getItem('token'))
+	console.log("get token - " + localStorage.getItem('token'));
+	console.log("get refresh token - " + localStorage.getItem('refreshToken'));
 	return localStorage.getItem('token');
 }
 

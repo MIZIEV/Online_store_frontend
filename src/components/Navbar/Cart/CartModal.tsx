@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
 import CloseButton from "./CloseButton";
-import { Phone } from "../../../shared.types";
+import { Phone, SelectedPhone } from "../../../shared.types";
 import { totalPrice } from "../../../redux/cartSlice";
 
 interface RootState {
-  cart: { items: Phone[] };
+  cart: { items: SelectedPhone[] };
 }
 
 const CartModal = () => {
@@ -34,7 +34,7 @@ const CartModal = () => {
             )}
             {cart.length > 0 && (
               <div className={classes.modalDown}>
-                <p className={classes.total}>Загалом: {totalPriceValue}грн</p>
+                <p className={classes.total}>Загалом: {totalPriceValue} ₴</p>
                 <p className={classes.buttons}>
                   <Link to="/">
                     <button className={classes.return}>

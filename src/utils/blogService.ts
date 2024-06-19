@@ -1,13 +1,15 @@
 import axios from "axios";
 import { BlogProps } from "../shared.types";
+import { HOST } from "./host";
+import api from "./api";
 
-const HOST = "13.60.76.209:8080"
-const GET_ALL_BLOGS = "http://" + HOST + "/api/blog/list"
-const GET_ONE_BLOG = "http://" + HOST + "/api/blog/"
+const HOST_PORT = HOST;
+const GET_ALL_BLOGS = "http://" + HOST_PORT + "/api/blog/list"
+const GET_ONE_BLOG = "http://" + HOST_PORT + "/api/blog/"
 
 export async function getAllBlogs() {
     try {
-        const responce = await axios.get(GET_ALL_BLOGS);
+        const responce = await api.get(GET_ALL_BLOGS);
         console.log("GET BLOGS FUNC")
         console.log(responce);
 
@@ -20,7 +22,7 @@ export async function getAllBlogs() {
 
 export async function getOneBlog(blogId: number) {
     try {
-        const response = await axios.get(GET_ONE_BLOG + `${blogId}`);
+        const response = await api.get(GET_ONE_BLOG + `${blogId}`);
 
         console.log("get one blog function - ")
         console.log(response.data)
@@ -29,11 +31,11 @@ export async function getOneBlog(blogId: number) {
         console.error(error);
         throw error;
     }
-}
+};
 
 export async function addNewBlog(blog: BlogProps) {
     try {
-        const response = await axios.post(`${GET_ONE_BLOG}add`, blog);
+        const response = await api.post(`${GET_ONE_BLOG}add`, blog);
         console.log("add blog function - ")
         console.log(response.data)
         return response.data;
@@ -45,7 +47,7 @@ export async function addNewBlog(blog: BlogProps) {
 
 export async function deleteBlog(blogId: number) {
     try {
-        const response = await axios.delete(`${GET_ONE_BLOG}${blogId}`);
+        const response = await api.delete(`${GET_ONE_BLOG}${blogId}`);
         console.log("delete blog function - ")
         console.log(response.data)
         return response.data;
@@ -53,4 +55,4 @@ export async function deleteBlog(blogId: number) {
         console.error(error);
         throw error;
     }
-}
+};

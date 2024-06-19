@@ -42,7 +42,7 @@ export type Comment = {
   commentText: string,
   createdAt: string,
   authorName: string
-  authorEmail:string;
+  authorEmail: string;
 }
 
 export type PhoneDistinctCharacteristics = {
@@ -57,6 +57,7 @@ export type PhoneDistinctCharacteristics = {
 };
 
 export type PhoneRom = {
+  id: number;
   romSize: number;
 }
 
@@ -68,8 +69,8 @@ export type Order = {
   deliveryMethod: string;
   paymentMethod: string;
   createdAt: string;
-  phoneList: Phone[];
-  username: string;
+  phoneList: SelectedPhone[];
+  email: string;
 }
 
 export type User = {
@@ -77,4 +78,21 @@ export type User = {
   lastName: string;
   phoneNumber: string;
   email: string;
+}
+
+export type PhoneFeature = {
+  id: number;
+  feature: string
+}
+
+export type SelectedPhone = {
+  id: number;
+  brand: string;
+  model: string;
+  colorNameConverted: string;
+  colorName: string;
+  rom: string;
+  price: number;
+  quantity: number;
+  image: string;
 }

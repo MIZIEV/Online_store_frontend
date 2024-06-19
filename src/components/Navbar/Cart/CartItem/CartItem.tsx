@@ -12,6 +12,9 @@ const CartItem: React.FC<{
     id: number;
     brand: string;
     model: string;
+    colorNameConverted: string;
+    colorName: string;
+    rom: string;
     price: number;
     quantity: number;
     image: string;
@@ -36,7 +39,7 @@ const CartItem: React.FC<{
       <img src={item.image} alt="" />
       <div className={classes.info}>
         <h1>
-          {item.brand} {item.model}{" "}
+          {item.brand} {item.model}{" "}{`${item.rom.romSize} Гб`}
           <button onClick={() => handleDeleteItem({ id: item.id })}>
             <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M42 8H32C32 5.794 30.206 4 28 4H20C17.794 4 16 5.794 16 8H6V12H42V8Z" fill="black" />
@@ -44,7 +47,8 @@ const CartItem: React.FC<{
             </svg>
           </button>
         </h1>
-        <p>{item.price}грн</p>
+        <p>{`Колір: ${item.colorNameConverted}`}</p>
+        <p>{`${item.price} ₴`}</p>
         <p>
           <button onClick={() => handleDecreaseItem({ id: item.id })}>-</button>
           {item.quantity}

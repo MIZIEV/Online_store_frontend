@@ -1,0 +1,83 @@
+.container {
+    padding: 50px;
+
+    h1 {
+        text-align: center;
+        font-family: "Arsenal", sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        padding-bottom: 40px;
+    }
+
+    form {
+        display: flex;
+
+        .textAreaBlock {
+            margin: auto;
+
+            textarea {
+                border: 3px solid #767676;
+                border-radius: 4px;
+                height: 50px;
+                width: 550px;
+                margin-bottom: 50px;
+                padding: 10px;
+                background-color: transparent;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+            }
+
+            button {
+                cursor: pointer;
+                display: block;
+                margin: 0px auto;
+                border-radius: 4px;
+                width: 370px;
+                height: 49px;
+                background-color: #436850;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+                color: #fffff4;
+            }
+        }
+
+    }
+
+    .featureListBlock {
+        padding-top: 50px;
+
+        .featureItem {
+            display: flex;
+            background-color: #adbc9f;
+            border-radius: 4px;
+            padding: 30px;
+            margin: 10px 400px;
+
+            .featureText {
+                width: 98%;
+
+                font-family: "Work Sans", sans-serif;
+                font-weight: 400;
+                font-size: 18px;
+                color: #fff;
+            }
+
+            svg {
+                margin: auto;
+                transition: fill 0.5s ease;
+                fill: #fff;
+                height: 25px;
+                width: auto;
+                cursor: pointer;
+            }
+
+            svg:hover {
+                fill: #ed3f3f;
+            }
+        }
+    }
+}

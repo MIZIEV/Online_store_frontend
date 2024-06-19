@@ -10,10 +10,17 @@
         font-size: 30px;
     }
 
-    p {
+    p,
+    .orderTitle,
+    .orderStatus {
         font-family: "Work Sans", sans-serif;
         font-weight: 400;
         font-size: 14px;
+    }
+
+    .orderStatus {
+        margin-left: 5px;
+        font-weight: 600;
     }
 
     button {
@@ -26,4 +33,5 @@
         width: 270px;
         height: 49px;
     }
+
 }

@@ -1,16 +1,18 @@
 import axios from "axios";
+import { HOST } from "./host";
+import api from "./api";
 
-const HOST = "localhost:8090";
-const GET_ALL_COLORS = "http://" + HOST + "/api/color/list";
-const ADD_NEW_COLOR = "http://" + HOST + "/api/color/add";
-const DELETE_COLOR = "http://" + HOST + "/api/color/remove";
-const PUT_THE_COLOR_IN_PHONE = "http://" + HOST + "/api/phone/";
+const HOST_PORT = HOST;
+const GET_ALL_COLORS = "http://" + HOST_PORT + "/api/color/list";
+const ADD_NEW_COLOR = "http://" + HOST_PORT + "/api/color/add";
+const DELETE_COLOR = "http://" + HOST_PORT + "/api/color/remove";
+const PUT_THE_COLOR_IN_PHONE = "http://" + HOST_PORT + "/api/phone/";
 
 export const getAllColors = async () => {
     let url = GET_ALL_COLORS;
 
     try {
-        const responce = await axios.get(url);
+        const responce = await api.get(url);
         console.log("get all colors function")
         console.log(responce);
 
@@ -23,7 +25,7 @@ export const getAllColors = async () => {
 
 export const addNewColor = async (colorCode: string) => {
     try {
-        const response = await axios.post(ADD_NEW_COLOR, colorCode, {
+        const response = await api.post(ADD_NEW_COLOR, colorCode, {
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -40,7 +42,7 @@ export const addNewColor = async (colorCode: string) => {
 
 export const deleteColor = async (colorId: number) => {
     try {
-        const response = await axios.delete(DELETE_COLOR + "/" + colorId);
+        const response = await api.delete(DELETE_COLOR + "/" + colorId);
         console.log(response.data)
         return response.data
     } catch (error) {
@@ -48,13 +50,14 @@ export const deleteColor = async (colorId: number) => {
         throw error;
     }
 };
+
 export const putTheColorsInPhone = async (phoneId: string[], colorsId: number[]) => {
     try {
-        const response = await axios.patch(PUT_THE_COLOR_IN_PHONE + `${phoneId}/color`, colorsId);
+        const response = await api.patch(PUT_THE_COLOR_IN_PHONE + `${phoneId}/color`, colorsId);
         console.log(response.data)
         return response.data
     } catch (error) {
         console.error(error);
         throw error;
     }
-}
+};

@@ -5,6 +5,8 @@ import { getAllOrdersForUser } from "../../utils/OrderService";
 import { Accordion, AccordionDetails, AccordionSummary, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { GridExpandMoreIcon } from "@mui/x-data-grid";
 import { Order } from "../../shared.types";
+import { Label } from "@mui/icons-material";
+import { GetColorName } from "hex-color-to-color-name";
 
 
 const OrderHistory: React.FC = () => {
@@ -31,6 +33,20 @@ const OrderHistory: React.FC = () => {
         navigator("/phone/catalog")
     }
 
+    const converteOrderStatus = (status: boolean) => {
+        if (status === true) {
+            return "Виконано"
+        } else {
+            return "В процесі..."
+        }
+    }
+
+    const converteColorCodeToColorName = (colorCode: string) => {
+        colorCode = colorCode.replace(/^#/, '');
+        const colorName = GetColorName(colorCode);
+        return colorName ? colorName : "Unknown color code"
+    }
+
     return (
         <div className={classes.container}>
 
@@ -43,17 +59,18 @@ const OrderHistory: React.FC = () => {
                                 aria-controls={`panel${order.id}-content`}
                                 id={`panel${order.id}-header`}
                             >
-                                <Typography className={classes.orderTitle}>
-                                    Замовлення №{order.id}, створено - {formatCreatedAt(order.createdAt)}, загальна ціна - {order.totalAmount}
-                                </Typography>
+                                <label className={classes.orderTitle}>
+                                    Замовлення №{order.id}, створено - {formatCreatedAt(order.createdAt)}, загальна ціна - {order.totalAmount}, Статус :
+                                </label>
+                                <label className={classes.orderStatus}>{converteOrderStatus(order.status)}</label>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List>
                                     {order.phoneList.map((phone) => (
                                         <ListItem key={phone.id}>
                                             <ListItemText
-                                                primary={phone.model}
-                                                secondary={`Ціна: ${phone.price} грн.`}
+                                                primary={`${phone.model} ${phone.rom.romSize} Гб`}
+                                                secondary={`Ціна: ${phone.price} грн. Колір: ${converteColorCodeToColorName(phone.color.colorName)}`}
                                             />
                                         </ListItem>
                                     ))}

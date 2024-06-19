@@ -27,6 +27,11 @@ const PhoneCatalog: React.FC = () => {
     const itemsPerPage = 15;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]
 
+    const { data, isPending, isError } = useQuery({
+        queryKey: ["products", { filter: filter }],
+        queryFn: ({ signal }) => getProducts({ signal, filter }),
+    });
+
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const searchQuery = searchParams.get("searchTerm");
@@ -34,34 +39,13 @@ const PhoneCatalog: React.FC = () => {
             setFilter(`?searchTerm=${encodeURIComponent(searchQuery)}`);
             console.log(filter)
         }
-      }, [location.search]);
+    }, [location.search]);
 
     useEffect(() => {
         getAllPhoneDistinctCharacteristics().then((response) => {
             setDistinctPhoneCharacteristic(response);
         })
     }, [])
-
-    useEffect(() => {
-        if (email) {
-            setIsWishListLoading(true);
-            getWishListForUser(email).then((response) => {
-                console.log("Fetched wishlist:", response); 
-                setWishList(response);
-                setIsWishListLoading(false);
-            }).catch(error => {
-                console.error("Error fetching wishlist:", error); 
-                setIsWishListLoading(false);
-            });
-        } else {
-            setIsWishListLoading(false);
-        }
-    }, [email]);
-
-    const { data, isPending, isError } = useQuery({
-        queryKey: ["products", { filter: filter }],
-        queryFn: ({ signal }) => getProducts({ signal, filter }),
-    });
 
     useEffect(() => {
         if (data) {
@@ -71,6 +55,22 @@ const PhoneCatalog: React.FC = () => {
             }
         }
     }, [data]);
+
+    useEffect(() => {
+        if (email) {
+            setIsWishListLoading(true);
+            getWishListForUser(email).then((response) => {
+                console.log("Fetched wishlist:", response);
+                setWishList(response);
+                setIsWishListLoading(false);
+            }).catch(error => {
+                console.error("Error fetching wishlist:", error);
+                setIsWishListLoading(false);
+            });
+        } else {
+            setIsWishListLoading(false);
+        }
+    }, [email]);
 
     const handleFilterChange = (filterParams: { [key: string]: string[] }) => {
         const currentFilterParams = new URLSearchParams(filter);
@@ -135,6 +135,22 @@ const PhoneCatalog: React.FC = () => {
     const isInWishlist = (phoneId) => {
         return wishList.some(phone => phone.id === phoneId);
     };
+
+    const leftButton = () => {
+        return (
+            <svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M30.5859 6.58496L13.1709 23.999L30.5859 41.413L33.4139 38.585L18.8289 23.999L33.4139 9.41296L30.5859 6.58496Z" fill="black" />
+            </svg>
+        )
+    }
+
+    const rightButton = () => {
+        return (
+            <svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.5859 9.41296L29.1709 23.999L14.5859 38.585L17.4139 41.413L34.8289 23.999L17.4139 6.58496L14.5859 9.41296Z" fill="black" />
+            </svg>
+        )
+    }
 
     return (
         <div className={classes.container}>
@@ -221,8 +237,8 @@ const PhoneCatalog: React.FC = () => {
             {data && data.length > 0 && (
                 <ReactPaginate
                     className={classes.pagination}
-                    previousLabel={"<"}
-                    nextLabel={">"}
+                    previousLabel={leftButton()}
+                    nextLabel={rightButton()}
                     breakLabel={"..."}
                     pageCount={Math.ceil(data.length / itemsPerPage)}
                     marginPagesDisplayed={2}
