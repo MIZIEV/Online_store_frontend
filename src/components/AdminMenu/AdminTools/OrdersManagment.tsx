@@ -1,39 +1,40 @@
 import React, { useEffect, useState } from "react";
-import classes from "./OrdersManagment.module.scss"
+import classes from "./OrdersManagment.module.scss";
 import { Order } from "../../../shared.types";
 import { changeCompleteStatus, deleteOrder, getAllOrders } from "../../../utils/OrderService";
-import { Accordion, AccordionDetails, AccordionSummary, FormControlLabel, FormGroup, List, ListItem, ListItemText, Pagination, Switch, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, FormControlLabel, FormGroup, List, ListItem, ListItemText, Pagination, Switch, Typography, RadioGroup, Radio, FormControl, FormLabel } from "@mui/material";
 import { GridExpandMoreIcon } from "@mui/x-data-grid";
 import { GetColorName } from "hex-color-to-color-name";
 
 const OrdersManagment: React.FC = () => {
-
     const [orderList, setOrderList] = useState<Order[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [filterStatus, setFilterStatus] = useState<string>('all');
+    const itemsPerPage = 20;
 
     useEffect(() => {
         getAllOrders().then((response) => {
             setOrderList(response);
-        })
-    }, [])
+        });
+    }, []);
 
     const converteDeliveryMethod = (deliveryMethod: string) => {
         if (deliveryMethod === "NEW_POST_OFFICE") {
-            return "У відділення Нової пошти"
+            return "У відділення Нової пошти";
         } else if (deliveryMethod === "NEW_POST_COURIER") {
-            return "Кур'єром Нової пошти"
+            return "Кур'єром Нової пошти";
         } else {
-            return "Кур'єром"
+            return "Кур'єром";
         }
     };
 
     const convertePaymentMethod = (paymentMethod: string) => {
         if (paymentMethod === "ONLINE") {
-            return "Онлайн"
+            return "Онлайн";
         } else {
-            return "Готівкою"
+            return "Готівкою";
         }
     };
-
 
     const formatCreatedAt = (createdAt: string): string => {
         const date = new Date(createdAt);
@@ -41,15 +42,15 @@ const OrdersManagment: React.FC = () => {
         const hours = date.getHours().toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${formattedDate} ${hours}:${minutes}`;
-    }
+    };
 
     const converteOrderStatus = (status: boolean) => {
         if (status === true) {
-            return "Виконано"
+            return "Виконано";
         } else {
-            return "В процесі..."
+            return "В процесі...";
         }
-    }
+    };
 
     const changeOrderStatusHandler = async (orderId: number, currentStatus: boolean) => {
         try {
@@ -67,19 +68,60 @@ const OrdersManagment: React.FC = () => {
     const converteColorCodeToColorName = (colorCode: string) => {
         colorCode = colorCode.replace(/^#/, '');
         const colorName = GetColorName(colorCode);
-        return colorName ? colorName : "Unknown color code"
-    }
+        return colorName ? colorName : "Unknown color code";
+    };
 
     const deleteOrderHandler = (orderId: number) => {
-
         deleteOrder(orderId);
-    }
+        setOrderList(prevOrderList => prevOrderList.filter(order => order.id !== orderId));
+    };
+
+    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        setCurrentPage(value);
+    };
+
+    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterStatus((event.target as HTMLInputElement).value);
+        setCurrentPage(1);
+    };
+
+    const filteredOrders = orderList.filter(order => {
+        if (filterStatus === 'all') {
+            return true;
+        } else if (filterStatus === 'completed') {
+            return order.status === true;
+        } else if (filterStatus === 'inProcess') {
+            return order.status === false;
+        }
+        return true;
+    });
 
     return (
         <div className={classes.container}>
-            {
-                orderList && orderList.length > 0 ? (
-                    orderList.map((order) => (
+            <h1>Керування замовленнями</h1>
+            <FormControl component="fieldset">
+                <label>Фільтрувати за статусом</label>
+                <RadioGroup
+                    row aria-label="status"
+                    name="status"
+                    value={filterStatus}
+                    onChange={handleFilterChange}
+                    sx={{
+                        '& .MuiFormControlLabel-label': {
+                            color: 'black'
+                        },
+                        '& .Mui-checked .MuiSvgIcon-root': {
+                            color: '#436850'
+                        }
+                    }}>
+                    <FormControlLabel value="all" control={<Radio />} label="Всі" />
+                    <FormControlLabel value="completed" control={<Radio />} label="Виконано" />
+                    <FormControlLabel value="inProcess" control={<Radio />} label="В процесі" />
+                </RadioGroup>
+            </FormControl>
+            {filteredOrders && filteredOrders.length > 0 ? (
+                <>
+                    {filteredOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((order) => (
                         <Accordion key={order.id}
                             sx={{ backgroundColor: " #adbc9f", borderRadius: "4px", width: "100%", marginBottom: "5px" }}>
                             <AccordionSummary
@@ -99,7 +141,7 @@ const OrdersManagment: React.FC = () => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List>
-                                    <ListItem >
+                                    <ListItem>
                                         {`Метод оплати - ${convertePaymentMethod(order.paymentMethod)}, 
                                         Спосіб доставки - ${converteDeliveryMethod(order.deliveryMethod)}`}
 
@@ -140,17 +182,21 @@ const OrdersManagment: React.FC = () => {
                                 </List>
                             </AccordionDetails>
                         </Accordion>
-                    ))
-                ) : (
-                    <div>
-                        <h2>Історія замовлень</h2>
-                        <p>Історія замовлень порожня. Почніть з першого замовлення в роділі Бестселери</p>
-                        <button >До покупок</button>
-                    </div>
-                )
-            }
+                    ))}
+                    <Pagination
+                        count={Math.ceil(filteredOrders.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+                    />
+                </>
+            ) : (
+                <div>
+                    <h2>На данний момент нема жодного замовлення</h2>
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default OrdersManagment;

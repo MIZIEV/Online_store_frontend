@@ -15,7 +15,8 @@ api.interceptors.request.use(
     async config => {
         const token = localStorage.getItem("token");
         if (token) {
-            config.headers["Authorization"] = `Bearer ${token}`;
+            config.headers["Authorization"] = `Bearer ${token}`;  // this var for development
+            //config.headers["Authorization"] = `${token}`;   // this is for deploy
         }
         return config;
     },

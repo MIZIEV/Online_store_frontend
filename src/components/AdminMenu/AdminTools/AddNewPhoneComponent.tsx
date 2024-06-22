@@ -88,6 +88,7 @@ const AddNewPhoneComponent = () => {
         used: used,
         countOfSimCard: countOfSimCard,
         brand: brand,
+        os: os,
         ...Object.fromEntries(formData),
       };
       updatePhone(Number(phoneId), data);
@@ -430,8 +431,8 @@ const AddNewPhoneComponent = () => {
             <Select
               id="communicationStandardList"
               multiple={true}
-              value={communicationStandardList.map(standard => standard.standardName)} // Extracting the sizes from the PhoneRom array
-              onChange={handleCommunicationStandardSelection} // Handling the ROM selection
+              value={communicationStandardList.map(standard => standard.standardName)}
+              onChange={handleCommunicationStandardSelection} 
 
               inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
             >

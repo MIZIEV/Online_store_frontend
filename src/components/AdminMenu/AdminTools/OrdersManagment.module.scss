@@ -1,6 +1,28 @@
 .container {
     padding: 50px;
 
+    h1,
+    h2 {
+        text-align: center;
+        font-family: "Arsenal", sans-serif;
+        padding-bottom: 40px;
+    }
+
+    h1 {
+        font-weight: 700;
+        font-size: 36px;
+    }
+
+    h2 {
+        font-weight: 500;
+        font-size: 28px;
+    }
+
+    label {
+        font-family: "Work Sans", sans-serif;
+        font-size: 18px;    
+    }
+
     .orderTitle,
     .orderStatus {
         font-family: "Work Sans", sans-serif;
