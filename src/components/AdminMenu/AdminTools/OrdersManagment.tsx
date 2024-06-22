@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import classes from "./OrdersManagment.module.scss";
 import { Order } from "../../../shared.types";
 import { changeCompleteStatus, deleteOrder, getAllOrders } from "../../../utils/OrderService";
-import { Accordion, AccordionDetails, AccordionSummary, FormControlLabel, FormGroup, List, ListItem, ListItemText, Pagination, Switch, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, FormControlLabel, FormGroup, List, ListItem, ListItemText, Pagination, Switch, Typography, RadioGroup, Radio, FormControl, FormLabel } from "@mui/material";
 import { GridExpandMoreIcon } from "@mui/x-data-grid";
 import { GetColorName } from "hex-color-to-color-name";
 
 const OrdersManagment: React.FC = () => {
     const [orderList, setOrderList] = useState<Order[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [filterStatus, setFilterStatus] = useState<string>('all');
     const itemsPerPage = 20;
 
     useEffect(() => {
@@ -79,17 +80,48 @@ const OrdersManagment: React.FC = () => {
         setCurrentPage(value);
     };
 
-    const getCurrentOrders = () => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        return orderList.slice(startIndex, startIndex + itemsPerPage);
+    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterStatus((event.target as HTMLInputElement).value);
+        setCurrentPage(1);
     };
+
+    const filteredOrders = orderList.filter(order => {
+        if (filterStatus === 'all') {
+            return true;
+        } else if (filterStatus === 'completed') {
+            return order.status === true;
+        } else if (filterStatus === 'inProcess') {
+            return order.status === false;
+        }
+        return true;
+    });
 
     return (
         <div className={classes.container}>
             <h1>Керування замовленнями</h1>
-            {orderList && orderList.length > 0 ? (
+            <FormControl component="fieldset">
+                <label>Фільтрувати за статусом</label>
+                <RadioGroup
+                    row aria-label="status"
+                    name="status"
+                    value={filterStatus}
+                    onChange={handleFilterChange}
+                    sx={{
+                        '& .MuiFormControlLabel-label': {
+                            color: 'black'
+                        },
+                        '& .Mui-checked .MuiSvgIcon-root': {
+                            color: '#436850'
+                        }
+                    }}>
+                    <FormControlLabel value="all" control={<Radio />} label="Всі" />
+                    <FormControlLabel value="completed" control={<Radio />} label="Виконано" />
+                    <FormControlLabel value="inProcess" control={<Radio />} label="В процесі" />
+                </RadioGroup>
+            </FormControl>
+            {filteredOrders && filteredOrders.length > 0 ? (
                 <>
-                    {getCurrentOrders().map((order) => (
+                    {filteredOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((order) => (
                         <Accordion key={order.id}
                             sx={{ backgroundColor: " #adbc9f", borderRadius: "4px", width: "100%", marginBottom: "5px" }}>
                             <AccordionSummary
@@ -152,7 +184,7 @@ const OrdersManagment: React.FC = () => {
                         </Accordion>
                     ))}
                     <Pagination
-                        count={Math.ceil(orderList.length / itemsPerPage)}
+                        count={Math.ceil(filteredOrders.length / itemsPerPage)}
                         page={currentPage}
                         onChange={handlePageChange}
                         sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
