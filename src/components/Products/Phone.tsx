@@ -248,17 +248,19 @@ const Phone: React.FC = () => {
 
                             <div className={classes.buttonsBlock}>
                                 <button onClick={() => {
+                                    let newErrorMessages: string[] = [];
                                     if (selectedColor === null) {
-                                        errorMessages.push("Колір смартфона не обрано!");
+                                        newErrorMessages.push("Колір смартфона не обрано!");
                                     }
                                     if (selectedRom === null) {
-                                        errorMessages.push("Розмір пам'яті не обрано!");
+                                        newErrorMessages.push("Розмір пам'яті не обрано!");
                                     }
-                                    if (errorMessages.length > 0) {
-                                        setErrorMessages(errorMessages);
+                                    if (newErrorMessages.length > 0) {
+                                        setErrorMessages(newErrorMessages);
                                         setIsError(true);
                                         return;
                                     }
+                                    // Новый код
                                     addProduct({
                                         id: phone.id,
                                         brand: phone.brand,
