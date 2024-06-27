@@ -13,8 +13,8 @@ const CartItem: React.FC<{
     brand: string;
     model: string;
     colorNameConverted: string;
-    colorName: string;
-    rom: string;
+    color: { id: number, colorName: string };
+    rom: { id: number, romSize: number };
     price: number;
     quantity: number;
     image: string;
@@ -22,15 +22,15 @@ const CartItem: React.FC<{
 }> = ({ item }) => {
   const dispatch = useDispatch();
 
-  const handleDeleteItem = (payload: { id: number }) => {
+  const handleDeleteItem = (payload: { id: number, color: { id: number, colorName: string }, rom: { id: number, romSize: number } }) => {
     dispatch(removeFromCart(payload));
   };
 
-  const handleIncreaseItem = (payload: { id: number }) => {
+  const handleIncreaseItem = (payload: { id: number, color: { id: number, colorName: string }, rom: { id: number, romSize: number } }) => {
     dispatch(increase(payload));
   };
 
-  const handleDecreaseItem = (payload: { id: number }) => {
+  const handleDecreaseItem = (payload: { id: number, color: { id: number, colorName: string }, rom: { id: number, romSize: number } }) => {
     dispatch(decrease(payload));
   };
 
@@ -39,8 +39,8 @@ const CartItem: React.FC<{
       <img src={item.image} alt="" />
       <div className={classes.info}>
         <h1>
-          {item.brand} {item.model}{" "}{`${item.rom.romSize} Гб`}
-          <button onClick={() => handleDeleteItem({ id: item.id })}>
+          {item.brand} {item.model} {`${item.rom.romSize} Гб`}
+          <button onClick={() => handleDeleteItem({ id: item.id, color: item.color, rom: item.rom })}>
             <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M42 8H32C32 5.794 30.206 4 28 4H20C17.794 4 16 5.794 16 8H6V12H42V8Z" fill="black" />
               <path d="M22 36H18V16H10V40.286C10 42.334 11.794 44 14 44H34C36.206 44 38 42.334 38 40.286V16H30V36H26V16H22V36Z" fill="black" />
@@ -50,9 +50,9 @@ const CartItem: React.FC<{
         <p>{`Колір: ${item.colorNameConverted}`}</p>
         <p>{`${item.price} ₴`}</p>
         <p>
-          <button onClick={() => handleDecreaseItem({ id: item.id })}>-</button>
+          <button onClick={() => handleDecreaseItem({ id: item.id, color: item.color, rom: item.rom })}>-</button>
           {item.quantity}
-          <button onClick={() => handleIncreaseItem({ id: item.id })}>+</button>
+          <button onClick={() => handleIncreaseItem({ id: item.id, color: item.color, rom: item.rom })}>+</button>
         </p>
       </div>
     </div>

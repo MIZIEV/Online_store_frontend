@@ -27,7 +27,12 @@ const CartModal = () => {
             {cart.length > 0 ? (
               <div className={classes.products}>
                 {cart &&
-                  cart.map((item) => <CartItem key={item.id} item={item} />)}
+                  cart.map((item) => (
+                    <CartItem
+                      key={`${item.id}-${item.color.id}-${item.rom.id}`}
+                      item={item}
+                    />
+                  ))}
               </div>
             ) : (
               <p className={classes.fallback}>Ваш кошик пустий</p>
