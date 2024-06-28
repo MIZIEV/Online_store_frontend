@@ -59,6 +59,7 @@ export type PhoneDistinctCharacteristics = {
 export type PhoneRom = {
   id: number;
   romSize: number;
+  price: number;
 }
 
 export type Order = {
