@@ -69,6 +69,7 @@ const Phone: React.FC = () => {
     const [count, setCount] = useState<number>(1);
     const [selectedPicture, setSelectedPicture] = useState<string>("");
     const dispatch = useDispatch();
+    const [phonePrice, setPhonePrice] = useState<number>(0)
 
     const addProduct = (payload: SelectedPhone) => {
         dispatch(addToCart(payload));
@@ -96,6 +97,7 @@ const Phone: React.FC = () => {
             console.log("function GET PHONE in component")
             console.log(response);
             setSelectedPicture(response.mainPictureURL)
+            setPhonePrice(response.price);
             setPhone(response);
         }).catch((error) => {
             console.error(error);
@@ -112,8 +114,9 @@ const Phone: React.FC = () => {
         return colorName ? colorName : "Unknown color code"
     }
 
-    const handleRomChange = (romId: number) => {
+    const handleRomChange = (romId: number, price: number) => {
         setSelectedRom(romId);
+        setPhonePrice(price);
     };
 
     const changeMainPictureHandler = (pictureUrl: string) => {
@@ -177,7 +180,7 @@ const Phone: React.FC = () => {
                                 <RatingComponent phoneId={id} rating={phone.rating} handleChangeRating={handleChangeRating} />
                                 <p className={classes.voteCount}>{phone.voteCount} відгуків</p>
                             </div>
-                            <h2 className={classes.price}>{phone.price} грн.</h2>
+                            <h2 className={classes.price}>{phonePrice} грн.</h2>
                             {/*---------------------------------color functional------------------------------------*/}
                             <div className={classes.colorBlock}>
                                 <p>Колір: {selectedColor !== null ?
@@ -212,7 +215,7 @@ const Phone: React.FC = () => {
                                     {phone.romList.map((rom) => (
 
                                         <div key={rom.id}
-                                            onClick={() => handleRomChange(rom.id)}
+                                            onClick={() => handleRomChange(rom.id, rom.price)}
                                             className={`${classes.romItem} ${selectedRom === rom.id ? classes.selected : ''}`}>
 
                                             <input
@@ -265,7 +268,7 @@ const Phone: React.FC = () => {
                                         id: phone.id,
                                         brand: phone.brand,
                                         model: phone.model,
-                                        price: phone.price,
+                                        price: phonePrice,
                                         colorNameConverted: converteColorCodeToColorName(phone.colors.find(color => color.id === selectedColor)?.colorName),
                                         color: {
                                             id: selectedColor,

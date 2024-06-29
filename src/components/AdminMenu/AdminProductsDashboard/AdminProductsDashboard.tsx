@@ -4,7 +4,7 @@ import AdminProductsDashboardItem from "../AdminProductsDashboardItem/AdminProdu
 import classes from "./AdminProductsDashboard.module.scss";
 import { getMethod } from "../../../utils/http";
 import { Phone } from "../../../shared.types";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { HOST } from "../../../utils/host";
 import { useMemo, useState } from "react";
 
@@ -35,6 +35,9 @@ const AdminProductsDashboard: React.FC = () => {
 
   return (
     <div className={classes.dashboard}>
+
+      <Outlet />
+
       <div className={classes["dashboard-header"]}>
         <input
           type="text"

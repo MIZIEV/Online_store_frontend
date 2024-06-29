@@ -4,6 +4,7 @@ import { BlogProps } from "../../../shared.types";
 import { addNewBlog, deleteBlog, getAllBlogs } from "../../../utils/blogService";
 import ErrorModal from "../../../UI/Modal/ErrorModal";
 import { isValidUrl } from "../../../utils/Validator";
+import { Outlet } from "react-router";
 
 const BlogSettingComponent: React.FC = () => {
 
@@ -74,6 +75,8 @@ const BlogSettingComponent: React.FC = () => {
     return (
 
         <div className={classes.container}>
+
+            <Outlet />
 
             {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
 

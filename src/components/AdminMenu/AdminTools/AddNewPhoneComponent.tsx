@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import classes from "./AddNewPhoneComponent.module.scss"
 import { FormControlLabel, FormGroup, MenuItem, Select, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ const AddNewPhoneComponent = () => {
   const [used, setUsed] = useState<boolean>(false);
 
   const [romList, setRomList] = useState<PhoneRom[]>([]);
+  const [romSizes, setRomSizes] = useState<{ [key: number]: number }>({});
   const [communicationStandardList, setCommunicationStandardList] = useState<CommunicationStandardList[]>([]);
 
   const [model, setModel] = useState<string>("");
@@ -73,6 +74,10 @@ const AddNewPhoneComponent = () => {
         setCountOfCores(response.countOfCores)
         setRomList(response.romList)
         setCommunicationStandardList(response.communicationStandardList);
+        setRomSizes(response.romList.reduce((acc: { [key: number]: number }, rom: PhoneRom) => {
+          acc[rom.romSize] = rom.price;
+          return acc;
+        }, {}));
       })
     }
   }, [])
@@ -83,7 +88,10 @@ const AddNewPhoneComponent = () => {
       const formData = new FormData(e.target as HTMLFormElement);
       const data = {
         communicationStandardList: communicationStandardList,
-        romList: romList,
+        romList: romList.map(rom => ({
+          romSize: rom.romSize,
+          price: romSizes[rom.romSize] || 0
+        })),
         rating: 0.0,
         used: used,
         countOfSimCard: countOfSimCard,
@@ -101,7 +109,10 @@ const AddNewPhoneComponent = () => {
       const formData = new FormData(e.target as HTMLFormElement);
       const data = {
         communicationStandardList: communicationStandardList,
-        romList: romList,
+        romList: romList.map(rom => ({
+          romSize: rom.romSize,
+          price: romSizes[rom.romSize] || 0
+        })),
         rating: 0.0,
         used: used,
         countOfSimCard: countOfSimCard,
@@ -154,16 +165,29 @@ const AddNewPhoneComponent = () => {
         return;
       }
 
-
       addNewPhone(data);
       navigate("/admin/phone-managment");
     };
+
   }
+
+  const handleRomPriceChange = (size: number, price: number) => {
+    setRomSizes(prev => ({
+      ...prev,
+      [size]: price
+    }));
+  };
 
   const handleRomSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
     const selectedSizes = e.target.value as number[];
-    const roms: PhoneRom[] = selectedSizes.map(size => ({ romSize: size }));
-    setRomList(roms);
+    const newRomSizes: { [key: number]: number } = {};
+
+    selectedSizes.forEach(size => {
+      newRomSizes[size] = romSizes[size] || 0;
+    });
+
+    setRomList(selectedSizes.map(size => ({ romSize: size })));
+    setRomSizes(newRomSizes);
   };
 
   const handleCommunicationStandardSelection = (e: React.ChangeEvent<{ value: unknown }>) => {
@@ -184,6 +208,8 @@ const AddNewPhoneComponent = () => {
 
   return (
     <div className={classes.container}>
+
+      <Outlet />
 
       {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
       <form onSubmit={handleSubmit}>
@@ -407,32 +433,12 @@ const AddNewPhoneComponent = () => {
           </div>
 
           <div className={classes.inputContainer}>
-            <label htmlFor="rom">Ппз</label>
-            <Select
-              id="rom"
-              multiple={true}
-              value={romList.map(rom => rom.romSize)} // Extracting the sizes from the PhoneRom array
-              onChange={handleRomSelection} // Handling the ROM selection
-
-              inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
-            >
-              <MenuItem value={16}>16 гб</MenuItem>
-              <MenuItem value={32}>32 гб</MenuItem>
-              <MenuItem value={64}>64 гб</MenuItem>
-              <MenuItem value={128}>128 гб</MenuItem>
-              <MenuItem value={256}>256 гб</MenuItem>
-              <MenuItem value={512}>512 гб</MenuItem>
-              <MenuItem value={1}>1 Тб</MenuItem>
-            </Select>
-          </div>
-
-          <div className={classes.inputContainer}>
             <label htmlFor="communicationStandardList">Стандарти зв'язку</label>
             <Select
               id="communicationStandardList"
               multiple={true}
               value={communicationStandardList.map(standard => standard.standardName)}
-              onChange={handleCommunicationStandardSelection} 
+              onChange={handleCommunicationStandardSelection}
 
               inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
             >
@@ -464,6 +470,41 @@ const AddNewPhoneComponent = () => {
               />} label="Вживаний?" />
             </FormGroup>
           </div>
+
+          <div className={classes.inputContainer}>
+            <label htmlFor="rom">Ппз</label>
+            <Select
+              id="rom"
+              multiple={true}
+              value={romList.map(rom => rom.romSize)} // Extracting the sizes from the PhoneRom array
+              onChange={handleRomSelection} // Handling the ROM selection
+              inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
+            >
+              <MenuItem value={16}>16 гб</MenuItem>
+              <MenuItem value={32}>32 гб</MenuItem>
+              <MenuItem value={64}>64 гб</MenuItem>
+              <MenuItem value={128}>128 гб</MenuItem>
+              <MenuItem value={256}>256 гб</MenuItem>
+              <MenuItem value={512}>512 гб</MenuItem>
+              <MenuItem value={1}>1 Тб</MenuItem>
+            </Select>
+          </div>
+
+          {romList.map((rom, index) => (
+            <div key={index} className={classes.inputContainer}>
+              <label htmlFor={`rom-price-${rom.romSize}`}>Ціна для {rom.romSize} гб</label>
+              <input
+                id={`rom-price-${rom.romSize}`}
+                type="number"
+                value={romSizes[rom.romSize] || ''}
+                onChange={(e) => handleRomPriceChange(rom.romSize, Number(e.target.value))}
+                placeholder={`Ціна для ${rom.romSize} гб`}
+                className={classes.inputField}
+              />
+            </div>
+          ))}
+
+
         </div>
 
         <div className={classes.bottomSection}>

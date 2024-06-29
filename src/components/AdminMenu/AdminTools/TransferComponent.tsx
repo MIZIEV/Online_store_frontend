@@ -1,21 +1,14 @@
 import React from "react";
 import classes from "./TransferComponent.module.scss";
-import { useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const TransferComponent: React.FC = () => {
 
-    const navigator = useNavigate();
-
-    function handleToPhoneManagment() {
-        navigator("/admin/phone-managment")
-    }
-    function handleToBlogManagment() {
-        navigator("/blog-managment")
-    }
-
     return (
         <div className={classes.container}>
+
+            <Outlet />
+
             <div className={classes.buttonContainer}>
 
                 <div className={classes.linkBlock}>
