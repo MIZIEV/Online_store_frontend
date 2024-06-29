@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import classes from "./AddNewPhoneComponent.module.scss"
 import { FormControlLabel, FormGroup, MenuItem, Select, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -208,6 +208,8 @@ const AddNewPhoneComponent = () => {
 
   return (
     <div className={classes.container}>
+
+      <Outlet />
 
       {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
       <form onSubmit={handleSubmit}>

@@ -5,6 +5,7 @@ import { changeCompleteStatus, deleteOrder, getAllOrders } from "../../../utils/
 import { Accordion, AccordionDetails, AccordionSummary, FormControlLabel, FormGroup, List, ListItem, ListItemText, Pagination, Switch, Typography, RadioGroup, Radio, FormControl, FormLabel } from "@mui/material";
 import { GridExpandMoreIcon } from "@mui/x-data-grid";
 import { GetColorName } from "hex-color-to-color-name";
+import { Outlet } from "react-router";
 
 const OrdersManagment: React.FC = () => {
     const [orderList, setOrderList] = useState<Order[]>([]);
@@ -98,6 +99,9 @@ const OrdersManagment: React.FC = () => {
 
     return (
         <div className={classes.container}>
+
+            <Outlet />
+
             <h1>Керування замовленнями</h1>
             <FormControl component="fieldset">
                 <label>Фільтрувати за статусом</label>

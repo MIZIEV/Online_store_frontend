@@ -9,7 +9,7 @@ const PaymentDeliveryPage: React.FC = () => {
             <Outlet />
             <div className={classes.BreadCrumb}>
                 <BreadCrumb
-                    items={[{ path: "/", title: "Головна" }, { path: "/payment-delivery", title: "/оплата і доставка" }]} />
+                    items={[{ path: "/", title: "Головна" }, { path: "/payment-delivery", title: "/ оплата і доставка" }]} />
 
             </div>
             

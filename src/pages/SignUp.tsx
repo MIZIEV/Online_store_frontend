@@ -1,4 +1,3 @@
-
 import React from 'react';
 import RegistrationForm from '../components/Forms/RegistrationForm';
 import classes from "./SignUp.module.scss"

@@ -23,10 +23,6 @@ const HomePage = () => {
     queryFn: ({ signal }) => getProducts({ signal, filter }),
   });
 
-  const handleFilterChange = (filter: string) => {
-    setFilter(filter);
-  };
-
   const handleNavigate = () => {
     navigator("/phone/catalog");
   }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from "./PhoneDescriptionComponent.module.scss";
 import { addNewDescription, deleteDescription, getDescriptions } from "../../../utils/descriptionService";
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { addNewAdditionalPicture, deleteAdditionalPicture, getAllAdditionPictures } from "../../../utils/AdditionalPictureService";
 import ErrorModal from "../../../UI/Modal/ErrorModal";
 import { isValidUrl } from "../../../utils/Validator";
@@ -105,6 +105,8 @@ const PhoneDescriptionComponent: React.FC = () => {
 
     return (
         <div className={classes.container}>
+
+            <Outlet />
 
             {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
 

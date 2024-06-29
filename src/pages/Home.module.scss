@@ -22,13 +22,13 @@
   transform: translateY(-50%);
 
   span {
-    cursor: pointer;
     font-family: "Arsenal", sans-serif;
     font-weight: 700;
     font-size: 36px;
   }
-
+  
   svg {
+    cursor: pointer;
     margin: 0 20px;
   }
 }
@@ -124,7 +124,7 @@
   padding-top: 60px;
   display: flex;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 150px;
 
   .leftBlock,
   .rightBlock {

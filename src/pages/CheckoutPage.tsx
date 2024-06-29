@@ -3,7 +3,7 @@ import classes from "./CheckoutPage.module.scss";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb";
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { Outlet, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { selectCartItems, totalPrice, clearCart } from "../redux/cartSlice";
 import { isUserLoggedIn } from "../utils/AuthService";
 import PaymentBlockComponent from "../UI/PaymentBlock/PaymentBlockComponent";
@@ -13,18 +13,18 @@ import { validateCVV, validateCardNumber, validateExpirationDate, validatePhoneN
 import ErrorModal from "../UI/Modal/ErrorModal";
 
 const CheckoutPage: React.FC = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const firstName = sessionStorage.getItem("authenticatedFirstName");
+  const lastName = sessionStorage.getItem("authenticatedLastName");
+  const phoneNumber = sessionStorage.getItem("authenticatedPhonenumbar");
   const isAuthenticated = isUserLoggedIn();
 
   const cartItems = useSelector(selectCartItems);
   const totalPriceValue = useSelector(totalPrice);
   const [recepient, setRecepient] = useState<boolean>(false);
-  const firstName = sessionStorage.getItem("authenticatedFirstName");
-  const lastName = sessionStorage.getItem("authenticatedLastName");
-  const phoneNumber = sessionStorage.getItem("authenticatedPhonenumbar");
-
   const [deliveryPrice, setDeliveryPrice] = useState<number>(60);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -132,7 +132,7 @@ const CheckoutPage: React.FC = () => {
     };
 
     console.log(orderData)
-    const response = addNewOrder(orderData);
+    addNewOrder(orderData);
     dispatch(clearCart());
 
     if (isAuthenticated) {
@@ -160,6 +160,8 @@ const CheckoutPage: React.FC = () => {
 
   return (
     <div className={classes.container}>
+
+      <Outlet />
 
       {isError && <ErrorModal message={errorMessages} onClose={closeModalHandler} />}
 
