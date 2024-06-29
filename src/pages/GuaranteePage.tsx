@@ -8,7 +8,7 @@ const GuaranteePage: React.FC = () => {
         <div className={classes.container}>
             <Outlet />
             <div className={classes.BreadCrumb}>
-                <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "guarantee", title: "/гарантія" }]} />
+                <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "guarantee", title: "/ гарантія" }]} />
             </div>
 
             <h1>Гарантія</h1>

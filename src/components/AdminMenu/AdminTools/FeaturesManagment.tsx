@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from "./FeaturesManagment.module.scss";
 import { addNewPhoneFeature, deleteFeature, getAllPhoneFeatures } from "../../../utils/FeaturesService";
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { PhoneFeature } from "../../../shared.types";
 import ErrorModal from "../../../UI/Modal/ErrorModal";
 
@@ -58,6 +58,8 @@ const FeaturesManagment: React.FC = () => {
 
     return (
         <div className={classes.container}>
+            
+            <Outlet />
 
             {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
 

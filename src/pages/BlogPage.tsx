@@ -23,7 +23,7 @@ const BlogPage: React.FC = () => {
             <div className={classes.containerTop}>
                 <div className={classes.BreadCrumb}>
 
-                    <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "/blog", title: "/блог" }]} />
+                    <BreadCrumb items={[{ path: "/", title: "Головна" }, { path: "/blog", title: "/ блог" }]} />
                 </div>
 
                 <h1>Блог</h1>

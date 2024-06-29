@@ -8,6 +8,7 @@ import { CardProps } from "@mui/material";
 import { getPhoneList } from "../../../utils/phoneService";
 import ErrorModal from "../../../UI/Modal/ErrorModal";
 import { isValidColor } from "../../../utils/Validator";
+import { Outlet } from "react-router";
 
 const columns: GridColDef[] = [
 
@@ -145,6 +146,8 @@ const ColorControleComponent: React.FC = () => {
 
     return (
         <div className={classes.container}>
+
+            <Outlet />
 
             {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
 
