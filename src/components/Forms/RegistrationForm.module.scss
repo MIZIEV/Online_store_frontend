@@ -65,6 +65,14 @@
             margin-bottom: 3rem;
             cursor: pointer;
         }
+
+        .error {
+            font-family: "Work Sans", sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ED3F3F;
+            margin-bottom: 10px;
+        }
     }
 
     .or {
@@ -146,4 +154,4 @@
         font-size: 14px;
         /* Зменшує розмір шрифту кнопки на малих екранах */
     }
-}  
+}

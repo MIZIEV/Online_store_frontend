@@ -166,8 +166,8 @@ const CheckoutPage: React.FC = () => {
       {isError && <ErrorModal message={errorMessages} onClose={closeModalHandler} />}
 
       <BreadCrumb items={[{ path: "/", title: "Головна" },
-      { path: "/phone/catalog", title: "/товари" },
-      { path: "/checkout", title: "/Оформлення замовлення" }]} />
+      { path: "/phone/catalog", title: "/ товари" },
+      { path: "/checkout", title: "/ Оформлення замовлення" }]} />
 
       <h2 className={classes.pageTitle}>Оформлення замовлення</h2>
 
