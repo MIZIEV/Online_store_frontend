@@ -1,4 +1,3 @@
-import axios from "axios";
 import { HOST } from "./host";
 import api from "./api";
 
@@ -8,7 +7,7 @@ const BASE_URL = "http://" + HOST_PORT + "/api/auth";
 interface RegistrationData {
 	firstName: string;
 	lastName: string;
-	username: string;
+	phoneNumber: string;
 	email: string;
 	password: string;
 }
@@ -18,8 +17,11 @@ export async function registerUser(userData: RegistrationData) {
 		const response = await api.post(`${BASE_URL}/register`, userData);
 		return response.data;
 	} catch (error) {
-		console.error(error);
-		throw error;
+		if (error.response && error.response.data) {
+			throw error.response.data;
+		} else {
+			throw error;
+		}
 	}
 };
 

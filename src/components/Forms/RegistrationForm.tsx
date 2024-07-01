@@ -54,13 +54,17 @@ const RegistrationForm: React.FC = () => {
       const success = await registerUser(userData);
 
       if (success) {
+        setError("");
         toast.success("Ви успішно зареєструвалися, тепер увійдіть в свій обліковий запис.");
       } else {
         setError("Помилка реєстрації");
       }
     } catch (error) {
-      setError("Помилка реєстрації");
-    } finally {
+      if (error.message === "Email already exists!!!") {
+        setError("Юзер з данним email вже зареєстрований!");
+      } else {
+        setError("Помилка реєстрації");
+      }
     }
   };
 
