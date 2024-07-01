@@ -4,11 +4,11 @@ import { loginUser, saveLoggedInUser } from "../../utils/AuthService";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  // const [success, setSuccess] = useState(false); // Додали стан success
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -16,12 +16,12 @@ const LoginForm: React.FC = () => {
     event.preventDefault();
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Invalid email address");
+      setError("Наданий Вами електронний адрес має неправильний формат!");
       return;
     }
 
     if (password.length < 5) {
-      setError("Password must be at least 5 characters long");
+      setError("Пароль повинен бути не меньше 5 символів!");
       return;
     }
 
@@ -31,18 +31,18 @@ const LoginForm: React.FC = () => {
         password,
       };
 
-      setLoading(true); // Встановлюємо стан загрузки на true
+      setLoading(true);
       const response = await loginUser(userData);
 
       if (response) {
         saveLoggedInUser(email, response.role, response.firstName, response.lastName, response.phoneNumber);
-        navigate("/"); // Використовуємо функцію navigate для перенаправлення
+        navigate("/");
       } else {
-        setError("Login failed");
+        setError("Електронна адреса або пароль невірні!");
       }
     } catch (error) {
       console.error(error);
-      setError("An error occurred"); // Встановлюємо повідомлення про помилку
+      setError("Електронна адреса або пароль невірні!");
     } finally {
       setLoading(false);
     }
@@ -50,9 +50,11 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className={classes["login-form"]}>
+
       <form className={classes["form"]} onSubmit={handleSubmit}>
         {loading && <div>Loading...</div>}
-        {error && <div className="error">{error}</div>}
+        {error && <div className={classes["error"]}>{error}</div>}
+
         <div className={classes["input-container"]}>
 
           <input
@@ -87,6 +89,7 @@ const LoginForm: React.FC = () => {
         </h2>
       </div>
       <div className={classes["buttons-section"]}>
+
         <button>
           <svg width="165" height="63" viewBox="0 0 165 63" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.899994 9.60548C0.899994 5.1872 4.48172 1.60547 8.89999 1.60547H156.1C160.518 1.60547 164.1 5.18719 164.1 9.60547V53.9222C164.1 58.3404 160.518 61.9222 156.1 61.9222H8.89999C4.48171 61.9222 0.899994 58.3405 0.899994 53.9222V9.60548Z" fill="white" stroke="#E0E2E9" stroke-width="1.60375" />
@@ -97,6 +100,7 @@ const LoginForm: React.FC = () => {
             <path d="M34.2308 21.3004C37.3348 21.3004 39.4286 22.6483 40.6225 23.7747L45.2877 19.1956C42.4225 16.5183 38.6939 14.875 34.2308 14.875C27.7655 14.875 22.1819 18.6047 19.4636 24.0331L24.8084 28.206C26.1493 24.1993 29.8594 21.3004 34.2308 21.3004Z" fill="#EB4335" />
           </svg>
         </button>
+
         <button>
           <svg width="176" height="63" viewBox="0 0 176 63" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1.09998 9.60548C1.09998 5.1872 4.6817 1.60547 9.09998 1.60547H167.1C171.518 1.60547 175.1 5.18719 175.1 9.60547V53.9222C175.1 58.3404 171.518 61.9222 167.1 61.9222H9.09997C4.68169 61.9222 1.09998 58.3405 1.09998 53.9222V9.60548Z" fill="white" stroke="#E0E2E9" stroke-width="1.60375" />
@@ -105,6 +109,7 @@ const LoginForm: React.FC = () => {
             <path d="M42.0689 36.2206L42.8411 31.16H38.0168V27.8821C38.0168 26.5019 38.6937 25.1505 40.8485 25.1505H43.0413V20.847C43.0413 20.847 41.0487 20.502 39.1418 20.502C35.1661 20.502 32.5727 22.9268 32.5727 27.307V31.16H28.1584V36.2206H32.5727V48.441C33.4594 48.5847 34.3652 48.6518 35.29 48.6518C36.2148 48.6518 37.1206 48.5752 38.0073 48.441V36.2206H42.0689Z" fill="white" />
           </svg>
         </button>
+
       </div>
       <p className={classes['no-account']}>
         <a href="">Немає особистого кабінету? <NavLink to="/signup">Зареєструватись</NavLink></a>
