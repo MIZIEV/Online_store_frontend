@@ -73,7 +73,7 @@ export const totalPrice = createSelector(
 );
 
 export const selectCartItems = createSelector(
-  (state: { cart: CartState }) => state.cart.items,
+  (state) => state.cart.items,
   (items) => items
 )
 
