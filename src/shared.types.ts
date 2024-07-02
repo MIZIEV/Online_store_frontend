@@ -5,9 +5,11 @@ export type Phone = {
   os: string;
   osVersion: number;
   resolution: string;
+  screenSize: number;
   mainCamera: string;
   frontCamera: number;
   processor: number;
+  producingCountry: string;
   countOfCores: number;
   ram: number;
   rom: number;
@@ -19,9 +21,10 @@ export type Phone = {
   rating: number;
   voteCount: number;
   used: boolean;
-  colors: Color[]
+  colors: Color[];
   romList: PhoneRom[];
   phonePictureURLS: PictureUrl[];
+  communicationStandardList: CommunicationStandard[];
 };
 
 
@@ -102,4 +105,9 @@ export type SelectedPhone = {
 export type PictureUrl = {
   id: number;
   url: string;
+}
+
+export type CommunicationStandard = {
+  id: number;
+  standardName: string;
 }
