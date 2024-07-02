@@ -17,10 +17,11 @@ export type Phone = {
   price: number;
   mainPictureURL: string;
   rating: number;
-  vote_count: number;
+  voteCount: number;
   used: boolean;
   colors: Color[]
   romList: PhoneRom[];
+  phonePictureURLS: PictureUrl[];
 };
 
 
@@ -96,4 +97,9 @@ export type SelectedPhone = {
   price: number;
   quantity: number;
   image: string;
+}
+
+export type PictureUrl = {
+  id: number;
+  url: string;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import classes from "./Phone.module.scss"
+import classes from "./PhoneDetail.module.scss"
 import { GetColorName } from 'hex-color-to-color-name';
 
 import { Outlet, useParams } from "react-router";
@@ -11,59 +11,19 @@ import CharacteristicComponent from "./phoneAdditionalComponents/CharacteristicC
 import ReviewsComponent from "./phoneAdditionalComponents/ReviewsComponent";
 import { addToCart } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
-import { SelectedPhone } from "../../shared.types";
+import { Phone, SelectedPhone } from "../../shared.types";
 import ErrorModal from "../../UI/Modal/ErrorModal";
-
-interface phoneCharacteristic {
-    id: number,
-    mainPictureURL: string,
-    brand: string,
-    model: string,
-    rating: number,
-    voteCount: number,
-    price: number,
-    os: string,
-    osVersion: number,
-    screenSize: number,
-    resolution: string,
-    mainCamera: string,
-    frontCamera: number,
-    processor: string,
-    countOfCores: number,
-    ram: number,
-    weight: number,
-    batteryCapacity: number,
-    countOfSimCard: number,
-    colors: Color[],
-    romList: Rom[],
-    phonePictureUrls: PictureUrl[]
-}
-
-interface Color {
-    id: number,
-    colorName: string
-}
-
-interface PictureUrl {
-    id: number,
-    url: string
-}
-
-interface Rom {
-    id: number,
-    romSize: number
-}
 
 interface PageState {
     selectedOption: string;
 }
 
-const Phone: React.FC = () => {
+const PhoneDetail: React.FC = () => {
 
     const { id } = useParams();
     const [isError, setIsError] = useState<boolean>(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
-    const [phone, setPhone] = useState<phoneCharacteristic>();
+    const [phone, setPhone] = useState<Phone>();
     const [selectedColor, setSelectedColor] = useState<number | null>(null);
     const [selectedRom, setSelectedRom] = useState<number | null>(null);
     const [count, setCount] = useState<number>(1);
@@ -157,7 +117,7 @@ const Phone: React.FC = () => {
                             <div className={classes.additionImagePanel}>
                                 <div className={classes.additionImagesContainer}>
 
-                                    {phone.phonePictureUrls.map((pictureUrl) => (
+                                    {phone.phonePictureURLS.map((pictureUrl) => (
 
                                         <div onClick={e => changeMainPictureHandler(pictureUrl.url)}
                                             className={classes.additionImages} key={pictureUrl.id}>
@@ -310,4 +270,4 @@ const Phone: React.FC = () => {
     )
 }
 
-export default Phone;
+export default PhoneDetail;

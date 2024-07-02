@@ -17,7 +17,7 @@ import PaymentDeliveryPage from "./pages/PaymentDeliveryPage";
 import GuaranteePage from "./pages/GuaranteePage";
 import BlogPage from "./pages/BlogPage";
 import Blog from "./components/Blog/Blog";
-import Phone from "./components/Products/Phone";
+import PhoneDetail from "./components/Products/PhoneDetail";
 import TransferComponent from "./components/AdminMenu/AdminTools/TransferComponent";
 import ColorControleComponent from "./components/AdminMenu/AdminTools/ColorControlComponent";
 import PhoneDescriptionComponent from "./components/AdminMenu/AdminTools/PhoneDescriptionComponent";
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
       },
       {
         path: "phone/:id",
-        element: <Phone />,
+        element: <PhoneDetail />,
         children: [{ path: "cart", element: <CartModal /> }]
       },
       {
