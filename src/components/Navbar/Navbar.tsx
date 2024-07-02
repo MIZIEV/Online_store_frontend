@@ -9,7 +9,7 @@ const Navbar = () => {
   const loggedInUser = getLoggedInUser();
   const isAdmin = isAdminUser();
   const navigate = useNavigate();
-  const savedUser = sessionStorage.getItem("authenticatedFirstName");
+  const savedUser = localStorage.getItem("authenticatedFirstName");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleLogout = () => {

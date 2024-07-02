@@ -22,7 +22,7 @@ const PhoneCatalog: React.FC = () => {
     const [maxPrice, setMaxPrice] = useState(0);
     const [wishList, setWishList] = useState<Phone[]>([]);
     const [isWishListLoading, setIsWishListLoading] = useState(true);
-    const email = sessionStorage.getItem("authenticatedEmail");
+    const email = localStorage.getItem("authenticatedEmail");
 
     const itemsPerPage = 15;
     const screenSizes = ["до 4\"", "4.1\" - 4.9\"", "5\" - 5.5\"", "5.6\" - 6\"", "більше 6\""]

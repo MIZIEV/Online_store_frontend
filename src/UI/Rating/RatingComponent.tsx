@@ -22,7 +22,7 @@ interface RatingComponentProps {
 const RatingComponent: React.FC<RatingComponentProps> = ({ phoneId, rating, handleChangeRating }) => {
   const [value, setValue] = useState<number | null>(rating);
   const [hasRated, setHasRated] = useState<boolean>(false);
-  const email = sessionStorage.getItem("authenticatedEmail");
+  const email = localStorage.getItem("authenticatedEmail");
   const isAuthenticated = isUserLoggedIn();
 
   useEffect(() => {

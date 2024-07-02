@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./CommentComponent.module.scss"
-import { isUserLoggedIn } from "../../../utils/AuthService";
 
 const CommentComponent: React.FC = (props) => {
 
-    const authenticatedEmail = sessionStorage.getItem("authenticatedEmail")
+    const authenticatedEmail = localStorage.getItem("authenticatedEmail")
 
     const { id, comment, updateComments, onDelete, authorEmail } = props;
 

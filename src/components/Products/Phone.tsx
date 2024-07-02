@@ -145,7 +145,7 @@ const Phone: React.FC = () => {
                 <div className={classes.container}>
                     {isError && <ErrorModal message={errorMessages} onClose={closeErroModalHandler} />}
                     <Outlet />
-                    <BreadCrumb items={[{ path: "/", title: "Головна/" }, { path: "/phone/catalog", title: "телефони/" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
+                    <BreadCrumb items={[{ path: "/", title: "Головна /" }, { path: "/phone/catalog", title: "телефони /" }, { path: `/phone/${phone.id}`, title: `${phone.model}` }]} />
 
                     <div className={classes.topInfoBlock}>
                         <div className={classes.leftImagesBlock}>

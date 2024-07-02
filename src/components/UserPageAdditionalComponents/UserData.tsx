@@ -4,10 +4,10 @@ import { changeUserPassword, updateUserData } from "../../utils/UserService";
 
 const UserData: React.FC = () => {
 
-  const email = sessionStorage.getItem("authenticatedEmail") || "";
-  const firstName = sessionStorage.getItem("authenticatedFirstName") || "";
-  const lastName = sessionStorage.getItem("authenticatedLastName") || "";
-  const phoneNumber = sessionStorage.getItem("authenticatedPhonenumbar") || "";
+  const email = localStorage.getItem("authenticatedEmail") || "";
+  const firstName = localStorage.getItem("authenticatedFirstName") || "";
+  const lastName = localStorage.getItem("authenticatedLastName") || "";
+  const phoneNumber = localStorage.getItem("authenticatedPhonenumbar") || "";
 
   const [userData, setUserData] = useState({
     firstName: firstName,

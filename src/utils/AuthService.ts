@@ -51,11 +51,11 @@ export async function loginUser(userData: LoginData) {
 
 export const saveLoggedInUser = (email: string, role: string, firstName: string, lastName: string, phoneNumber: string) => {
 	console.log("saved email - " + email + "saved role - " + role + " firstName - " + firstName);
-	sessionStorage.setItem("authenticatedEmail", email);
-	sessionStorage.setItem("authenticatedFirstName", firstName);
-	sessionStorage.setItem("authenticatedLastName", lastName);
-	sessionStorage.setItem("authenticatedPhonenumbar", phoneNumber);
-	sessionStorage.setItem("role", role);
+	localStorage.setItem("authenticatedEmail", email);
+	localStorage.setItem("authenticatedFirstName", firstName);
+	localStorage.setItem("authenticatedLastName", lastName);
+	localStorage.setItem("authenticatedPhonenumbar", phoneNumber);
+	localStorage.setItem("role", role);
 };
 
 export function saveRefreshToken(token: string) {
@@ -67,12 +67,12 @@ export function getRefreshToken(): string | null {
 }
 
 export const isUserLoggedIn = (): boolean => {
-	const email = sessionStorage.getItem("authenticatedEmail");
+	const email = localStorage.getItem("authenticatedEmail");
 	return email !== null;
 }
 
 export const getLoggedInUser = () => {
-	const firstName = sessionStorage.getItem("authenticatedFirstName");
+	const firstName = localStorage.getItem("authenticatedFirstName");
 	console.log("username saved - " + firstName);
 	return firstName as string;
 }
@@ -93,6 +93,6 @@ export function logout() {
 }
 
 export const isAdminUser = () => {
-	const role = sessionStorage.getItem("role");
+	const role = localStorage.getItem("role");
 	return role === "ROLE_ADMIN";
 };

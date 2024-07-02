@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const WishList: React.FC = () => {
 
     const [wishList, setWishList] = useState<Phone[]>([])
-    const email = sessionStorage.getItem("authenticatedEmail");
+    const email = localStorage.getItem("authenticatedEmail");
     const navigator = useNavigate();
 
     useEffect(() => {
