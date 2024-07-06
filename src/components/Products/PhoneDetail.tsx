@@ -160,6 +160,7 @@ const PhoneDetail: React.FC = () => {
                                                 id={`color-${color.id}`}
                                                 name="phoneColor"
                                                 checked={selectedColor === color.id}
+                                                onChange={() => handleColorChange(color.id)}
                                             />
                                         </div>
                                     ))}
@@ -184,6 +185,7 @@ const PhoneDetail: React.FC = () => {
                                                 id={`rom-${rom.id}`}
                                                 name="phoneRom"
                                                 checked={selectedRom === rom.id}
+                                                onChange={() => handleRomChange(rom.id, rom.price)}
                                             />
                                             {rom.romSize} Гб
                                         </div>
@@ -195,7 +197,7 @@ const PhoneDetail: React.FC = () => {
                             <div className={classes.countBlock}>
                                 <div onClick={decreaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8 12H16" stroke="black" stroke-linecap="round" />
+                                        <path d="M8 12H16" stroke="black" strokeLinecap="round" />
                                     </svg>
                                 </div>
 
@@ -203,8 +205,8 @@ const PhoneDetail: React.FC = () => {
 
                                 <div onClick={increaseCount} className={classes.countImage}>
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 8V16" stroke="black" stroke-linecap="round" />
-                                        <path d="M8 12H16" stroke="black" stroke-linecap="round" />
+                                        <path d="M12 8V16" stroke="black" strokeLinecap="round" />
+                                        <path d="M8 12H16" stroke="black" strokeLinecap="round" />
                                     </svg>
                                 </div>
                             </div>
@@ -223,7 +225,7 @@ const PhoneDetail: React.FC = () => {
                                         setIsError(true);
                                         return;
                                     }
-                                    // Новый код
+
                                     addProduct({
                                         id: phone.id,
                                         brand: phone.brand,
