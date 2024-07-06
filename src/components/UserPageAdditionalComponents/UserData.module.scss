@@ -86,8 +86,26 @@
     }
   }
 
+  .deleteBlock {
+    display: flex;
+    justify-content: center;
+
+    .deleteButton {
+      cursor: pointer;
+      border: 1px solid #adbc9f;
+      border-radius: 4px;
+      background-color: transparent;
+      transition: background-color 0.3s;
+      padding: 5px;
+    }
+
+    .deleteButton:hover {
+      background-color: #ED3F3F;
+    }
+  }
+
   .error {
-    color: red;
+    color: #ED3F3F;
     font-size: 14px;
     margin-top: 5px;
   }

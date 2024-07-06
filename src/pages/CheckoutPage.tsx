@@ -90,6 +90,9 @@ const CheckoutPage: React.FC = () => {
     if (formData.city.length < 3) {
       errorMessages.push("В полі 'Місто' повинно бути більше 3 символів!")
     }
+    if (cartItems.length === 0) {
+      errorMessages.push("Кошик пустий, оберіть сматфон з каталогу!")
+    }
 
     if (errorMessages.length > 0) {
       setIsError(true);

@@ -12,7 +12,7 @@ const CatalogCard: React.FC = (props) => {
     const id = props.phoneData.id;
     const inWishList = props.inWishList;
 
-    const email = sessionStorage.getItem("authenticatedEmail");
+    const email = localStorage.getItem("authenticatedEmail");
 
 
     const [isInWishList, setIsInWIshList] = useState(inWishList);
