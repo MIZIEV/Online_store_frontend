@@ -1,26 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Button from "../../UI/Button/Button";
 import { Phone } from "../../shared.types";
 import classes from "./Card.module.scss";
-import { CartProduct, addToCart, removeFromCart } from "../../redux/cartSlice";
 import { useNavigate } from "react-router";
 import { RootState } from "@reduxjs/toolkit/query";
 
 const Card: React.FC<Phone> = (props) => {
-  const dispatch = useDispatch();
   const navigator = useNavigate();
 
   const isAdded = useSelector((state: RootState) =>
     state.cart.items.some((item) => item.id === props.id)
   );
-
-  const addProduct = (payload: CartProduct) => {
-    dispatch(addToCart(payload));
-  };
-
-  const removeProduct = (id: number) => {
-    dispatch(removeFromCart({ id }));
-  };
 
   const handleNavigateOnClick = () => {
     navigator(`/phone/${props.id}`)

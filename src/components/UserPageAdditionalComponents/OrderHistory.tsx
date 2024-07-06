@@ -5,14 +5,13 @@ import { getAllOrdersForUser } from "../../utils/OrderService";
 import { Accordion, AccordionDetails, AccordionSummary, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { GridExpandMoreIcon } from "@mui/x-data-grid";
 import { Order } from "../../shared.types";
-import { Label } from "@mui/icons-material";
 import { GetColorName } from "hex-color-to-color-name";
 
 
 const OrderHistory: React.FC = () => {
     const navigator = useNavigate();
     const [orderedList, setOrderedList] = useState<Order[]>([]);
-    const email = sessionStorage.getItem("authenticatedEmail");
+    const email = localStorage.getItem("authenticatedEmail");
 
     const formatCreatedAt = (createdAt: string): string => {
         const date = new Date(createdAt);

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { User } from "../shared.types";
 import { HOST } from "./host";
 import api from "./api";
@@ -31,7 +30,18 @@ export async function updateUserData(email: string, userData: User) {
 
 export async function changeUserPassword(email: string, password: string) {
     try {
-        const response = await api.patch(`${UPDATE_USER_DATA}/${email}/password`, { password: password })
+        const response = await api.patch(`${UPDATE_USER_DATA}/${email}/password`, { password: password });
+        console.log("CHANGE PASSWORD FUNC")
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export async function deleteUser(email: string) {
+    try {
+        const response = await api.delete(`${UPDATE_USER_DATA}/${email}/remove`);
         console.log("CHANGE PASSWORD FUNC")
         console.log(response.data);
         return response.data;

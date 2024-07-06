@@ -29,43 +29,43 @@ const HomePage = () => {
 
   console.log(data);
 
-  const carouselRef = useRef(null);
-  const carouselRef2 = useRef(null);
-  const carouselRef3 = useRef(null);
+  const topcarousel = useRef(null);
+  const middlecarousel = useRef(null);
+  const bottomcarousel = useRef(null);
 
   const handlePrevSlide = () => {
-    if (carouselRef.current) {
-      carouselRef.current.previous();
+    if (topcarousel.current) {
+      topcarousel.current.previous();
     }
   };
 
   const handleNextSlide = () => {
-    if (carouselRef.current) {
-      carouselRef.current.next();
+    if (topcarousel.current) {
+      topcarousel.current.next();
     }
   };
 
   const handlePrevSlide2 = () => {
-    if (carouselRef2.current) {
-      carouselRef2.current.previous();
+    if (middlecarousel.current) {
+      middlecarousel.current.previous();
     }
   };
 
   const handleNextSlide2 = () => {
-    if (carouselRef2.current) {
-      carouselRef2.current.next();
+    if (middlecarousel.current) {
+      middlecarousel.current.next();
     }
   };
 
   const handlePrevSlide3 = () => {
-    if (carouselRef3.current) {
-      carouselRef3.current.previous();
+    if (bottomcarousel.current) {
+      bottomcarousel.current.previous();
     }
   };
 
   const handleNextSlide3 = () => {
-    if (carouselRef3.current) {
-      carouselRef3.current.next();
+    if (bottomcarousel.current) {
+      bottomcarousel.current.next();
     }
   };
 
@@ -123,7 +123,7 @@ const HomePage = () => {
 
       <div className={classes.phonesContainer}>
         <Carousel
-          ref={carouselRef}
+          ref={topcarousel}
           responsive={responsive}
           additionalTransfrom={0}
           arrows={false}
@@ -168,7 +168,7 @@ const HomePage = () => {
 
       <div className={classes.phonesContainer}>
         <Carousel
-          ref={carouselRef2}
+          ref={middlecarousel}
           responsive={responsive}
           additionalTransfrom={0}
           arrows={false}
@@ -217,9 +217,10 @@ const HomePage = () => {
           <button >
             Підписатись
             <svg width="20" height="21" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 12.5H19" stroke="#F7F8FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M12 5.5L19 12.5L12 19.5" stroke="#F7F8FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 12.5H19" stroke="#F7F8FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M12 5.5L19 12.5L12 19.5" stroke="#F7F8FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
+
           </button>
         </div>
       </div>
@@ -238,7 +239,7 @@ const HomePage = () => {
 
       <div className={classes.phonesContainer}>
         <Carousel
-          ref={carouselRef3}
+          ref={bottomcarousel}
           responsive={responsive}
           additionalTransfrom={0}
           arrows={false}

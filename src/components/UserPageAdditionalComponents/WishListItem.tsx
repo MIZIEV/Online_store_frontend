@@ -11,7 +11,7 @@ interface WishListItemProps {
 const WishListItem: React.FC<WishListItemProps> = (props) => {
 
     const { phone, onDelete } = props;
-    const email = sessionStorage.getItem("authenticatedEmail");
+    const email = localStorage.getItem("authenticatedEmail");
 
 
     const onClickDeleteHandler = () => {

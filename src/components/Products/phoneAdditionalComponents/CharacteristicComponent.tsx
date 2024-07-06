@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import classes from "./CharacteristicComponent.module.scss";
 import { getAllPhoneFeatures } from "../../../utils/FeaturesService";
-import { PhoneFeature } from "../../../shared.types";
+import { Phone, PhoneFeature } from "../../../shared.types";
 
-const CharacteristicComponent: React.FC = (props) => {
+interface CharacteristicComponentProps {
+    phone: Phone;
+}
+
+const CharacteristicComponent: React.FC<CharacteristicComponentProps> = (props) => {
 
     const phoneCharacteristic = props.phone;
     const [phoneFeatures, setPhoneFeatures] = useState<PhoneFeature[]>([]);

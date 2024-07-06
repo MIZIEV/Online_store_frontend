@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import classes from "./UserData.module.scss";
-import { changeUserPassword, updateUserData } from "../../utils/UserService";
+import { changeUserPassword, deleteUser, updateUserData } from "../../utils/UserService";
 
 const UserData: React.FC = () => {
 
-  const email = sessionStorage.getItem("authenticatedEmail") || "";
-  const firstName = sessionStorage.getItem("authenticatedFirstName") || "";
-  const lastName = sessionStorage.getItem("authenticatedLastName") || "";
-  const phoneNumber = sessionStorage.getItem("authenticatedPhonenumbar") || "";
+  const email = localStorage.getItem("authenticatedEmail") || "";
+  const firstName = localStorage.getItem("authenticatedFirstName") || "";
+  const lastName = localStorage.getItem("authenticatedLastName") || "";
+  const phoneNumber = localStorage.getItem("authenticatedPhonenumbar") || "";
 
   const [userData, setUserData] = useState({
     firstName: firstName,
@@ -26,7 +26,7 @@ const UserData: React.FC = () => {
 
   const [newData, setNewData] = useState({ ...userData });
   const [passwords, setPasswords] = useState({ newPassword: "", confirmPassword: "" });
-  const [passwordError, setPasswordError] = useState("");
+  const [passwordError, setPasswordError] = useState<string>("");
 
   const fieldLabels = {
     firstName: "Ім'я",
@@ -53,7 +53,7 @@ const UserData: React.FC = () => {
         setPasswordError("Passwords do not match");
         return;
       }
-      
+
       changeUserPassword(email, passwords.newPassword);
 
       console.log("Password updated to:", passwords.newPassword);
@@ -71,6 +71,10 @@ const UserData: React.FC = () => {
       handleSave(field);
     }
   };
+
+  const deleteUserHandler = () => {
+    deleteUser(email);
+  }
 
   return (
     <div className={classes.container}>
@@ -135,6 +139,11 @@ const UserData: React.FC = () => {
           </div>
         )}
       </div>
+
+      <div className={classes.deleteBlock}>
+        <button onClick={deleteUserHandler} className={classes.deleteButton}>Видалити акаунт</button>
+      </div>
+
     </div>
   );
 };

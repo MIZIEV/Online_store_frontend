@@ -17,9 +17,9 @@ const CheckoutPage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const firstName = sessionStorage.getItem("authenticatedFirstName");
-  const lastName = sessionStorage.getItem("authenticatedLastName");
-  const phoneNumber = sessionStorage.getItem("authenticatedPhonenumbar");
+  const firstName = localStorage.getItem("authenticatedFirstName");
+  const lastName = localStorage.getItem("authenticatedLastName");
+  const phoneNumber = localStorage.getItem("authenticatedPhonenumbar");
   const isAuthenticated = isUserLoggedIn();
 
   const cartItems = useSelector(selectCartItems);
@@ -35,7 +35,7 @@ const CheckoutPage: React.FC = () => {
   const [cardExpiration, setCardExpiration] = useState("");
   const [cvv, setCvv] = useState("");
 
-  const email = sessionStorage.getItem("authenticatedEmail")
+  const email = localStorage.getItem("authenticatedEmail")
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -89,6 +89,9 @@ const CheckoutPage: React.FC = () => {
     }
     if (formData.city.length < 3) {
       errorMessages.push("В полі 'Місто' повинно бути більше 3 символів!")
+    }
+    if (cartItems.length === 0) {
+      errorMessages.push("Кошик пустий, оберіть сматфон з каталогу!")
     }
 
     if (errorMessages.length > 0) {
