@@ -13,7 +13,7 @@ const WishList: React.FC = () => {
 
     useEffect(() => {
 
-        getWishListForUser(email).then((response) => {
+        getWishListForUser(email as string).then((response) => {
             setWishList(response);
         })
     }, [])

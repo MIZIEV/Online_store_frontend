@@ -17,7 +17,7 @@ const ReviewsComponent: React.FC = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        getAllComments(id).then((response) => {
+        getAllComments(Number(id)).then((response) => {
             setComments(response);
         })
     }, [])
@@ -58,7 +58,7 @@ const ReviewsComponent: React.FC = () => {
 
     const handleDeleteComment = async (commentId: number) => {
         try {
-            await deleteComment(id, commentId);
+            await deleteComment(Number(id), commentId);
             setComments(comments.filter(comment => comment.id !== commentId));
         } catch (error) {
             console.error(error)
@@ -93,7 +93,7 @@ const ReviewsComponent: React.FC = () => {
 
                         <CommentComponent
                             id={id}
-                            updateComments={() => getAllComments(id)}
+                            updateComments={() => getAllComments(Number(id))}
                             onDelete={handleDeleteComment}
                             key={comment.id}
                             comment={comment}

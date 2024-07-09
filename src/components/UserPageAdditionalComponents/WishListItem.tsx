@@ -15,7 +15,7 @@ const WishListItem: React.FC<WishListItemProps> = (props) => {
 
 
     const onClickDeleteHandler = () => {
-        deletePhoneFromWishList(phone.id, email);
+        deletePhoneFromWishList(phone.id, email as string);
         onDelete(phone.id);
     }
 
