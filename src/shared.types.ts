@@ -8,7 +8,7 @@ export type Phone = {
   screenSize: number;
   mainCamera: string;
   frontCamera: number;
-  processor: number;
+  processor: string;
   producingCountry: string;
   countOfCores: number;
   ram: number;
