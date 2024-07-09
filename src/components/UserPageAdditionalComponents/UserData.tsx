@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import classes from "./UserData.module.scss";
 import { changeUserPassword, deleteUser, updateUserData } from "../../utils/UserService";
+import { useNavigate } from "react-router";
+import NotificationModal from "../../UI/Modal/NotificationModal";
 
 const UserData: React.FC = () => {
 
@@ -27,6 +29,20 @@ const UserData: React.FC = () => {
   const [newData, setNewData] = useState({ ...userData });
   const [passwords, setPasswords] = useState({ newPassword: "", confirmPassword: "" });
   const [passwordError, setPasswordError] = useState<string>("");
+  const navigator = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalMessage, setModalMessage] = useState<string>("");
+
+  const openModal = (message: string) => {
+    setIsModalOpen(true);
+    setModalMessage(message);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalMessage("");
+  };
 
   const fieldLabels = {
     firstName: "Ім'я",
@@ -73,8 +89,18 @@ const UserData: React.FC = () => {
   };
 
   const deleteUserHandler = () => {
-    deleteUser(email);
-  }
+    openModal("Ви впевнені, що хочете видалити акаунт?");
+  };
+
+  const handleConfirmDelete = () => {
+    deleteUser(email).then(() => {
+      localStorage.clear();
+      navigator("/");
+    }).catch((error) => {
+      console.error(error);
+    });
+  };
+
 
   return (
     <div className={classes.container}>
@@ -143,6 +169,14 @@ const UserData: React.FC = () => {
       <div className={classes.deleteBlock}>
         <button onClick={deleteUserHandler} className={classes.deleteButton}>Видалити акаунт</button>
       </div>
+
+      {isModalOpen && (
+        <NotificationModal
+          message={modalMessage}
+          onClose={closeModal}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
 
     </div>
   );

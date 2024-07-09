@@ -31,9 +31,9 @@ const CheckoutPage: React.FC = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-  const [creditCard, setCreditCard] = useState("");
-  const [cardExpiration, setCardExpiration] = useState("");
-  const [cvv, setCvv] = useState("");
+  const [creditCard, setCreditCard] = useState<string>("");
+  const [cardExpiration, setCardExpiration] = useState<string>("");
+  const [cvv, setCvv] = useState<string>("");
 
   const email = localStorage.getItem("authenticatedEmail")
 

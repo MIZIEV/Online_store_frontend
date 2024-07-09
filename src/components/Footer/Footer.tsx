@@ -62,7 +62,7 @@ const Footer = () => {
 
         <div className={classes["footer-sections"]}>
 
-          <div >
+          <div>
             <p>Приймаємо дзвінки з 10:00 до 19:00</p>
             <p className={classes["phone-section"]}>
               <img src="/public/icons/phone.svg" alt="" />
@@ -78,7 +78,7 @@ const Footer = () => {
               <p>Оплата і доставка</p>
             </NavLink>
 
-            <p onClick={navigateToPersonalPage}>Особистий кабінет</p>
+            <p className={classes.link} onClick={navigateToPersonalPage}>Особистий кабінет</p>
 
             <NavLink className={classes.link} to="/guarantee">
               <p>Гарантія</p>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from '@mui/material';
 import classes from "./Confirmmodal.module.scss"
+import { isUserLoggedIn } from '../../utils/AuthService';
 
 interface ConfirmModalProps {
     open: boolean;
@@ -10,6 +11,8 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({ open, handleClose, handleConfirm, orderData }) => {
+
+    const isAuthenticated: boolean = isUserLoggedIn();
 
     const deliveryConverter = (deliveryMethod: string) => {
         if (deliveryMethod === "COURIER") {
@@ -53,6 +56,17 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ open, handleClose, handleCo
                 <label>
                     До сплати: {orderData.totalAmount} грн
                 </label>
+
+                {
+                    !isAuthenticated && (
+                        <div>
+                            <label className={classes.unAuthorizedMessage}>
+                                Після пітвердження замовлення з вами зв'яжеться наш менеджер. Якщо бажаєте слідкувати за статусом замовлення,
+                                рекомендуємо зареєструватися, і вам стане доступний особистий кабінет із статусом замовлення.
+                            </label>
+                        </div>
+                    )
+                }
 
                 <div className={classes.buttonBlock}>
                     <button className={classes.confirmButton} onClick={handleConfirm}>Підтверджую</button>

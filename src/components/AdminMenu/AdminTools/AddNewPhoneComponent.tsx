@@ -4,11 +4,8 @@ import { FormControlLabel, FormGroup, MenuItem, Select, Switch } from "@mui/mate
 import { useEffect, useState } from "react";
 import { addNewPhone, getOnePhone, updatePhone } from "../../../utils/phoneService";
 import ErrorModal from "../../../UI/Modal/ErrorModal";
-import { isValidUrl } from "../../../utils/Validator";
-
-interface PhoneRom {
-  romSize: number
-}
+import { validatePhoneData } from "../../../utils/Validator";
+import { Phone, PhoneRom } from "../../../shared.types";
 
 interface CommunicationStandardList {
   standardName: string
@@ -46,7 +43,6 @@ const AddNewPhoneComponent = () => {
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const { phoneId } = useParams();
-
 
   let handleSubmit;
 
@@ -99,6 +95,15 @@ const AddNewPhoneComponent = () => {
         os: os,
         ...Object.fromEntries(formData),
       };
+
+      const errorMessages = validatePhoneData(data as Phone);
+
+      if (errorMessages.length > 0) {
+        setIsError(true);
+        setErrorMessages(errorMessages);
+        return;
+      }
+
       updatePhone(Number(phoneId), data);
       navigate("/admin/phone-managment");
     };
@@ -121,43 +126,7 @@ const AddNewPhoneComponent = () => {
         ...Object.fromEntries(formData),
       };
 
-      if (data.model.length < 5) {
-        errorMessages.push("Поле 'модель' повинно бути довштим за 5 символів!")
-      } if (data.producingCountry.length < 3) {
-        errorMessages.push("Поле 'країна виробник' повинно бути довштим за 5 символів!")
-      } if (data.screenSize <= 0) {
-        errorMessages.push("Поле 'розмір екрана' не повинно бути від'ємним або нуль!")
-      } if (data.mainCamera.length < 1) {
-        errorMessages.push("Поле 'Головна камера' повинно бути довштим за 1 символ!")
-      } if (data.frontCamera <= 0) {
-        errorMessages.push("Поле 'Фронтальна камера' не повинно бути від'ємним або нуль!")
-      } if (data.processor.length < 5) {
-        errorMessages.push("Поле 'Процесор' повинно бути довштим за 5 символів!")
-      } if (data.weight <= 0) {
-        errorMessages.push("Поле 'Вага' не повинно бути від'ємним або нуль!")
-      } if (data.batteryCapacity <= 0) {
-        errorMessages.push("Поле 'Ємність акумулятора' не повинно бути від'ємним або нуль!")
-      } if (data.price <= 0) {
-        errorMessages.push("Поле 'Ціна' не повинно бути від'ємним або нуль!")
-      } if (data.countOfCores <= 0) {
-        errorMessages.push("Поле 'Кількість ядер' не повинно бути від'ємним або нуль!")
-      } if (data.osVersion <= 0) {
-        errorMessages.push("Поле 'Версія ОС' не повинно бути від'ємним або нуль!")
-      } if (data.ram <= 0) {
-        errorMessages.push("Поле 'ОЗУ' не повинно бути від'ємним або нуль!")
-      } if (!isValidUrl(data.mainPictureURL)) {
-        errorMessages.push("Не коректна URL головної картинки!")
-      } if (data.resolution.length < 7) {
-        errorMessages.push("Поле 'Роздільна здатність' повинно бути довштим за 7 символів!")
-      } if (data.brand.length == 0) {
-        errorMessages.push("Поле 'Бренд' не обране!")
-      } if (data.os == undefined) {
-        errorMessages.push("Поле 'ОС' не обране!")
-      } if (data.communicationStandardList.length === 0) {
-        errorMessages.push("Поле 'Стандарт зв'язку' не обране!")
-      } if (data.romList.length == 0) {
-        errorMessages.push("Поле 'Ппз' не обране!")
-      }
+      const errorMessages = validatePhoneData(data as Phone);
 
       if (errorMessages.length > 0) {
         setIsError(true);
@@ -165,7 +134,7 @@ const AddNewPhoneComponent = () => {
         return;
       }
 
-      addNewPhone(data);
+      addNewPhone(data as Phone);
       navigate("/admin/phone-managment");
     };
 
@@ -476,8 +445,8 @@ const AddNewPhoneComponent = () => {
             <Select
               id="rom"
               multiple={true}
-              value={romList.map(rom => rom.romSize)} // Extracting the sizes from the PhoneRom array
-              onChange={handleRomSelection} // Handling the ROM selection
+              value={romList.map(rom => rom.romSize)}
+              onChange={handleRomSelection}
               inputProps={{ id: 'select-multiple-chip', 'aria-label': 'brand' }}
             >
               <MenuItem value={16}>16 гб</MenuItem>
@@ -503,7 +472,6 @@ const AddNewPhoneComponent = () => {
               />
             </div>
           ))}
-
 
         </div>
 

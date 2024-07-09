@@ -24,11 +24,16 @@
         margin-bottom: 20px;
     }
 
-    label {
+    label,
+    .unAuthorizedMessage {
         margin: 5px 0px;
         font-family: "Work Sans", sans-serif;
         font-weight: 400;
         font-size: 18px;
+    }
+
+    .unAuthorizedMessage {
+        color: #ED3F3F;
     }
 
     .buttonBlock {
@@ -47,15 +52,24 @@
             font-family: "Work Sans", sans-serif;
             font-weight: 400;
             font-size: 14px;
+            transition: background-color 0.5s ease;
         }
 
         .confirmButton {
             color: #FFFFF4;
             background-color: #436850;
+
+            &:hover {
+                background-color: #12372A;
+            }
         }
 
         .cancelButton {
             background-color: transparent;
+
+            &:hover {
+                background-color: #ED3F3F;
+            }
         }
     }
 }
