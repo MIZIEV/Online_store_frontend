@@ -110,14 +110,20 @@
   .no-account {
     text-align: center;
 
-    a {
+    p {
       font-family: "Arsenal", sans-serif;
       font-weight: 700;
       font-size: 24px;
       font-style: normal;
       color: #0d0c0c;
       text-decoration: none;
+
+      .link {
+        text-decoration: none;
+        color: #12372A;
+      }
     }
+
   }
 }
 
