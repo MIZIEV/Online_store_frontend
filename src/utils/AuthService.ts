@@ -36,12 +36,6 @@ export async function loginUser(userData: LoginData) {
 
 		saveToken(response.data.accessToken);
 		saveRefreshToken(response.data.refreshToken);
-
-		console.log("--------------tokens----------")
-		console.log(localStorage.getItem("token"))
-		console.log(localStorage.getItem("refreshToken"))
-		console.log("--------------tokens----------")
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.error(error);
@@ -50,7 +44,6 @@ export async function loginUser(userData: LoginData) {
 };
 
 export const saveLoggedInUser = (email: string, role: string, firstName: string, lastName: string, phoneNumber: string) => {
-	console.log("saved email - " + email + "saved role - " + role + " firstName - " + firstName);
 	localStorage.setItem("authenticatedEmail", email);
 	localStorage.setItem("authenticatedFirstName", firstName);
 	localStorage.setItem("authenticatedLastName", lastName);
@@ -73,7 +66,6 @@ export const isUserLoggedIn = (): boolean => {
 
 export const getLoggedInUser = () => {
 	const firstName = localStorage.getItem("authenticatedFirstName");
-	console.log("username saved - " + firstName);
 	return firstName as string;
 }
 
@@ -82,8 +74,6 @@ export function saveToken(token: string) {
 }
 
 export function getToken(): string | null {
-	console.log("get token - " + localStorage.getItem('token'));
-	console.log("get refresh token - " + localStorage.getItem('refreshToken'));
 	return localStorage.getItem('token');
 }
 

@@ -38,8 +38,6 @@ const ColorControleComponent: React.FC = () => {
                 const data = await getPhoneList();
                 setPhoneList(data);
                 setRows(data);
-                console.log("data list of phons")
-                console.log(data)
             } catch (error) {
                 console.error(error);
             }
@@ -50,8 +48,6 @@ const ColorControleComponent: React.FC = () => {
     const handleRowSelection = (selection: string[]) => {
         setSelectedRows(selection);
         setSelectedColors([]);
-
-        console.log(selection);
 
         const selectedPhones = selection.map(selectedId => {
             return phoneList.find(phone => phone.id === parseInt(selectedId));

@@ -47,15 +47,11 @@ const PhoneDetail: React.FC = () => {
     }, [])
 
     const handleChangeRating = () => {
-        console.log("second getPhone handler")
         getPhone();
     }
 
     function getPhone() {
         getOnePhone(Number(id)).then((response) => {
-
-            console.log("function GET PHONE in component")
-            console.log(response);
             setSelectedPicture(response.mainPictureURL)
             setPhonePrice(response.price);
             setPhone(response);
@@ -80,7 +76,6 @@ const PhoneDetail: React.FC = () => {
     };
 
     const changeMainPictureHandler = (pictureUrl: string) => {
-        console.log(pictureUrl)
         setSelectedPicture(pictureUrl);
     }
 

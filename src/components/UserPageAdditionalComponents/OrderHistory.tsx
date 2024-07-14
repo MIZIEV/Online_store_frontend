@@ -24,7 +24,6 @@ const OrderHistory: React.FC = () => {
     useEffect(() => {
         getAllOrdersForUser(email).then((response) => {
             setOrderedList(response)
-            console.log(response)
         })
     }, [])
 

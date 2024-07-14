@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Order } from "../shared.types";
 import { HOST } from "./host";
 import api from "./api";
@@ -16,8 +15,6 @@ export const addNewOrder = async (order: Order) => {
                 'Content-Type': 'application/json',
             }
         });
-        console.log("add new order func")
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
@@ -28,7 +25,6 @@ export const addNewOrder = async (order: Order) => {
 export const getAllOrdersForUser = async (email: string) => {
     try {
         const response = await api.get(GET_ALL_ORDERS_FOR_USER + `/${email}`)
-        console.log("GET ALL ORDERS FO USER FUNC");
         return response.data;
     } catch (error) {
         console.error(error);
@@ -39,7 +35,6 @@ export const getAllOrdersForUser = async (email: string) => {
 export const getAllOrders = async () => {
     try {
         const response = await api.get(GET_ALL_ORDERS_FOR_USER);
-        console.log("GET ALL ORDERS  FUNC");
         return response.data;
     } catch (error) {
         console.error(error);
@@ -50,7 +45,6 @@ export const getAllOrders = async () => {
 export const changeCompleteStatus = async (orderId: number) => {
     try {
         const response = await api.patch(`${CHANGE_COMPLETE_STATUS}${orderId}`);
-        console.log("CHANGE COMPLETE STATUS  FUNC");
         return response.data;
     } catch (error) {
         console.error(error);
@@ -61,7 +55,6 @@ export const changeCompleteStatus = async (orderId: number) => {
 export const deleteOrder = async (orderId: number) => {
     try {
         const response = await api.delete(`${CHANGE_COMPLETE_STATUS}${orderId}/remove`);
-        console.log("DELETE ORDER  FUNC");
         return response.data;
     } catch (error) {
         console.error(error);
