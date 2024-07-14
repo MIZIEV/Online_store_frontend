@@ -17,7 +17,6 @@ const Blog: React.FC = () => {
     function getBlog() {
 
         getOneBlog(Number(id)).then((response) => {
-            console.log(response);
             setBlog(response);
 
         }).catch((error) => console.error(error));

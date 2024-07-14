@@ -72,7 +72,6 @@ const UserData: React.FC = () => {
 
       changeUserPassword(email, passwords.newPassword);
 
-      console.log("Password updated to:", passwords.newPassword);
       setPasswords({ newPassword: "", confirmPassword: "" });
       setPasswordError("");
     } else {

@@ -167,7 +167,6 @@ const AddNewPhoneComponent = () => {
 
   function handleUsed() {
     setUsed(!used);
-    console.log(used);
   }
 
   const closeErroModalHandler = () => {

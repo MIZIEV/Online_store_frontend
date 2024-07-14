@@ -24,7 +24,6 @@ axios.interceptors.request.use(function (config) {
 export async function getMethod(path: string) {
   try {
     const response = await api.get(path);
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -49,7 +48,6 @@ export async function getProducts({
 
   try {
     const response = await api.get(url, { cancelToken: signal.token });
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -61,7 +59,6 @@ export async function postProduct(data: unknown) {
   console.log(data);
   try {
     const response = await api.post(ADD_NEW_PHONE_URL, data);
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -84,8 +81,7 @@ export async function editProduct(productInfo: {
   productId: string | undefined;
   productData: unknown;
 }) {
-  console.log(productInfo.productId);
-  console.log(productInfo.productData);
+
   try {
     const response = await api.put(
       PRODUCTS_URL + `${productInfo.productId}`,

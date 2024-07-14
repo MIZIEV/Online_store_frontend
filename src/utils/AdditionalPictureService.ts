@@ -1,4 +1,3 @@
-import axios from "axios";
 import { HOST } from "./host";
 import api from "./api";
 
@@ -14,7 +13,6 @@ export async function addNewAdditionalPicture(phoneId: number, pictureUrl: strin
                 'Content-Type': 'application/json',
             }
         });
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -25,9 +23,6 @@ export async function addNewAdditionalPicture(phoneId: number, pictureUrl: strin
 export async function getAllAdditionPictures(phoneId: number) {
     try {
         const response = await api.get(GET_ALL_PICTURES + `${phoneId}/pctureUrl/list`);
-
-        console.log("GET ALL ADDITION PICTURE");
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error(error)
@@ -38,8 +33,6 @@ export async function getAllAdditionPictures(phoneId: number) {
 export async function deleteAdditionalPicture(phoneId: number, pictureUrl: number) {
     try {
         const response = await api.delete(DELETE_PICTURE + `${phoneId}/pctureUrl/${pictureUrl}`);
-        console.log("DELETE ADDITION PICTURE");
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error(error)

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { HOST } from "./host";
 import api from "./api";
 
@@ -13,9 +12,6 @@ export const getAllColors = async () => {
 
     try {
         const responce = await api.get(url);
-        console.log("get all colors function")
-        console.log(responce);
-
         return responce.data;
     } catch (error) {
         console.error(error);
@@ -30,9 +26,6 @@ export const addNewColor = async (colorCode: string) => {
                 'Content-Type': 'application/json',
             }
         });
-        console.log(colorCode)
-        console.log("add new color func")
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
@@ -43,7 +36,6 @@ export const addNewColor = async (colorCode: string) => {
 export const deleteColor = async (colorId: number) => {
     try {
         const response = await api.delete(DELETE_COLOR + "/" + colorId);
-        console.log(response.data)
         return response.data
     } catch (error) {
         console.error(error);
@@ -54,7 +46,6 @@ export const deleteColor = async (colorId: number) => {
 export const putTheColorsInPhone = async (phoneId: string[], colorsId: number[]) => {
     try {
         const response = await api.patch(PUT_THE_COLOR_IN_PHONE + `${phoneId}/color`, colorsId);
-        console.log(response.data)
         return response.data
     } catch (error) {
         console.error(error);

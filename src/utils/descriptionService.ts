@@ -1,4 +1,3 @@
-import axios from "axios";
 import { HOST } from "./host";
 import api from "./api";
 
@@ -16,9 +15,6 @@ interface PhoneDescription {
 export async function getDescriptions(phoneId: number): Promise<PhoneDescription[]> {
     try {
         const response = await api.get(GET_DESCRIPTIONS + `${phoneId}` + "/description/list");
-
-        console.log("service function GET ALL DESCRIPTION - ")
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
@@ -33,8 +29,6 @@ export async function addNewDescription(phoneId: number, data: FormData): Promis
                 "Content-Type": "application/json"
             }
         });
-        console.log("service function ADD NEW DESCRIPTION- ")
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
@@ -45,8 +39,6 @@ export async function addNewDescription(phoneId: number, data: FormData): Promis
 export async function deleteDescription(phoneId: number, descriptionId: number): Promise<any> {
     try {
         const response = await api.delete(DELETE_DESCRIPTION + `${phoneId}` + "/description/remove/" + `${descriptionId}`);
-        console.log("service function DELETE DESCRIPTION - ")
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
